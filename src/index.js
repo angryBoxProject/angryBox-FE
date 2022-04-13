@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { QueryClient } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter } from 'react-router-dom';
 
+//리액트 Query세팅
 const queryClient = new QueryClient();
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <QueryClientProvider client={queryClient}>
+            <RecoilRoot>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </RecoilRoot>
+        </QueryClientProvider>
     </React.StrictMode>,
     document.getElementById('root'),
 );
