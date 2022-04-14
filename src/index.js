@@ -4,8 +4,9 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/configureStore';
 
 //리액트 Query세팅
 const queryClient = new QueryClient();
@@ -13,11 +14,11 @@ const queryClient = new QueryClient();
 ReactDOM.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <RecoilRoot>
+            <Provider store={store}>
                 <BrowserRouter>
                     <App />
                 </BrowserRouter>
-            </RecoilRoot>
+            </Provider>
         </QueryClientProvider>
     </React.StrictMode>,
     document.getElementById('root'),
