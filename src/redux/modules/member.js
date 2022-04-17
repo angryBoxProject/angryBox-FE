@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { URL } from '../../Apis/API';
+import { tokenURL, URL } from '../../Apis/API';
 import { setCookie } from '../../shared/utils/Cookie';
 
 export const login = createAsyncThunk(
@@ -24,9 +24,24 @@ export const login = createAsyncThunk(
 );
 //kakao
 export const kakaoLogin = createAsyncThunk(
-    'user/kakaoLogin',
+    'member/kakaoLogin',
     async ({ code, navigate }, thunkAPI) => {
         await URL.post(`oauth2/kakao?code=${code}`)
+            .then(res => {
+                console.log(res);
+                // sessionStorage.setItem('userInfo', JSON.stringify(res.data));
+                navigate('/main');
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    },
+);
+//google
+export const googleLogin = createAsyncThunk(
+    'member/googleLogin',
+    async ({ code, navigate }, thunkAPI) => {
+        await URL.post(`oauth2/google?code=${code}`)
             .then(res => {
                 alert('로그인 완료');
                 console.log(res);
@@ -61,6 +76,18 @@ export const signup = createAsyncThunk(
         }
     },
 );
+
+export const setLogin = createAsyncThunk('member/setLogin', async () => {
+    try {
+        return await tokenURL.get(`/user`).then(res => {
+            console.log(res);
+            return res.data.data;
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 export const memberSlice = createSlice({
     name: 'member',
     initialState: {
@@ -79,10 +106,22 @@ export const memberSlice = createSlice({
         builder
             .addCase(login.fulfilled, (state, action) => {
                 state.user_info = action.payload;
-                state.isLoading = true;
+                state.isLogin = true;
             })
             .addCase(signup.fulfilled, (state, action) => {
                 state.user_info = action.payload;
+            })
+            .addCase(kakaoLogin.fulfilled, (state, action) => {
+                state.user_info = action.payload;
+                state.isLogin = true;
+            })
+            .addCase(googleLogin.fulfilled, (state, action) => {
+                state.user_info = action.payload;
+                state.isLogin = true;
+            })
+            .addCase(setLogin.fulfilled, (state, action) => {
+                state.user_info = action.payload;
+                state.isLogin = true;
             });
     },
 });

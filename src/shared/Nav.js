@@ -51,7 +51,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/signup"
+                            to="/mypage"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
