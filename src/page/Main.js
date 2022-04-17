@@ -1,15 +1,19 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { URL } from '../Apis/API';
 import { setUserName } from '../redux/modules/member';
 const Main = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const { data: loginResult } = useQuery(['login'], () => {});
+    console.log(loginResult);
     const memberNick = useSelector(state => state.member.nickname);
     const testServer = async () => {
-        dispatch(setUserName('test'));
+        // dispatch(setUserName('test'));
         // try {
         //     console.log('axios');
         //     const data = await axios
@@ -20,6 +24,11 @@ const Main = () => {
         //     console.log(error);
         // }
     };
+    const gettest = async () => {
+        const { data } = await URL.get('/');
+        return data;
+    };
+    const query = useQuery('test', gettest);
     return (
         <>
             <div>test</div>
