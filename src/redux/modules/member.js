@@ -2,15 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { tokenURL, URL } from '../../Apis/API';
 import { setCookie } from '../../shared/utils/Cookie';
 
+const ismock = false;
 export const login = createAsyncThunk(
     'member/login',
-    async (data, { rejectWithValue }) => {
+    async ({ data, navigate }, { rejectWithValue }) => {
         try {
             return await URL.post(`/auth/login`, data, {
                 withCredentials: true,
             }).then(response => {
                 console.log(response);
                 setCookie('token', response.headers.authorization);
+                navigate('/main');
 
                 return response.data.data;
             });

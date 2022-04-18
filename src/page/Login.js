@@ -44,7 +44,7 @@ const Login = () => {
         //query테스트
         // loginMutation.mutate(data);
 
-        dispatch(login(data));
+        dispatch(login({ data, navigate }));
     };
     return (
         <>
