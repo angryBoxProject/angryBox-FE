@@ -3,9 +3,9 @@ const Header = props => {
     const { title } = props;
     return (
         <>
-            <div className="flex justify-end">
+            <div className="flex justify-end h-20">
                 <div>{title}</div>
-                <div>{title}</div>
+                <div>프로필 url</div>
             </div>
         </>
     );

@@ -6,12 +6,20 @@ const URL = axios.create({
 });
 const tokenURL = axios.create({
     baseURL: process.env.REACT_APP_IP,
-    headers: {
-        Authorization: getCookie('token'),
-        // Authorization:
-        //     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3NUb2tlbiIsInJvbGUiOiJST0xFX1VTRVIiLCJuaWNrbmFtZSI6IjExMTEiLCJpZCI6MSwiZXhwIjoxNjUwMjg3NjAyLCJlbWFpbCI6IjExMTFAbmF2ZXIuY29tIn0.vbdNOta9kmNa2VzUxtTzA-Td_m6ysZJZds05wHnc7Lk',
-    },
     withCredentials: true,
 });
+tokenURL.interceptors.request.use(
+    config => {
+        const token = getCookie('token');
+        if (token) {
+            config.headers['authorization'] = token;
+            return config;
+        }
+        return config;
+    },
+    error => {
+        return;
+    },
+);
 
 export { URL, tokenURL };

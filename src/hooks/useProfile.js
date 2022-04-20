@@ -2,7 +2,7 @@ import { tokenURL } from '../Apis/API';
 import { useQuery } from 'react-query';
 import { getCookie } from '../shared/utils/Cookie';
 
-const ismock = true;
+const ismock = false;
 const fetchProfile = async () => {
     if (ismock) {
         const mockdata = {
@@ -15,6 +15,7 @@ const fetchProfile = async () => {
         return mockdata;
     }
     if (!getCookie('token')) return;
+    console.log(getCookie('token'));
     const { data } = await tokenURL.get(`/profile`);
     return data.data;
 };

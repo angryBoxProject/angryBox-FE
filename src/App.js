@@ -16,6 +16,7 @@ import Mypage from './page/Mypage';
 import { useDispatch } from 'react-redux';
 import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
+import Header from './components/Header';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -36,6 +37,7 @@ function App() {
                 <StyledWrap>
                     <Nav />
                     <Warp>
+                        <Header title="헤더 "></Header>
                         <Routes>
                             <Route path="/main" element={<Main />} />
                             <Route path="/login" element={<Login />} />
@@ -58,6 +60,7 @@ function App() {
 }
 
 const StyledWrap = styled.div`
+    background-color: black;
     width: 100%;
     display: flex;
 `;
