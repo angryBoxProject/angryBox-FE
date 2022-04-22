@@ -29,9 +29,11 @@ const Main = () => {
         return data;
     };
     const query = useQuery('test', gettest);
-    return (
+    return ( 
         <>
-            <div>test</div>
+        <div className='grid grid-cols-2 gap-4'>
+            <div className='grid col-start-1'>
+            <div>HOME</div>
             <button className="bg-slate-500" onClick={testServer}>
                 testButton
             </button>
@@ -43,6 +45,23 @@ const Main = () => {
             >
                 testButton2
             </button>
+            </div>
+            <div className='grid col-start-2'>
+                <div>
+                    <button>이번 달은 진짜로</button>
+                    <span>총 게시글 수 </span>
+                    <span>총 쓰담 수 </span>
+                </div>
+                <div className='grid grid-flow-row grid-cols-2 gap-4'>
+                    <div>no.14</div>
+                    <div>no.14</div>
+                    <div>no.14</div>
+                    <div>no.14</div>
+                    <div>no.14</div>
+                </div>
+                <button>분노 저금하기</button>
+            </div>
+        </div>
         </>
     );
 };
