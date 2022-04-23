@@ -1,144 +1,157 @@
 import React from 'react';
-// import Icon from '../Icons/Icon';
-import tw from 'tailwind-styled-components';
-
-const Btn = tw.button`
-   rounded-full text-sm md:text-base shadow-sm flex flex-row justify-center items-center 
-   font-min1 disabled:bg-dgray-300
-  ${props => (props.size === '1' ? `h-b01 px-6 w-36` : '')};
-  ${props => (props.size === '2' ? `h-b02 px-4 py-4 w-36` : '')};
-  ${props => (props.size === '3' ? `h-b03 px-2 py-5 w-40` : '')};
-  ${props => (props.disabled ? 'bg-gray-300' : '')};
-
-  ${props =>
-      props.color === '1'
-          ? `
-  text-white bg-dpurple-200 
-  hover:bg-dpurple-300 
-  active:bg-dpurple-400
-  disabled:bg-dpurple-100`
-          : ''};
-  ${props =>
-      props.color === '2'
-          ? `
-  text-white bg-dgray-300 
-  hover:bg-dgray-400 
-  active:bg-dgray-500
-  disabled:bg-dgray-100`
-          : ''};
-  ${props =>
-      props.color === '3'
-          ? `
-  text-white bg-dred-300 
-  hover:bg-dred-400 
-  active:bg-dred-500
-  disabled:bg-dred-100`
-          : ''};
-
-  ${props =>
-      props.color === '4'
-          ? `
-  text-dpurple-200 bg-white
-  border border-dpurple-200
-  hover:bg-dpurple-100 
-  active:bg-[#E3D7FD]
-  disabled:border-dpurple-100
-  disabled:bg-white
-  disabled:text-dpurple-100
-  `
-          : ''};
-  ${props =>
-      props.color === '5'
-          ? `
-  text-dgray-400 bg-white
-  border border-dgray-400
-  hover:bg-dgray-200 
-  active:bg-[#EBEEF3]
-  disabled:border-dgray-200
-  disabled:bg-white
-  disabled:text-dgray-200
-  
-  `
-          : ''};
-  ${props =>
-      props.color === '6'
-          ? `
-  text-dred-300 
-  border border-dred-300
-  hover:bg-dred-100 
-  active:bg-[#FFD3DA]
-  disabled:border-dred-100
-  disabled:bg-white
-  disabled:text-dred-100
-  
-  `
-          : ''};
-          ${props =>
-              props.color === '7'
-                  ? `
-        text-white
-        border border-white
-        bg-transparent
-        hover:bg-dpurple-100
-        active:bg-dpurple-200
-        disabled:border-dred-100
-        disabled:bg-white
-        disabled:text-dpurple-200
-        
-        `
-                  : ''};
-`;
-const IconColor = tw.span` 
-mr-2 
-${props => (props.iconColor === 'heart' ? `text-dred-300` : '')};
-${props => (props.iconColor === 'book' ? `text-dpurple-300` : '')};
-`;
+import styled from 'styled-components';
+import theme from '../Styles/theme';
 
 const Button = props => {
     const {
-        size,
-        color,
-        styles,
-        children,
         onClick,
-        disabled,
-        is_loading,
-        icon,
-        name,
-        iconSize,
-        iconColor,
-        className,
-        count,
+        is_float,
+        children,
+        margin,
+        width,
+        height,
+        padding,
+        is_disabled,
+        is_edit,
+        _accept,
+        onChange,
+        _type,
+        abled,
+        value,
+        is_green,
     } = props;
 
-    return (
-        <Btn
-            size={size}
-            color={color}
-            styles={styles}
-            onClick={onClick}
-            disabled={disabled}
-            is_loading={is_loading}
-            className={className}
-        >
-            {/* {icon && (
-                <IconColor iconColor={iconColor}>
-                    <Icon name={name} iconSize={iconSize} />
-                </IconColor>
-            )} */}
+    const styles = {
+        margin: margin,
+        width: width,
+        height: height,
+        padding: padding,
+        is_edit: is_edit,
+        abled: abled,
+        is_green: is_green,
+    };
 
-            {children}
-        </Btn>
+    if (is_float) {
+        return (
+            <React.Fragment>
+                <FloatButton
+                    type={_type}
+                    accept={_accept}
+                    disabled={is_disabled}
+                    onClick={onClick}
+                    onChange={onChange}
+                    value={value}
+                >
+                    {children}
+                </FloatButton>
+            </React.Fragment>
+        );
+    }
+
+    if (is_green) {
+        return (
+            <React.Fragment>
+                <GreenButton
+                    disabled={is_disabled}
+                    value={value}
+                    {...styles}
+                    onClick={onClick}
+                >
+                    {children}
+                </GreenButton>
+            </React.Fragment>
+        );
+    }
+
+    return (
+        <React.Fragment>
+            <ElButton
+                disabled={is_disabled}
+                value={value}
+                {...styles}
+                onClick={onClick}
+            >
+                {children}
+            </ElButton>
+        </React.Fragment>
     );
 };
 
 Button.defaultProps = {
-    size: '1',
-    color: '1',
+    text: false,
     children: null,
     onClick: () => {},
-    iconColor: '',
-    className: '',
+    is_float: false,
+    margin: false,
+    width: '100%',
+    height: '100%',
+    padding: '12px',
+    is_disabled: false,
+    is_edit: false,
+    abled: false,
+    register: false,
+    is_green: false,
 };
+
+const ElButton = styled.button`
+    width: ${props => props.width};
+
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    padding: ${props => props.padding};
+    ${props =>
+        props.is_edit
+            ? props =>
+                  props.abled
+                      ? `background-color:${theme.color.gray5};
+            color: ${theme.color.gray1};`
+                      : `background-color:${theme.color.white};
+            color: ${theme.color.orange};
+  border: 1px solid ${theme.color.orange};
+            `
+            : props =>
+                  props.abled
+                      ? `background-color:${theme.color.orange};
+            color: ${theme.color.white};`
+                      : `background-color:${theme.color.red};
+            color: ${theme.color.white};`}
+
+    ${props => (props.margin ? `margin: ${props.margin};` : '')}
+`;
+
+const GreenButton = styled.button`
+    width: ${props => props.width};
+    padding: ${props => props.padding};
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    ${props =>
+        props.is_green
+            ? `background-color:${theme.color.green};
+            color: ${theme.color.white};`
+            : `background-color:${theme.color.gray5};
+            color: ${theme.color.gray1};
+            `}
+    ${props => (props.margin ? `margin: ${props.margin};` : '')}
+`;
+
+const FloatButton = styled.button`
+    width: 54px;
+    height: 54px;
+    background-color: ${theme.color.orange};
+    color: #ffffff;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: 800;
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+`;
 
 export default Button;

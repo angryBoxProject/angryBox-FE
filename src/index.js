@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/configureStore';
+import GlobalStyle from './Styles/GlobalStyle';
 import ReactModal from 'react-modal';
 
 ReactModal.setAppElement('#root');
@@ -21,6 +22,7 @@ ReactDOM.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
+                <GlobalStyle />
                 <BrowserRouter>
                     <App />
                 </BrowserRouter>
