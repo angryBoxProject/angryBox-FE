@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
 import Header from './components/Header';
+import Bamboo from './page/Bamboo';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -42,6 +43,7 @@ function App() {
                             <Route path="/main" element={<Main />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/mypage" element={<Mypage />} />
+                            <Route path="/bamboo" element={<Bamboo />} />
                             <Route
                                 path="/oauth2/kakao/callback"
                                 element={<Kakaocallback />}

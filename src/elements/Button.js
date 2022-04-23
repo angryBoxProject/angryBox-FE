@@ -98,7 +98,7 @@ const ElButton = styled.button`
 
     box-sizing: border-box;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     padding: ${props => props.padding};
     ${props =>
         props.is_edit
@@ -112,8 +112,9 @@ const ElButton = styled.button`
             `
             : props =>
                   props.abled
-                      ? `background-color:${theme.color.orange};
-            color: ${theme.color.white};`
+                      ? `background-color:${theme.color.realblack};
+            color: ${theme.color.white};
+            border: solid 1px white`
                       : `background-color:${theme.color.red};
             color: ${theme.color.white};`}
 

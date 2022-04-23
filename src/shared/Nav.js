@@ -27,7 +27,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/login"
+                            to="/bamboo"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
@@ -39,7 +39,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/signup"
+                            to="/login"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
