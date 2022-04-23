@@ -10,15 +10,19 @@ import { FlexDiv } from '../../elements';
 const Profile = props => {
     const isLogin = useSelector(state => state.member.isLogin);
 
-    const { status, data: profileList, error, isFetching } = useProfile();
+    const {
+        status,
+        data: profileList,
+        error,
+        isFetching,
+        refetch,
+    } = useProfile();
     console.log(profileList);
 
-    const queryClient = useQueryClient();
     const ProfileImageMutation = useMutation(Data => {
         tokenURL.put(`/profile/image`, Data).then(res => {
-            // queryClient.setQueryData(['profile/image'], res);
-            console.log(res);
-            queryClient.invalidateQueries('profile');
+            //프로필 갱신
+            refetch();
         });
     });
     const handleFileInput = e => {
@@ -30,9 +34,6 @@ const Profile = props => {
         }
 
         ProfileImageMutation.mutate(formData);
-        // dispatch(setUploadImage(data));
-        // dispatch(getImage(planId));
-        // dispatch(getOnePlan(planId));
     };
 
     const renderByStatus = useCallback(() => {
