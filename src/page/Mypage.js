@@ -13,7 +13,7 @@ const Mypage = props => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [newpw, setNewPw] = useState('');
-    const [openpw, setOpenpw] = useState(false);
+    const [openpw, setOpenpw] = useState(true);
 
     useEffect(() => {});
     return (
