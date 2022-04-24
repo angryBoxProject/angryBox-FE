@@ -15,38 +15,14 @@ const BambooSocket = props => {
         message: null,
     });
     useEffect(() => {
-        connect();
-        // client.activate();
+        // connect();
         return () => {
-            // client.deactivate();
             if (client.connected) {
                 client.unsubscribe();
                 client.disconnect();
             }
         };
     }, []);
-    // const client = new StompJs.Client({
-    //     brokerURL: process.env.REACT_APP_IP + '/stomp/topic',
-    //     connectHeaders: {
-    //         login: 'user',
-    //         passcode: 'password',
-    //     },
-    //     debug: function (str) {
-    //         console.log(str);
-    //     },
-    //     reconnectDelay: 5000, //자동 재 연결
-    //     heartbeatIncoming: 4000,
-    //     heartbeatOutgoing: 4000,
-    // });
-
-    // client.onConnect = function (frame) {
-    //     console.log(frame);
-    // };
-
-    // client.onStompError = function (frame) {
-    //     console.log('Broker reported error: ' + frame.headers['message']);
-    //     console.log('Additional details: ' + frame.body);
-    // };
 
     const connect = () => {
         console.log('connet');
@@ -75,21 +51,26 @@ const BambooSocket = props => {
         let chatMessage = {
             sender: '',
             type: 'ENTER',
+            hello: 'hello',
+        };
+        let test = {
+            greeting: 'asdf',
         };
         setUserData({
             ...userData,
             connected: true,
         });
 
-        client.send('/stomp/topic', {}, JSON.stringify(chatMessage));
+        client.send('/pub/topic/bamboo/enter', {}, JSON.stringify(test));
     };
 
     //리시브
     const onMessageReceived = payload => {
-        console.log(payload);
-        let payloadData = JSON.parse(payload.body);
-        console.log('payloadData=', payloadData);
-        setPublicChats(prevPublicChats => [...prevPublicChats, payloadData]);
+        // console.log(payload);
+        // let payloadData = JSON.parse(payload.body);
+        //이전엔 파싱해줬는데 이번엔 파싱한 json타입으로 와서 그냥적용
+        console.log('payloadData=', payload.body);
+        // setPublicChats(prevPublicChats => [...prevPublicChats, payloadData]);
     };
 
     const onError = err => {

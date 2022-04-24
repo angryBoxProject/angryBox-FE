@@ -1,16 +1,62 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 import { BsFillBellFill } from 'react-icons/bs';
 import { useNotification } from '../hooks/useNoti';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Noti from './Noti';
+import { getnotis } from '../redux/modules/notification';
+import useIsMount from '../hooks/useIsMount';
 
 const Notifications = props => {
-    const lastnotiId = useSelector(state => state.noti.lastnotiId);
+    const { notilist, listloading, hasMorePosts } = useSelector(
+        state => state.noti,
+    );
+    const dispatch = useDispatch();
+    const scrollRef = useRef();
+    const isMount = useIsMount();
+    useEffect(() => {
+        dispatch(getnotis(props.lastnotiId));
+    }, []);
+    // const {
+    //     status,
+    //     data: notilistquery,
+    //     error,
+    //     isFetching,
+    // } = useNotification(lastnotiId, hasMorePosts);
+    useEffect(() => {
+        function onScroll() {
+            const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
+            if (clientHeight + scrollTop > scrollHeight - 300) {
+                if (
+                    hasMorePosts &&
+                    notilist &&
+                    !listloading &&
+                    isMount.current
+                ) {
+                    dispatch(getnotis(props.lastnotiId));
+                }
+            }
+        }
+        scrollRef.current.addEventListener('scroll', onScroll);
+        return () => {
+            scrollRef.current.removeEventListener('scroll', onScroll);
+        };
+    }, [hasMorePosts, notilist, listloading, isMount]);
 
-    const { status, data: notilist, error, isFetching } = useNotification(1);
-    console.log(notilist);
-
+    // const renderByStatus = useCallback(() => {
+    //     switch (status) {
+    //         case 'loading':
+    //             return <div>loading</div>;
+    //         case 'error':
+    //             if (error instanceof Error) {
+    //                 return <span>Error: {error.message}</span>;
+    //             }
+    //             break;
+    //         default:
+    //             return <></>;
+    //     }
+    // }, [status, isFetching]);
     return (
         <>
             <Section
@@ -18,12 +64,25 @@ const Notifications = props => {
                     props.setNotimodal(false);
                 }}
             >
-                <Modaltap>
+                <Modaltap ref={scrollRef}>
                     <Notiheader>
                         <BsFillBellFill size="20px" />
                         <div>프로필 url</div>
                     </Notiheader>
                     <MainModal>알림</MainModal>
+                    {/* {renderByStatus()} */}
+                    {notilist?.map((data, index) => (
+                        <Noti
+                            key={index}
+                            notiid={data.id}
+                            diaryId={data.diaryId}
+                            checked={data.checked}
+                            content={data.content}
+                            dateTime={data.dateTime}
+                            receiveMemberId={data.receiveMemberId}
+                            sendMemberId={data.sendMemberId}
+                        />
+                    ))}
                 </Modaltap>
             </Section>
         </>
@@ -52,6 +111,12 @@ const Modaltap = styled.div`
     width: 20%;
     height: 100%;
     background-color: ${theme.color.black};
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    ::-webkit-scrollbar {
+        display: none; /* Chrome , Safari , Opera */
+    }
 `;
 const MainModal = styled.div`
     padding: 45px;
