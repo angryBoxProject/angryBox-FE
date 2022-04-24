@@ -32,7 +32,7 @@ const color = {
     gray5: '#E9E9E9',
     orange: '#F84914',
     green: '#2DBEB1',
-    black: '#292929',
+    black: '#2E2E2E',
     realblack: '#000000',
     white: '#fff',
     BackGround: '#363F4E',

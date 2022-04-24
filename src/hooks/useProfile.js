@@ -15,7 +15,6 @@ const fetchProfile = async () => {
         return mockdata;
     }
     if (!getCookie('token')) return;
-    console.log(getCookie('token'));
     const { data } = await tokenURL.get(`/profile`);
     return data.data;
 };
