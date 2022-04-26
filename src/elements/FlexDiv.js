@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FlexDiv = props => {
-    const { children, padding, column, justify, align, grow } = props;
+    const { children, padding, column, justify, align, grow, onClick } = props;
     const styles = {
         padding: padding,
         column: column,
@@ -12,7 +12,9 @@ const FlexDiv = props => {
     };
     return (
         <>
-            <Flex {...styles}>{children}</Flex>
+            <Flex onClick={onClick} {...styles}>
+                {children}
+            </Flex>
         </>
     );
 };

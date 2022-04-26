@@ -2,11 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../Styles/theme';
 import { FlexDiv } from '../../elements';
-import { ReactComponent as Eyes } from '../../static/image/Eyes.svg';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { ReactComponent as Eyes } from '../../static/image/Eyes.svg';
+import { ReactComponent as View } from '../../static/image/View.svg';
+import { ReactComponent as Todack } from '../../static/image/Todack.svg';
+import { useDispatch } from 'react-redux';
+import { getDiary, removelistDiary } from '../../redux/modules/bamboo';
+
 const RealTimeDiary = props => {
     const { Diarylist } = props;
     console.log(Diarylist);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     return (
         <>
             <div>
@@ -15,7 +24,15 @@ const RealTimeDiary = props => {
                         <Eyes />
                         <SubTitle>최신 게시글</SubTitle>
                     </FlexDiv>
-                    <FlexDiv>
+                    <FlexDiv
+                        onClick={() => {
+                            dispatch(removelistDiary());
+                            dispatch(getDiary(-1));
+                            navigate('/bamboo/realtimediary', {
+                                state: Diarylist,
+                            });
+                        }}
+                    >
                         <div>더보기</div>
                         <IoIosArrowForward
                             size="23px"
@@ -32,7 +49,9 @@ const RealTimeDiary = props => {
                                 key={index}
                             >
                                 <span>{data.title}</span>
+                                <Todack />
                                 <span>{data.todackCount}</span>
+                                <View />
                                 <span>{data.viewCount}</span>
                             </FlexDiv>
                         );

@@ -33,6 +33,7 @@ const color = {
     orange: '#F84914',
     green: '#2DBEB1',
     black: '#2E2E2E',
+    black2: '#363636',
     realblack: '#000000',
     white: '#fff',
     BackGround: '#363F4E',

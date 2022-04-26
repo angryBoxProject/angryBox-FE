@@ -18,6 +18,8 @@ import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
 import Header from './components/Header';
 import Bamboo from './page/Bamboo';
+import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
+import BambooTopDiary from './components/bamboo/BambooTopDiary';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -45,6 +47,14 @@ function App() {
                             <Route path="/mypage" element={<Mypage />} />
                             <Route path="/bamboo" element={<Bamboo />} />
                             <Route
+                                path="/bamboo/realtimediary"
+                                element={<BambooRealTimeDiary />}
+                            />
+                            <Route
+                                path="/bamboo/topdiary"
+                                element={<BambooTopDiary />}
+                            />
+                            <Route
                                 path="/oauth2/kakao/callback"
                                 element={<Kakaocallback />}
                             />
@@ -69,5 +79,6 @@ const StyledWrap = styled.div`
 const Warp = styled.div`
     width: 100%;
     padding-left: 20%;
+    height: calc(100vh - 5rem);
 `;
 export default App;

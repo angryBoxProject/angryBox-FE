@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import theme from '../../Styles/theme';
 import { FlexDiv } from '../../elements';
 import { ReactComponent as Fire } from '../../static/image/Fire.svg';
+import { ReactComponent as View } from '../../static/image/View.svg';
+import { ReactComponent as Todack } from '../../static/image/Todack.svg';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getTopDiary, removelistTopDiary } from '../../redux/modules/bamboo';
 const TopDiary = props => {
     const { TopDiarylist } = props;
-    console.log(TopDiarylist);
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     return (
         <>
             <div>
@@ -16,7 +22,15 @@ const TopDiary = props => {
                         <Fire />
                         <SubTitle>실시간 Best</SubTitle>
                     </FlexDiv>
-                    <FlexDiv>
+                    <FlexDiv
+                        onClick={() => {
+                            dispatch(removelistTopDiary());
+                            dispatch(getTopDiary(0));
+                            navigate('/bamboo/topdiary', {
+                                state: TopDiarylist,
+                            });
+                        }}
+                    >
                         <div>더보기</div>
                         <IoIosArrowForward
                             size="23px"
@@ -33,7 +47,9 @@ const TopDiary = props => {
                                 key={index}
                             >
                                 <span>{data.title}</span>
+                                <Todack />
                                 <span>{data.todackCount}</span>
+                                <View />
                                 <span>{data.viewCount}</span>
                             </FlexDiv>
                         );

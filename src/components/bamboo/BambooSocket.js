@@ -15,7 +15,7 @@ const BambooSocket = props => {
         message: null,
     });
     useEffect(() => {
-        // connect();
+        connect();
         return () => {
             if (client.connected) {
                 client.unsubscribe();
