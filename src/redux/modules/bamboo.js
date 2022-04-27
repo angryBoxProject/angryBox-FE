@@ -24,7 +24,7 @@ export const getFirstDiary = createAsyncThunk(
         console.log('lastDiaryId:::', lastDiaryId);
         try {
             return await tokenURL
-                .get(`/diaries?lastDiaryId=-1&size=5`)
+                .get(`/diaries?lastDiaryId=0&size=5`)
                 .then(res => {
                     // console.log(res);
                     return res.data.data.diaries;
@@ -70,7 +70,7 @@ export const getFirstTopDiary = createAsyncThunk(
 export const bambooSlice = createSlice({
     name: 'bamboo',
     initialState: {
-        lastDiaryId: -1,
+        lastDiaryId: 0,
         lastTopDiaryId: 0,
         Diarylist: [],
         TopDiarylist: [],

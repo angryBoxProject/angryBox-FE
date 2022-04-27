@@ -39,7 +39,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/login"
+                            to="/angrybook"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
@@ -59,6 +59,18 @@ const Nav = props => {
                             })}
                         >
                             <BsPerson size="20px" />
+                        </NavLink>
+                    </div>
+                    <div>
+                        <NavLink
+                            to="/login"
+                            style={({ isActive }) => ({
+                                textDecoration: 'none',
+                                color: isActive ? '#DA463C' : '#222222',
+                                fontWeight: isActive ? '800' : '400',
+                            })}
+                        >
+                            <RiFileListLine size="20px" />
                         </NavLink>
                     </div>
                 </FlexDiv>

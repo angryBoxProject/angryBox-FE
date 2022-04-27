@@ -20,6 +20,7 @@ import Header from './components/Header';
 import Bamboo from './page/Bamboo';
 import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
 import BambooTopDiary from './components/bamboo/BambooTopDiary';
+import AngryBook from './page/AngryBook';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -46,6 +47,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/mypage" element={<Mypage />} />
                             <Route path="/bamboo" element={<Bamboo />} />
+                            <Route path="/angrybook" element={<AngryBook />} />
                             <Route
                                 path="/bamboo/realtimediary"
                                 element={<BambooRealTimeDiary />}

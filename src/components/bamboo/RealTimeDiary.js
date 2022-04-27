@@ -27,7 +27,7 @@ const RealTimeDiary = props => {
                     <FlexDiv
                         onClick={() => {
                             dispatch(removelistDiary());
-                            dispatch(getDiary(-1));
+                            dispatch(getDiary(0));
                             navigate('/bamboo/realtimediary', {
                                 state: Diarylist,
                             });

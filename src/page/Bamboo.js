@@ -19,7 +19,7 @@ const Bamboo = props => {
     const { TopDiarylist } = useSelector(state => state.bamboo);
     const { Diarylist } = useSelector(state => state.bamboo);
     useEffect(() => {
-        dispatch(getFirstDiary(-1));
+        dispatch(getFirstDiary(0));
         dispatch(getFirstTopDiary(0));
         // dispatch(getDiary(-1));
     }, []);
