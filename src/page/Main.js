@@ -7,6 +7,7 @@ import { URL } from '../Apis/API';
 import { setUserName } from '../redux/modules/member';
 import { MainCard } from '../elements';
 import { WriteAngryModal } from '../components/WriteAngryModal';
+import { mainPageLoad } from '../redux/modules/diary';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -42,6 +43,10 @@ const Main = () => {
         setOpen(false);
     }
 
+    useEffect(() => {
+        dispatch(mainPageLoad(dispatch));
+    }, [])
+    
 
     return ( 
         <>
