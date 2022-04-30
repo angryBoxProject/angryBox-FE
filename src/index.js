@@ -8,13 +8,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/configureStore';
 import GlobalStyle from './Styles/GlobalStyle';
-import ReactModal from 'react-modal';
-
-ReactModal.setAppElement('#root');
 
 //리액트 Query세팅
 const queryClient = new QueryClient();
-
 
 const rootElement = document.getElementById('root');
 
