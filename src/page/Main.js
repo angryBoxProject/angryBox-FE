@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { URL } from '../Apis/API';
 import { setUserName } from '../redux/modules/member';
 import { MainCard } from '../elements';
-import { WriteAngryModal } from '../components/WriteAngryModal';
+import { WriteAngryModal } from '../components/Main/WriteAngryModal';
+import { ViewDetailModal } from '../components/Main/ViewDetailModal';
 import { mainPageLoad } from '../redux/modules/diary';
 
 const Main = () => {
@@ -14,6 +15,7 @@ const Main = () => {
     const dispatch = useDispatch();
     // const { openModal } = props;
     const [isOpen, setOpen] = useState(false);
+    const [isViewOpen, setViewOpen] = useState(false);
     const { data: loginResult } = useQuery(['login'], () => {});
     console.log(loginResult);
     const memberNick = useSelector(state => state.member.nickname);
@@ -41,6 +43,15 @@ const Main = () => {
 
     const closeModal = () => {
         setOpen(false);
+    }
+
+    const openViewDetail = () => {
+        console.log('zzz')
+        setViewOpen(true);
+    }
+
+    const closeViewDetail = () => {
+        setViewOpen(false);
     }
 
     useEffect(() => {
@@ -72,17 +83,18 @@ const Main = () => {
                     <span>총 쓰담 수 </span>
                 </div>
                 <div className='grid grid-flow-row grid-cols-2 gap-1 place-items-center'>
-                    <MainCard size='3'></MainCard>
-                    <MainCard size='3'></MainCard>
-                    <MainCard size='3'></MainCard>
-                    <MainCard size='3'></MainCard>
-                    <MainCard size='3'></MainCard>
-                    <MainCard size='3'></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
+                    <MainCard clickCard={openViewDetail}></MainCard>
                 </div>
                 <button onClick={openModal} className='bg-blue-300'>분노 저금하기</button>
             </div>
         </div>
         <WriteAngryModal open={isOpen} close={closeModal}/>
+        <ViewDetailModal open={isViewOpen} temp='zzzzz' close={closeViewDetail}/>
         </>
     );
 };
