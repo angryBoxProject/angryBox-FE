@@ -13,13 +13,6 @@ const AngryChart = props => {
         refetch,
     } = useMonthchart('2022-05-01');
     console.log(chartlist);
-    const myData = [
-        { angle: chartlist.apPerList[4], color: '#DA463C', label: '극대노' },
-        { angle: chartlist.apPerList[3], color: '#EA675E' },
-        { angle: chartlist.apPerList[2], color: '#E2766F' },
-        { angle: chartlist.apPerList[1], color: '#E38E88' },
-        { angle: chartlist.apPerList[0], color: '#E8AEAA' },
-    ];
 
     const renderByStatus = useCallback(() => {
         switch (status) {
@@ -36,7 +29,29 @@ const AngryChart = props => {
                         <Warp>
                             <FlexDiv>
                                 <RadialChart
-                                    data={myData}
+                                    data={[
+                                        {
+                                            angle: chartlist.apPerList[4],
+                                            color: '#DA463C',
+                                            label: '극대노',
+                                        },
+                                        {
+                                            angle: chartlist.apPerList[3],
+                                            color: '#EA675E',
+                                        },
+                                        {
+                                            angle: chartlist.apPerList[2],
+                                            color: '#E2766F',
+                                        },
+                                        {
+                                            angle: chartlist.apPerList[1],
+                                            color: '#E38E88',
+                                        },
+                                        {
+                                            angle: chartlist.apPerList[0],
+                                            color: '#E8AEAA',
+                                        },
+                                    ]}
                                     width={250}
                                     height={250}
                                     colorType="literal"
