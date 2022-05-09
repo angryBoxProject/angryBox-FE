@@ -81,8 +81,8 @@ export const signup = createAsyncThunk(
 
 export const setLogin = createAsyncThunk('member/setLogin', async () => {
     try {
-        return await tokenURL.get(`/user`).then(res => {
-            console.log(res);
+        return await tokenURL.get(`/profile`).then(res => {
+            console.log(res.data.data);
             return res.data.data;
         });
     } catch (error) {
@@ -97,11 +97,16 @@ export const memberSlice = createSlice({
             id: '',
             email: '',
             nickname: '',
+            file: '',
         },
     },
     reducers: {
         setUserName: (state, action) => {
             state.nickname = action.payload;
+        },
+        setLoginUser: (state, action) => {
+            state.user_info = action.payload;
+            state.isLogin = true;
         },
     },
     extraReducers: builder => {
@@ -128,6 +133,6 @@ export const memberSlice = createSlice({
     },
 });
 
-export const { setUserName } = memberSlice.actions;
+export const { setUserName, setLoginUser } = memberSlice.actions;
 
 export default memberSlice.reducer;

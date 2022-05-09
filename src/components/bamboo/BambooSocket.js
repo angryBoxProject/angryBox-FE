@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
+import { pushrealDiary } from '../../redux/modules/bamboo';
 
 // import SockJS from 'sockjs-client';
 // import StompJs from '@stomp/stompjs';
 const BambooSocket = props => {
     let sock = useRef({});
+    const dispatch = useDispatch();
     const sockUrl = process.env.REACT_APP_IP + '/stomp/topic';
     sock = new SockJS(sockUrl);
     let client = over(sock);
@@ -30,9 +33,9 @@ const BambooSocket = props => {
         sock.addEventListener('open', () => {
             console.log('Connected to Browser!!!😀');
         });
-        sock.addEventListener('message', message => {
-            console.log('Got this:', message, '😀');
-        });
+        // sock.addEventListener('message', message => {
+        //     console.log('Got this:', message, '😀');
+        // });
         sock.addEventListener('close', () => {
             console.log('Disconnected to Server😀');
         });
@@ -67,10 +70,10 @@ const BambooSocket = props => {
     //리시브
     const onMessageReceived = payload => {
         // console.log(payload);
-        // let payloadData = JSON.parse(payload.body);
-        //이전엔 파싱해줬는데 이번엔 파싱한 json타입으로 와서 그냥적용
-        console.log('payloadData=', payload.body);
+        let payloadData = JSON.parse(payload.body);
+        console.log('payloadData=', payloadData);
         // setPublicChats(prevPublicChats => [...prevPublicChats, payloadData]);
+        dispatch(pushrealDiary(payloadData));
     };
 
     const onError = err => {
@@ -80,10 +83,6 @@ const BambooSocket = props => {
         const { value } = event.target;
         setUserData({ ...userData, content: value });
     };
-    return (
-        <>
-            <div>BambooSocket</div>
-        </>
-    );
+    return null;
 };
 export default BambooSocket;

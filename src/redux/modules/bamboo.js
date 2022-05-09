@@ -80,6 +80,9 @@ export const bambooSlice = createSlice({
         Toplistloading: false,
     },
     reducers: {
+        pushrealDiary: (state, action) => {
+            state.Diarylist.unshift(action.payload);
+        },
         setlastDiaryId: (state, action) => {
             state.lastDiaryId = state.notilist[state.notilist.length - 1].id;
         },
@@ -140,7 +143,11 @@ export const bambooSlice = createSlice({
     },
 });
 
-export const { setlastDiaryId, removelistTopDiary, removelistDiary } =
-    bambooSlice.actions;
+export const {
+    setlastDiaryId,
+    removelistTopDiary,
+    removelistDiary,
+    pushrealDiary,
+} = bambooSlice.actions;
 
 export default bambooSlice.reducer;

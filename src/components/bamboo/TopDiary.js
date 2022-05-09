@@ -14,6 +14,7 @@ const TopDiary = props => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    console.log(TopDiarylist);
     return (
         <>
             <div>

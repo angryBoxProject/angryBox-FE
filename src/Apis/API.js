@@ -37,8 +37,6 @@ tokenURL.interceptors.response.use(
         ) {
             console.log('토큰만료');
             const { data } = await refreshaxios();
-            console.log('token', data);
-            setCookie('token', `Bearer ${data.data.data.access_token}`);
 
             originalRequest.headers.authorization = getCookie('token');
             return axios(originalRequest);
@@ -60,6 +58,7 @@ const refreshaxios = async _ => {
         },
     );
     console.log('response:::', response);
+    setCookie('token', `Bearer ${response.data.data.access_token}`);
 
     return response;
 };

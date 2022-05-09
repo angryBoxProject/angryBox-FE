@@ -30,6 +30,7 @@ import AngryBook from './page/AngryBook';
 function App() {
     const dispatch = useDispatch();
     const mytoken = getCookie('token');
+
     useEffect(() => {
         if (mytoken) {
             dispatch(setLogin());

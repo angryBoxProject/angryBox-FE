@@ -5,7 +5,6 @@ import theme from '../Styles/theme';
 
 import BambooSocket from '../components/bamboo/BambooSocket';
 import { FlexDiv } from '../elements';
-import { useDiary } from '../hooks/useDiary';
 import {
     getDiary,
     getFirstDiary,
