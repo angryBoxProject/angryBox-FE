@@ -1,4 +1,6 @@
 import React from 'react';
+import AngryBookDiarylist from '../components/angrybook/AngryBookDiarylist';
+import AngryBookProfile from '../components/angrybook/AngryBookProfile';
 import AngryCalendar from '../components/angrybook/AngryCalendar';
 import AngryChart from '../components/angrybook/AngryChart';
 import { FlexDiv } from '../elements';
@@ -9,8 +11,9 @@ const AngryBook = props => {
             <FlexDiv>
                 <AngryCalendar />
                 <div style={{ minWidth: '50%' }}>
-                    <div>myprofile</div>
+                    <AngryBookProfile />
                     <AngryChart />
+                    <AngryBookDiarylist />
                 </div>
             </FlexDiv>
         </>

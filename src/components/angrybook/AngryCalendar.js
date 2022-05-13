@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 import styled from 'styled-components';
 import moment from 'moment';
+import { useMonthBankCalender } from '../../hooks/useMonthBankCalender';
+import useIsMount from '../../hooks/useIsMount';
 
 const AngryCalendar = props => {
+    const Selectdate = '2022-04';
     const [value, SetValue] = useState();
     const [mark, setMark] = useState(['']);
+    const {
+        status,
+        data: Markerlist,
+        error,
+        isFetching,
+        refetch,
+    } = useMonthBankCalender(Selectdate);
+    const ismount = useIsMount();
+    useEffect(() => {
+        // if (ismount.current) {
+        //     if(status)
+        //     setMark(Object.keys(Markerlist));
+        // }
+    }, [ismount]);
+    console.log(mark);
 
     return (
         <>
@@ -31,10 +49,13 @@ const AngryCalendar = props => {
                     prev2Label={null}
                     // 요일 영어로 표시
                     locale={'en'}
+                    formatShortWeekday={(locale, date) =>
+                        ['S', 'M', 'T', 'W', 'T', 'F', 'S'][date.getDay()]
+                    }
                     // 특정 날짜에 표시
                     tileContent={({ date, view }) => {
                         let isDot = [];
-                        if (mark)
+                        if (date)
                             if (
                                 mark.find(
                                     x =>
@@ -42,6 +63,7 @@ const AngryCalendar = props => {
                                 )
                             ) {
                                 isDot.push(<div className="dot"></div>);
+                                console.log(isDot);
                             }
                         return (
                             <>

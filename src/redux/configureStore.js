@@ -3,6 +3,7 @@ import imageReducer from './modules/image';
 import memberReducer from './modules/member';
 import notiReducer from './modules/notification';
 import bambooReducer from './modules/bamboo';
+import bankReducer from './modules/bank';
 import { createBrowserHistory } from 'history';
 import logger from 'redux-logger';
 
@@ -14,6 +15,7 @@ export const store = configureStore({
         member: memberReducer,
         noti: notiReducer,
         bamboo: bambooReducer,
+        bank: bankReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({ serializableCheck: false }).concat(logger),

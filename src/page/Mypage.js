@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Profile from '../components/mypage/Profile';
 import NewPw from '../components/mypage/NewPw';
+import theme from '../Styles/theme';
 
 const Mypage = props => {
     // const email = useSelector(state => state.member.user_info.email);
