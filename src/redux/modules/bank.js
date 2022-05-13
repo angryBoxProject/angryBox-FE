@@ -12,7 +12,7 @@ export const getMonthDiaryList = createAsyncThunk(
                 )
                 .then(res => {
                     console.log(res);
-                    // return res.data.data.ntfList;
+                    return res.data.data.diaryListInMonth;
                 });
         } catch (error) {
             console.log(error);
@@ -24,7 +24,7 @@ export const bankSlice = createSlice({
     name: 'bank',
     initialState: {
         lastnotiId: 0,
-        notilist: [],
+        banklist: [],
         hasMorePosts: true,
         listloading: false,
     },
@@ -39,19 +39,7 @@ export const bankSlice = createSlice({
                 state.listloading = true;
             })
             .addCase(getMonthDiaryList.fulfilled, (state, action) => {
-                if (state.hasMorePosts) {
-                    state.notilist.push(...action.payload);
-                    // const data = state.notilist.filter(data => {
-                    //     console.log(data.id);
-                    // });
-                    //중복제거해야함
-                    state.lastnotiId =
-                        state.notilist[state.notilist.length - 1].id;
-                    console.log('lastnotiId', state.lastnotiId);
-                    state.hasMorePosts = action.payload.length === 10;
-                    state.listloading = false;
-                    if (state.lastnotiId === 1) state.hasMorePosts = false;
-                }
+                state.banklist = action.payload;
             });
     },
 });

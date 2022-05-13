@@ -12,7 +12,6 @@ const AngryChart = props => {
         isFetching,
         refetch,
     } = useMonthchart('2022-05-01');
-    console.log(chartlist);
 
     const renderByStatus = useCallback(() => {
         switch (status) {
