@@ -2,6 +2,7 @@ import './App.css';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import theme from './Styles/theme';
 
 //나중에 lazy로딩 사용하기전
 //page
@@ -75,7 +76,7 @@ function App() {
 }
 
 const StyledWrap = styled.div`
-    background-color: black;
+    background-color: ${theme.color.black};
     width: 100%;
     display: flex;
 `;
