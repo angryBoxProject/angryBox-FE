@@ -27,7 +27,7 @@ const AngryChart = props => {
                 return (
                     <>
                         <Warp>
-                            <FlexDiv>
+                            <FlexDiv padding="0 0 3% 0">
                                 <RadialChart
                                     data={[
                                         {
@@ -62,28 +62,61 @@ const AngryChart = props => {
                                     justify="center"
                                     grow="1"
                                 >
-                                    <FlexDiv justify="space-between">
-                                        <div>극대노</div>
-                                        <div>{chartlist.apList[4]}</div>
-                                    </FlexDiv>
-                                    <FlexDiv justify="space-between">
-                                        <div>대노</div>
-                                        <div>{chartlist.apList[3]}</div>
-                                    </FlexDiv>
-                                    <FlexDiv justify="space-between">
-                                        <div>중노</div>
-                                        <div>{chartlist.apList[2]}</div>
-                                    </FlexDiv>
-                                    <FlexDiv justify="space-between">
-                                        <div>소노</div>
-                                        <div>{chartlist.apList[1]}</div>
-                                    </FlexDiv>
-                                    <FlexDiv justify="space-between">
-                                        <div>극소노</div>
-                                        <div>{chartlist.apList[0]}</div>
-                                    </FlexDiv>
+                                    <CustomFlexDiv>
+                                        <FlexDiv
+                                            justify="space-between"
+                                            padding="3%"
+                                        >
+                                            <div>극대노</div>
+                                            <Underline>
+                                                {chartlist.apList[4]}회 (
+                                                {chartlist.apPerList[4]}%)
+                                            </Underline>
+                                        </FlexDiv>
+                                        <FlexDiv
+                                            justify="space-between"
+                                            padding="3%"
+                                        >
+                                            <div>대노</div>
+                                            <Underline>
+                                                {chartlist.apList[3]}회 (
+                                                {chartlist.apPerList[3]}%)
+                                            </Underline>
+                                        </FlexDiv>
+                                        <FlexDiv
+                                            justify="space-between"
+                                            padding="3%"
+                                        >
+                                            <div>중노</div>
+                                            <Underline>
+                                                {chartlist.apList[2]}회 (
+                                                {chartlist.apPerList[2]}%)
+                                            </Underline>
+                                        </FlexDiv>
+                                        <FlexDiv
+                                            justify="space-between"
+                                            padding="3%"
+                                        >
+                                            <div>소노</div>
+                                            <Underline>
+                                                {chartlist.apList[1]}회 (
+                                                {chartlist.apPerList[1]}%)
+                                            </Underline>
+                                        </FlexDiv>
+                                        <FlexDiv
+                                            justify="space-between"
+                                            padding="3%"
+                                        >
+                                            <div>극소노</div>
+                                            <Underline>
+                                                {chartlist.apList[0]}회 (
+                                                {chartlist.apPerList[0]}%)
+                                            </Underline>
+                                        </FlexDiv>
+                                    </CustomFlexDiv>
                                 </FlexDiv>
                             </FlexDiv>
+                            <hr></hr>
                         </Warp>
                     </>
                 );
@@ -93,9 +126,30 @@ const AngryChart = props => {
 };
 const Warp = styled.div`
     min-width: 100%;
+    max-height: 100%;
 `;
 const Angrylist = styled.div`
     width: 100%;
     align-items: center;
+`;
+const CustomFlexDiv = styled.div`
+    display: flex;
+    padding-left: 10%;
+    width: 80%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+`;
+
+const Underline = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    /* identical to box height */
+
+    text-align: right;
+    text-decoration-line: underline;
 `;
 export default AngryChart;

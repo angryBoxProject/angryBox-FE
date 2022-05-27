@@ -90,7 +90,7 @@ const StyledWrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: 999;
+    z-index: 98;
     transition: all 0.2s ease-in-out;
 `;
 const FlexDiv = styled.div`
