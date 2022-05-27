@@ -27,19 +27,21 @@ const AngryBookProfile = props => {
             default:
                 return (
                     <>
-                        <FlexDiv
-                            justify="space-between"
-                            padding="9px 18px 9px 18px"
-                        >
-                            <Underline>분노 계좌번호</Underline>
-                            <div>{profilelist.bankAccount}</div>
-                        </FlexDiv>
-                        <FlexDiv
-                            justify="space-between"
-                            padding="9px 18px 9px 18px"
-                        >
-                            <Underline>총 쓰담 수</Underline>
-                            <div>{profilelist.recieveTodackCount}</div>
+                        <FlexDiv column="column" padding="0px 13% 0px 0px">
+                            <FlexDiv
+                                justify="space-between"
+                                padding="9px 18px 9px 18px"
+                            >
+                                <Underline>분노 계좌번호</Underline>
+                                <div>{profilelist.bankAccount}</div>
+                            </FlexDiv>
+                            <FlexDiv
+                                justify="space-between"
+                                padding="9px 18px 9px 18px"
+                            >
+                                <Underline>총 쓰담 수</Underline>
+                                <div>{profilelist.recieveTodackCount}</div>
+                            </FlexDiv>
                         </FlexDiv>
                     </>
                 );
@@ -47,10 +49,12 @@ const AngryBookProfile = props => {
     }, [status, isFetching]);
     return (
         <>
-            <Nickname>{nickname}</Nickname>
-            <Title>님의 4월 분노 적금 통계입니다.</Title>
-            <div>{renderByStatus()}</div>
-            <hr></hr>
+            <div style={{ maxHeight: '30%', padding: '10% 0 20% 0' }}>
+                <Nickname>{nickname}</Nickname>
+                <Title>님의 4월 분노 적금 통계입니다.</Title>
+                <div>{renderByStatus()}</div>
+            </div>
+            <hr style={{ paddingBottom: '3%' }}></hr>
         </>
     );
 };

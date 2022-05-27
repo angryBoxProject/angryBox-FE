@@ -49,17 +49,22 @@ const AngryBookDiarylist = props => {
             default:
                 return (
                     <>
-                        {bankdiarylist?.map((data, index) => (
-                            <FlexDiv justify="space-between">
-                                <div>
-                                    {monthdate(data.dateTime) +
-                                        '/' +
-                                        daydate(data.dateTime)}
-                                </div>
-                                <div>{data.title}</div>
-                                <div>{angryPhase(data.angryPhaseId)}</div>
-                            </FlexDiv>
-                        ))}
+                        <Warp>
+                            {bankdiarylist?.map((data, index) => (
+                                <FlexDiv
+                                    justify="space-between"
+                                    padding="1% 0px 0px 0px"
+                                >
+                                    <div>
+                                        {monthdate(data.dateTime) +
+                                            '/' +
+                                            daydate(data.dateTime)}
+                                    </div>
+                                    <div>{data.title}</div>
+                                    <div>{angryPhase(data.angryPhaseId)}</div>
+                                </FlexDiv>
+                            ))}
+                        </Warp>
                     </>
                 );
         }
@@ -78,6 +83,8 @@ const AngryBookDiarylist = props => {
 };
 
 const Warp = styled.div`
-    padding: 48px 20px 48px 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 5% 15% 0% 3%;
 `;
 export default AngryBookDiarylist;

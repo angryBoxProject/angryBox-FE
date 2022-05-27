@@ -5,7 +5,7 @@ import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
 
-const ModalImportBook = props => {
+const ModalImportposttoBank = props => {
     const {
         open,
         close,
@@ -15,7 +15,7 @@ const ModalImportBook = props => {
         subtitle,
         contents,
         _onChange,
-        listclick,
+        bankId,
     } = props;
     return (
         <>
@@ -45,7 +45,7 @@ const ModalImportBook = props => {
                                     </div>
                                 </ModalText>
                                 <ModalButton>
-                                    <Button onClick={listclick}>test</Button>
+                                    <Button>test</Button>
                                     {/* <ModalButtonCancel
                                         className="close"
                                         onClick={close}
@@ -150,7 +150,7 @@ const ModalButtonCancel = styled.div`
 `;
 
 // default props 작성 위치
-ModalImportBook.defaultProps = {
+ModalImportposttoBank.defaultProps = {
     open: false,
     close: false,
     title: '',
@@ -161,4 +161,4 @@ ModalImportBook.defaultProps = {
     height: '80%',
 };
 
-export default ModalImportBook;
+export default ModalImportposttoBank;
