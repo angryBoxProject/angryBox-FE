@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CreateDiary } from '../../redux/modules/diary'
+import { useNavigate } from 'react-router-dom';
 import './WriteAngryModal.css';
 
 export const WriteAngryModal = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { open, close } = props;  
 
     // 타이틀, 내용
@@ -33,16 +36,23 @@ export const WriteAngryModal = (props) => {
     }
 
     // 분노 크기
-    const [angrySize, setAngrySize] = useState('ExtraSmallAngry');
+    const [angrySize, setAngrySize] = useState(1);
     const angrySizeOptions = [
-        { value: 'ExtraSmallAngry', label: '극소노'},
-        { value: 'SmallAngry', label: '소노'},
-        { value: 'MiddleAngry', label: '중노'},
-        { value: 'BigAngry', label: '대노'},
-        { value: 'ExtraBigAngry', label: '극대노'},
+        { value: 1, label: '극소노'},
+        { value: 2, label: '소노'},
+        { value: 3, label: '중노'},
+        { value: 4, label: '대노'},
+        { value: 5, label: '극대노'},
     ]
     const selectAngry = (e) => {
         setAngrySize(e.target.value);
+    }
+    
+    // 이미지 업로드
+    const [image, setImage] = useState();
+    const inputImage = (e) => {
+        console.log(e.target.files[0]);
+        setImage(e.target.files[0]);
     }
 
     // 작성 버튼
@@ -50,14 +60,27 @@ export const WriteAngryModal = (props) => {
         const data = {
             title: inputs.title,
             content: inputs.content,
-            isPublic: isPublic,
+            public: isPublic,
             angryPhaseId: angrySize,
+            interimId: 0,
         }
-        console.log(inputs.title, inputs.content, isPublic, angrySize)
+        console.log(data)
         const formData = new FormData();
         formData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
-        // formData.append('imgFile', )
-        // dispatch()
+        formData.append('file', image);
+        // console.log(formData);
+        for (var key of formData.keys()) {
+
+            console.log(key);
+          
+        }
+        for (var value of formData.values()) {
+
+            console.log(value);
+        
+        }
+        dispatch(CreateDiary({dispatch, formData}));
+        navigate('/main');
     }
 
     return (
@@ -108,6 +131,8 @@ export const WriteAngryModal = (props) => {
                             value={inputs.content}
                             onChange={handleChange}
                         />
+
+                        <input type='file' className='imgInput' accept='image/*' onChange={inputImage}/>
                     </>
                     <button className="close" onClick={writeDiary}>완료</button>
                 </main>
