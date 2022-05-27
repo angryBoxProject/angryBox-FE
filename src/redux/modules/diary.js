@@ -1,15 +1,57 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { tokenURL, URL } from '../../Apis/API';
-import { setCookie } from '../../shared/utils/Cookie';
+import { setCookie, getCookie } from '../../shared/utils/Cookie';
+
+const token = getCookie('token');
 
 export const mainPageLoad = createAsyncThunk(
     'diary/all',
     async ({ dispatch }, { rejectWithValue }) => {
         try {
-            return await URL.get(`/angrybox`)
+            return await tokenURL.get(`/angrybox`)
             .then(response => {
                 console.log(response);
-                
+                return response.data.data;
+            });
+        } catch (error) {
+            console.log(error);
+            window.alert(error.response.data.message);
+
+            return rejectWithValue(error.response);
+        }
+    },
+);
+
+// export const CreateDiary = createAsyncThunk(
+//     'diary/create',
+//     async ({ dispatch, formData }, { rejectWithValue }) => {
+//         try {
+//             return await tokenURL.post(`/diary`, formData)
+//             .then(response => {
+//                 console.log(response);
+//                 return response.data.data;
+//             });
+//         } catch (error) {
+//             console.log(error);
+//             window.alert(error.response.data.message);
+
+//             return rejectWithValue(error.response);
+//         }
+//     },
+// );
+
+export const CreateDiary = createAsyncThunk(
+    'diary/create',
+    async ({ dispatch, formData }, { rejectWithValue }) => {
+        try {
+            return await URL.post(`/diary`, formData, {
+                headers: {
+                    "content-type": "multipart/form-data",
+                    accessToken: token
+                }
+            })
+            .then(response => {
+                console.log(response);
                 return response.data.data;
             });
         } catch (error) {
