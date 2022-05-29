@@ -8,7 +8,7 @@ export const mainPageLoad = createAsyncThunk(
     'diary/all',
     async ({ dispatch }, { rejectWithValue }) => {
         try {
-            return await tokenURL.get(`/angrybox`)
+            return await tokenURL.get(`/diaries/1`)
             .then(response => {
                 console.log(response);
                 return response.data.data;
@@ -42,12 +42,12 @@ export const mainPageLoad = createAsyncThunk(
 
 export const CreateDiary = createAsyncThunk(
     'diary/create',
-    async ({ dispatch, formData }, { rejectWithValue }) => {
+    async ({ dispatch, diaryDTO, isPublic, formData }, { rejectWithValue }) => {
         try {
-            return await URL.post(`/diary`, formData, {
+            return await URL.post(`/diary?public=${isPublic}`, formData, {
                 headers: {
                     "content-type": "multipart/form-data",
-                    accessToken: token
+                    authorization: token
                 }
             })
             .then(response => {
