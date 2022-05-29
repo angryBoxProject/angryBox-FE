@@ -4,7 +4,7 @@ import { CreateDiary } from '../../redux/modules/diary'
 import { useNavigate } from 'react-router-dom';
 import './WriteAngryModal.css';
 
-export const WriteAngryModal = (props) => {
+export const WriteAngryModal = props => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { open, close } = props;  
@@ -14,7 +14,7 @@ export const WriteAngryModal = (props) => {
         title: '',
         content: '',
     });
-    const handleChange = (e) => {
+    const handleChange = e => {
         const {value, name} = e.target;
         setInputs({
             ...inputs,
@@ -27,7 +27,7 @@ export const WriteAngryModal = (props) => {
         { value: true, label: '공개'},
         { value: false, label: '비공개'},
     ]
-    const selectPublic = (e) => {
+    const selectPublic = e => {
         if (e.target.value == true){
             setIsPublic(true);
         } else{
@@ -44,42 +44,41 @@ export const WriteAngryModal = (props) => {
         { value: 4, label: '대노'},
         { value: 5, label: '극대노'},
     ]
-    const selectAngry = (e) => {
+    const selectAngry = e => {
         setAngrySize(e.target.value);
     }
     
     // 이미지 업로드
     const [image, setImage] = useState();
-    const inputImage = (e) => {
+    const inputImage = e => {
         console.log(e.target.files[0]);
         setImage(e.target.files[0]);
     }
 
     // 작성 버튼
     const writeDiary = () => {
-        const data = {
+        const diaryDTO = {
             title: inputs.title,
             content: inputs.content,
-            public: isPublic,
             angryPhaseId: angrySize,
             interimId: 0,
         }
-        console.log(data)
+        console.log(diaryDTO)
         const formData = new FormData();
-        formData.append('data', new Blob([JSON.stringify(data)], {type: 'application/json'}));
+        formData.append('diaryDTO', new Blob([JSON.stringify(diaryDTO)], {type: 'application/json'}));
         formData.append('file', image);
         // console.log(formData);
-        for (var key of formData.keys()) {
+        // for (var key of formData.keys()) {
 
-            console.log(key);
+        //     console.log(key);
           
-        }
-        for (var value of formData.values()) {
+        // }
+        // for (var value of formData.values()) {
 
-            console.log(value);
+        //     console.log(value);
         
-        }
-        dispatch(CreateDiary({dispatch, formData}));
+        // }
+        dispatch(CreateDiary({dispatch, diaryDTO, isPublic, formData}));
         navigate('/main');
     }
 
