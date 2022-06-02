@@ -77,16 +77,6 @@ const AngryBook = props => {
                     SetmodalPost(true);
                 }}
             />
-            <ModalImportposttoBank
-                title="FILE LIST"
-                subtitle="게시글 목록"
-                width="80%"
-                height="80%"
-                open={modalstatePost}
-                close={() => {
-                    SetmodalPost(false);
-                }}
-            />
         </>
     );
 };

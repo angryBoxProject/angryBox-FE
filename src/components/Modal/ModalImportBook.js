@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
 import { useBanks } from '../../hooks/useBanks';
+import ModalImportposttoBank from './ModalImportposttoBank';
 
 const ModalImportBook = props => {
     const {
@@ -20,8 +21,73 @@ const ModalImportBook = props => {
     } = props;
     const [select, setSelect] = useState(false);
     const [selectbankId, setSelectbankId] = useState();
+    const [modalstatePost, SetmodalPost] = useState(false);
+
     const { status, data: bankList, error, isFetching, refetch } = useBanks();
-    const bankslist = bankList.coinBankList;
+
+    const renderByStatus = useCallback(() => {
+        switch (status) {
+            case 'loading':
+                return <div>loading</div>;
+            case 'error':
+                if (error instanceof Error) {
+                    return <span>Error: {error.message}</span>;
+                }
+                break;
+            default:
+                return (
+                    <>
+                        <FlexDiv justify="space-between" padding="10px">
+                            <FlexDiv>
+                                <ModalTitle>{title}</ModalTitle>
+                                <ModalSubTitle>{subtitle}</ModalSubTitle>
+                            </FlexDiv>
+                            <CloseButton onClick={close} />
+                        </FlexDiv>
+                        <FlexDiv justify="space-between" padding="10px">
+                            <ModalTextNo select={true}>No</ModalTextNo>
+                            <ModalTextBankName select={true}>
+                                적금명
+                            </ModalTextBankName>
+                            <ModalTextBankdes select={true}>
+                                세부 설명
+                            </ModalTextBankdes>
+                            <ModalTextBankTime select={true}>
+                                설계일
+                            </ModalTextBankTime>
+                        </FlexDiv>
+                        <hr />
+                        {bankList.coinBankList.map((data, index) => (
+                            <FlexDiv
+                                key={index}
+                                justify="space-between"
+                                padding="10px"
+                                onClick={() => {
+                                    setSelect(!select);
+                                    if (selectbankId === data.coinBankId)
+                                        setSelectbankId(null);
+                                    else setSelectbankId(data.coinBankId);
+                                }}
+                            >
+                                <ModalTextNo select={select}>
+                                    {data.coinBankId}
+                                </ModalTextNo>
+                                <ModalTextBankName select={select}>
+                                    {data.coinBankName}
+                                </ModalTextBankName>
+                                <ModalTextBankdes select={select}>
+                                    게시글 수{data.diaryCount} 총 쓰담 수
+                                    {data.todackCount}
+                                </ModalTextBankdes>
+                                <ModalTextBankTime select={select}>
+                                    {data.bankAccount}
+                                </ModalTextBankTime>
+                            </FlexDiv>
+                        ))}
+                    </>
+                );
+        }
+    }, [status, isFetching, select]);
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
@@ -29,67 +95,15 @@ const ModalImportBook = props => {
                     <Section>
                         <MainModal width={width} height={height}>
                             <ModalPopup>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <FlexDiv>
-                                        <ModalTitle>{title}</ModalTitle>
-                                        <ModalSubTitle>
-                                            {subtitle}
-                                        </ModalSubTitle>
-                                    </FlexDiv>
-                                    <CloseButton onClick={close} />
-                                </FlexDiv>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <ModalTextNo select={true}>No</ModalTextNo>
-                                    <ModalTextBankName select={true}>
-                                        적금명
-                                    </ModalTextBankName>
-                                    <ModalTextBankdes select={true}>
-                                        세부 설명
-                                    </ModalTextBankdes>
-                                    <ModalTextBankTime select={true}>
-                                        설계일
-                                    </ModalTextBankTime>
-                                </FlexDiv>
-                                <hr />
-                                {bankslist.map((data, index) => (
-                                    <FlexDiv
-                                        justify="space-between"
-                                        padding="10px"
-                                        onClick={() => {
-                                            setSelect(!select);
-                                            if (
-                                                selectbankId === data.coinBankId
-                                            )
-                                                setSelectbankId(null);
-                                            else if (
-                                                selectbankId !== data.coinBankId
-                                            )
-                                                setSelectbankId(
-                                                    data.coinBankId,
-                                                );
-                                            console.log(selectbankId);
-                                        }}
-                                    >
-                                        <ModalTextNo select={select}>
-                                            {data.coinBankId}
-                                        </ModalTextNo>
-                                        <ModalTextBankName select={select}>
-                                            {data.coinBankName}
-                                        </ModalTextBankName>
-                                        <ModalTextBankdes select={select}>
-                                            {data.coinBankName}
-                                        </ModalTextBankdes>
-                                        <ModalTextBankTime select={select}>
-                                            {data.bankAccount}
-                                        </ModalTextBankTime>
-                                    </FlexDiv>
-                                ))}
+                                {renderByStatus()}
 
                                 <ModalText></ModalText>
                                 <ModalButton>
                                     <Button
-                                        is_disabled={selectbankId}
-                                        onClick={listclick}
+                                        is_disabled={!selectbankId}
+                                        onClick={() => {
+                                            SetmodalPost(true);
+                                        }}
                                     >
                                         test
                                     </Button>
@@ -109,6 +123,16 @@ const ModalImportBook = props => {
                                 </ModalButton>
                             </ModalPopup>
                         </MainModal>
+                        <ModalImportposttoBank
+                            title="FILE LIST"
+                            subtitle="게시글 목록"
+                            width="80%"
+                            height="80%"
+                            open={modalstatePost}
+                            close={() => {
+                                SetmodalPost(false);
+                            }}
+                        />
                     </Section>
                 ) : null}
             </div>
