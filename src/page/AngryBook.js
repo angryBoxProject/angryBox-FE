@@ -67,8 +67,8 @@ const AngryBook = props => {
             <ModalImportBook
                 title="IMPORT BOOK"
                 subtitle="적금 불러오기"
-                width="80%"
-                height="80%"
+                width="50%"
+                height="50%"
                 open={modalstateBank}
                 close={() => {
                     SetmodalBank(false);
