@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
@@ -76,8 +76,14 @@ const ModalImportBook = props => {
                                     {data.coinBankName}
                                 </ModalTextBankName>
                                 <ModalTextBankdes select={select}>
-                                    게시글 수{data.diaryCount} 총 쓰담 수
-                                    {data.todackCount}
+                                    게시글 수
+                                    <ModalTextBankdesNum>
+                                        {data.diaryCount}
+                                    </ModalTextBankdesNum>
+                                    {` `}총 쓰담 수
+                                    <ModalTextBankdesNum>
+                                        {data.todackCount}
+                                    </ModalTextBankdesNum>
                                 </ModalTextBankdes>
                                 <ModalTextBankTime select={select}>
                                     {data.bankAccount}
@@ -128,6 +134,7 @@ const ModalImportBook = props => {
                             subtitle="게시글 목록"
                             width="80%"
                             height="80%"
+                            bankId={selectbankId}
                             open={modalstatePost}
                             close={() => {
                                 SetmodalPost(false);
@@ -146,8 +153,8 @@ const Section = styled.div`
     top: 0;
     left: 0;
     box-sizing: border-box;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -230,6 +237,14 @@ const ModalTextBankdes = styled.div`
     width: 40%;
     text-align: center;
     opacity: ${props => (props.select ? 1 : 0.2)};
+`;
+const ModalTextBankdesNum = styled.span`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: ${theme.color.red};
 `;
 const ModalTextBankTime = styled.div`
     font-family: 'Noto Sans';
