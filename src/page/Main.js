@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../Apis/API';
 import { setUserName } from '../redux/modules/member';
-import { MainCard } from '../elements';
+import { Button, FlexDiv, MainCard } from '../elements';
 import { WriteAngryModal } from '../components/Main/WriteAngryModal';
 import { ViewDetailModal } from '../components/Main/ViewDetailModal';
-import { mainPageLoad } from '../redux/modules/diary';
+import { CreateDiary, mainPageLoad } from '../redux/modules/diary';
+
+import theme from '../Styles/theme';
+import styled from 'styled-components';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -19,18 +22,7 @@ const Main = () => {
     const { data: loginResult } = useQuery(['login'], () => {});
     console.log(loginResult);
     const memberNick = useSelector(state => state.member.nickname);
-    const testServer = async () => {
-        // dispatch(setUserName('test'));
-        // try {
-        //     console.log('axios');
-        //     const data = await axios
-        //         .get('https://angrybox.link')
-        //         .then(res => console.log(res));
-        //     console.log(data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-    };
+
     const gettest = async () => {
         const { data } = await URL.get('/');
         return data;
@@ -39,64 +31,155 @@ const Main = () => {
 
     const openModal = () => {
         setOpen(true);
-    }
+    };
 
     const closeModal = () => {
         setOpen(false);
-    }
+    };
 
     const openViewDetail = () => {
-        console.log('zzz')
+        console.log('zzz');
         setViewOpen(true);
-    }
+    };
 
     const closeViewDetail = () => {
         setViewOpen(false);
-    }
+    };
+
+    const angryPhase = id => {
+        const list = ['극대노', '대노', '중노', '소노', '극소노'];
+        return list[id];
+    };
 
     useEffect(() => {
-        dispatch(mainPageLoad(dispatch));
-    }, [])
-    
+        // dispatch(mainPageLoad(dispatch));
+    }, []);
 
-    return ( 
+    return (
         <>
-        <div className='grid grid-cols-2 gap-4'>
-            <div className='grid col-start-1'>
-            <div>HOME</div>
-            <button className="bg-slate-500" onClick={testServer}>
-                testButton
-            </button>
-            <button
-                className="bg-slate-500"
-                onClick={() => {
-                    navigate('/login');
-                }}
-            >
-                testButton2
-            </button>
-            </div>
-            <div className='grid w-2/3 col-start-2 '>
-                <div>
-                    <button>이번 달은 진짜로</button>
-                    <span>총 게시글 수 </span>
-                    <span>총 쓰담 수 </span>
+            <Warp>
+                <FlexDiv>
+                    <FlexDiv column="column">
+                        <Title>HOME</Title>
+                        <Subtitle>곧 터지기 직전!</Subtitle>
+                        <AngryState>
+                            <FlexDiv column="column">
+                                <p>극대노 2번</p>
+                                <p>대노 2번</p>
+                                <p>중노 2번</p>
+                                <p>소노 2번</p>
+                                <p>극소노 2번</p> 남았어요!
+                            </FlexDiv>
+                        </AngryState>
+                        <FlexDiv>
+                            <div>
+                                <p>현재 소연님의</p>
+                                <p>신용상태는</p>
+                            </div>
+                            <p>{angryPhase(0)}</p>
+                        </FlexDiv>
+                        <Button
+                            is_disabled={true}
+                            onClick={() => {
+                                // dispatch(CreateDiary({ dispatch, "test" }));
+                                console.log('test');
+                            }}
+                        >
+                            아직 적금을 깰 수 없습니다.
+                        </Button>
+                    </FlexDiv>
+                    <FlexDiv>
+                        test
+                        <Button
+                            onClick={() => {
+                                // dispatch(CreateDiary({ dispatch, "test" }));
+                                console.log('test');
+                            }}
+                        ></Button>
+                    </FlexDiv>
+                </FlexDiv>
+
+                {/* <div className="grid grid-cols-2 gap-4">
+                <div className="grid col-start-1">
+                    <div>HOME</div>
+                    <button className="bg-slate-500" onClick={testServer}>
+                        testButton
+                    </button>
+                    <button
+                        className="bg-slate-500"
+                        onClick={() => {
+                            navigate('/login');
+                        }}
+                    >
+                        testButton2
+                    </button>
                 </div>
-                <div className='grid grid-flow-row grid-cols-2 gap-1 place-items-center'>
-                    <MainCard clickCard={openViewDetail}></MainCard>
-                    <MainCard clickCard={openViewDetail}></MainCard>
-                    <MainCard clickCard={openViewDetail}></MainCard>
-                    <MainCard clickCard={openViewDetail}></MainCard>
-                    <MainCard clickCard={openViewDetail}></MainCard>
-                    <MainCard clickCard={openViewDetail}></MainCard>
+                <div className="grid w-2/3 col-start-2 ">
+                    <div>
+                        <button>이번 달은 진짜로</button>
+                        <span>총 게시글 수 </span>
+                        <span>총 쓰담 수 </span>
+                    </div>
+                    <div className="grid grid-flow-row grid-cols-2 gap-1 place-items-center">
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                        <MainCard clickCard={openViewDetail}></MainCard>
+                    </div>
+                    <button onClick={openModal} className="bg-blue-300">
+                        분노 저금하기
+                    </button>
                 </div>
-                <button onClick={openModal} className='bg-blue-300'>분노 저금하기</button>
             </div>
-        </div>
-        <WriteAngryModal open={isOpen} close={closeModal}/>
-        <ViewDetailModal open={isViewOpen} temp='zzzzz' close={closeViewDetail}/>
+            <WriteAngryModal open={isOpen} close={closeModal} />
+            <ViewDetailModal
+                open={isViewOpen}
+                temp="zzzzz"
+                close={closeViewDetail}
+            /> */}
+            </Warp>
         </>
     );
 };
 
+const Warp = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: 20px 100px 50px 50px;
+    background-color: ${theme.color.black};
+`;
+const Title = styled.div`
+    font-family: 'Hanson';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 25px;
+    /* identical to box height */
+
+    color: #f6f6f6;
+`;
+
+const Subtitle = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 90px;
+    line-height: 123px;
+    /* identical to box height */
+
+    color: #f6f6f6;
+`;
+const AngryState = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 68px;
+    line-height: 93px;
+
+    color: #f6f6f6;
+
+    padding-bottom: 40px;
+`;
 export default Main;
