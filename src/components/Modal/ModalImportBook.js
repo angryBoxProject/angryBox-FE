@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
+import { useBanks } from '../../hooks/useBanks';
+import ModalImportposttoBank from './ModalImportposttoBank';
 
 const ModalImportBook = props => {
     const {
@@ -17,35 +19,100 @@ const ModalImportBook = props => {
         _onChange,
         listclick,
     } = props;
+    const [select, setSelect] = useState(false);
+    const [selectbankId, setSelectbankId] = useState();
+    const [modalstatePost, SetmodalPost] = useState(false);
+
+    const { status, data: bankList, error, isFetching, refetch } = useBanks();
+
+    const renderByStatus = useCallback(() => {
+        switch (status) {
+            case 'loading':
+                return <div>loading</div>;
+            case 'error':
+                if (error instanceof Error) {
+                    return <span>Error: {error.message}</span>;
+                }
+                break;
+            default:
+                return (
+                    <>
+                        <FlexDiv justify="space-between" padding="10px">
+                            <FlexDiv>
+                                <ModalTitle>{title}</ModalTitle>
+                                <ModalSubTitle>{subtitle}</ModalSubTitle>
+                            </FlexDiv>
+                            <CloseButton onClick={close} />
+                        </FlexDiv>
+                        <FlexDiv justify="space-between" padding="10px">
+                            <ModalTextNo select={true}>No</ModalTextNo>
+                            <ModalTextBankName select={true}>
+                                적금명
+                            </ModalTextBankName>
+                            <ModalTextBankdes select={true}>
+                                세부 설명
+                            </ModalTextBankdes>
+                            <ModalTextBankTime select={true}>
+                                설계일
+                            </ModalTextBankTime>
+                        </FlexDiv>
+                        <hr />
+                        {bankList.coinBankList.map((data, index) => (
+                            <FlexDiv
+                                key={index}
+                                justify="space-between"
+                                padding="10px"
+                                onClick={() => {
+                                    setSelect(!select);
+                                    if (selectbankId === data.coinBankId)
+                                        setSelectbankId(null);
+                                    else setSelectbankId(data.coinBankId);
+                                }}
+                            >
+                                <ModalTextNo select={select}>
+                                    {data.coinBankId}
+                                </ModalTextNo>
+                                <ModalTextBankName select={select}>
+                                    {data.coinBankName}
+                                </ModalTextBankName>
+                                <ModalTextBankdes select={select}>
+                                    게시글 수
+                                    <ModalTextBankdesNum>
+                                        {data.diaryCount}
+                                    </ModalTextBankdesNum>
+                                    {` `}총 쓰담 수
+                                    <ModalTextBankdesNum>
+                                        {data.todackCount}
+                                    </ModalTextBankdesNum>
+                                </ModalTextBankdes>
+                                <ModalTextBankTime select={select}>
+                                    {data.bankAccount}
+                                </ModalTextBankTime>
+                            </FlexDiv>
+                        ))}
+                    </>
+                );
+        }
+    }, [status, isFetching, select]);
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
-                    <Section onClick={close}>
+                    <Section>
                         <MainModal width={width} height={height}>
                             <ModalPopup>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <FlexDiv>
-                                        <ModalTitle>{title}</ModalTitle>
-                                        <ModalSubTitle>
-                                            {subtitle}
-                                        </ModalSubTitle>
-                                    </FlexDiv>
-                                    <CloseButton onClick={close} />
-                                </FlexDiv>
-                                <ModalText>
-                                    <div padding="20px">
-                                        <div style={{ padding: '5px' }}></div>
-                                        <p
-                                            size="11px"
-                                            color={theme.color.gray4}
-                                        >
-                                            {contents}
-                                        </p>
-                                    </div>
-                                </ModalText>
+                                {renderByStatus()}
+
+                                <ModalText></ModalText>
                                 <ModalButton>
-                                    <Button onClick={listclick}>test</Button>
+                                    <Button
+                                        is_disabled={!selectbankId}
+                                        onClick={() => {
+                                            SetmodalPost(true);
+                                        }}
+                                    >
+                                        test
+                                    </Button>
                                     {/* <ModalButtonCancel
                                         className="close"
                                         onClick={close}
@@ -62,6 +129,17 @@ const ModalImportBook = props => {
                                 </ModalButton>
                             </ModalPopup>
                         </MainModal>
+                        <ModalImportposttoBank
+                            title="FILE LIST"
+                            subtitle="게시글 목록"
+                            width="80%"
+                            height="80%"
+                            bankId={selectbankId}
+                            open={modalstatePost}
+                            close={() => {
+                                SetmodalPost(false);
+                            }}
+                        />
                     </Section>
                 ) : null}
             </div>
@@ -75,8 +153,8 @@ const Section = styled.div`
     top: 0;
     left: 0;
     box-sizing: border-box;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -127,6 +205,56 @@ const ModalText = styled.div`
         display: none; /* Chrome , Safari , Opera */
     }
     white-space: pre-line;
+`;
+
+const ModalTextNo = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: ${theme.color.red};
+    opacity: ${props => (props.select ? 1 : 0.2)};
+    width: 20%;
+    text-align: center;
+`;
+const ModalTextBankName = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 20%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
+`;
+const ModalTextBankdes = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 40%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
+`;
+const ModalTextBankdesNum = styled.span`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: ${theme.color.red};
+`;
+const ModalTextBankTime = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 20%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
 `;
 const ModalButton = styled.div`
     display: flex;

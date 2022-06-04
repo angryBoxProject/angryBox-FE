@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import useIsMount from '../../hooks/useIsMount';
+import {
+    getBankFirstPostList,
+    getBankPostList,
+} from '../../redux/modules/bank';
 
 const ModalImportposttoBank = props => {
     const {
@@ -13,15 +19,83 @@ const ModalImportposttoBank = props => {
         height,
         title,
         subtitle,
+        bankId,
         contents,
         _onChange,
-        bankId,
+        listclick,
     } = props;
+
+    const { lastDiaryId, bankpostlist, hasMoreBankPosts, Postlistloading } =
+        useSelector(state => state.bank);
+    const dispatch = useDispatch();
+    const scrollRef = useRef();
+    const isMount = useIsMount();
+
+    useEffect(() => {
+        const data = {
+            coinBankId: bankId,
+            lastDiaryId: lastDiaryId,
+        };
+
+        dispatch(getBankFirstPostList(data));
+    }, [bankId]);
+    useEffect(() => {
+        function onScroll() {
+            console.log('test');
+            const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
+            console.log(
+                'clientHeight',
+                clientHeight,
+                'scrollTop',
+                scrollTop,
+                'scrollHeight',
+                scrollHeight,
+                'sum',
+                clientHeight + scrollTop > scrollHeight - 30,
+            );
+            if (clientHeight + scrollTop > scrollHeight - 30) {
+                console.log(
+                    'hasMoreBankPosts',
+                    hasMoreBankPosts,
+                    '!Postlistloading',
+                    Postlistloading,
+                );
+                if (
+                    hasMoreBankPosts &&
+                    bankpostlist &&
+                    !Postlistloading &&
+                    isMount.current
+                ) {
+                    console.log('dispatch');
+                    const data = {
+                        coinBankId: bankId,
+                        lastDiaryId: lastDiaryId,
+                    };
+
+                    dispatch(getBankPostList(data));
+                }
+            }
+        }
+        if (scrollRef.current !== undefined)
+            scrollRef.current.addEventListener('scroll', onScroll);
+        return () => {
+            if (scrollRef.current !== undefined)
+                scrollRef.current.removeEventListener('scroll', onScroll);
+        };
+    }, [
+        hasMoreBankPosts,
+        bankpostlist,
+        Postlistloading,
+        isMount,
+        bankId,
+        scrollRef,
+    ]);
+
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
-                    <Section onClick={close}>
+                    <Section>
                         <MainModal width={width} height={height}>
                             <ModalPopup>
                                 <FlexDiv justify="space-between" padding="10px">
@@ -33,32 +107,45 @@ const ModalImportposttoBank = props => {
                                     </FlexDiv>
                                     <CloseButton onClick={close} />
                                 </FlexDiv>
-                                <ModalText>
-                                    <div padding="20px">
-                                        <div style={{ padding: '5px' }}></div>
-                                        <p
-                                            size="11px"
-                                            color={theme.color.gray4}
+                                <FlexDiv justify="space-between" padding="10px">
+                                    <ModalTextNo select={true}>No</ModalTextNo>
+                                    <ModalTextBankName select={true}>
+                                        게시글명
+                                    </ModalTextBankName>
+                                    <ModalTextBankdes select={true}>
+                                        본문
+                                    </ModalTextBankdes>
+                                    <ModalTextBankTime select={true}>
+                                        작성일
+                                    </ModalTextBankTime>
+                                </FlexDiv>
+                                <hr />
+                                <ListScroll ref={scrollRef}>
+                                    {bankpostlist?.map((data, index) => (
+                                        <FlexDiv
+                                            key={index}
+                                            justify="space-between"
+                                            padding="10px"
                                         >
-                                            {contents}
-                                        </p>
-                                    </div>
-                                </ModalText>
+                                            <ModalTextNo select={true}>
+                                                {data.diaryNo}
+                                            </ModalTextNo>
+                                            <ModalTextBankName select={true}>
+                                                {data.title}
+                                            </ModalTextBankName>
+                                            <ModalTextBankdes select={true}>
+                                                {data.content}
+                                            </ModalTextBankdes>
+                                            <ModalTextBankTime select={true}>
+                                                {data.dateTime}
+                                            </ModalTextBankTime>
+                                        </FlexDiv>
+                                    ))}
+                                </ListScroll>
+
+                                {/* <ModalText></ModalText> */}
                                 <ModalButton>
-                                    <Button>test</Button>
-                                    {/* <ModalButtonCancel
-                                        className="close"
-                                        onClick={close}
-                                    >
-                                        취소
-                                    </ModalButtonCancel>
-                                    <ModalButtonConfirm
-                                        onClick={() => {
-                                            _onChange();
-                                        }}
-                                    >
-                                        확인
-                                    </ModalButtonConfirm> */}
+                                    <Button onClick={close}>닫기</Button>
                                 </ModalButton>
                             </ModalPopup>
                         </MainModal>
@@ -75,8 +162,8 @@ const Section = styled.div`
     top: 0;
     left: 0;
     box-sizing: border-box;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -128,6 +215,48 @@ const ModalText = styled.div`
     }
     white-space: pre-line;
 `;
+
+const ModalTextNo = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: ${theme.color.red};
+    opacity: ${props => (props.select ? 1 : 0.2)};
+    width: 20%;
+    text-align: center;
+`;
+const ModalTextBankName = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 20%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
+`;
+const ModalTextBankdes = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 40%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
+`;
+const ModalTextBankTime = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    width: 20%;
+    text-align: center;
+    opacity: ${props => (props.select ? 1 : 0.2)};
+`;
 const ModalButton = styled.div`
     display: flex;
     position: absolute;
@@ -147,6 +276,28 @@ const ModalButtonCancel = styled.div`
     text-align: center;
     cursor: pointer;
     border: 1px solid #9e9e9e;
+`;
+
+const ListScroll = styled.div`
+    min-height: 40%;
+    height: calc(100% - 10rem);
+    padding-right: 20px;
+    overflow-y: auto;
+    overflow-x: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    ::-webkit-scrollbar {
+        //display: none; /* Chrome , Safari , Opera */
+        background-color: ${theme.color.black2};
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: ${theme.color.red};
+        border-radius: 40px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: ${theme.color.black2};
+        border-radius: 40px;
+    }
 `;
 
 // default props 작성 위치
