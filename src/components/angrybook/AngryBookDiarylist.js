@@ -10,7 +10,7 @@ import moment from 'moment';
 const AngryBookDiarylist = props => {
     const dispatch = useDispatch();
     const data = {
-        date: '2022-04-18',
+        date: '2022-06-01',
         lastDiaryId: 0,
         size: 5,
     };
@@ -20,7 +20,7 @@ const AngryBookDiarylist = props => {
         error,
         isFetching,
         refetch,
-    } = useBankDiarylist('2022-04-18');
+    } = useBankDiarylist('2022-06-01');
 
     // const month = moment('2019-12-10', 'YYYY-MM-DD');
 

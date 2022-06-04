@@ -50,6 +50,8 @@ const ModalImportposttoBank = props => {
                 scrollTop,
                 'scrollHeight',
                 scrollHeight,
+                'sum',
+                clientHeight + scrollTop > scrollHeight - 30,
             );
             if (clientHeight + scrollTop > scrollHeight - 30) {
                 console.log(
@@ -278,7 +280,7 @@ const ModalButtonCancel = styled.div`
 
 const ListScroll = styled.div`
     min-height: 40%;
-    height: calc(100% - 5rem);
+    height: calc(100% - 10rem);
     padding-right: 20px;
     overflow-y: auto;
     overflow-x: auto;
