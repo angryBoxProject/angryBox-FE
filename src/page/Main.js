@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { CreateDiary, mainPageLoad } from '../redux/modules/diary';
 
 import theme from '../Styles/theme';
 import styled from 'styled-components';
+import { useBank } from '../hooks/useBank';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -23,12 +24,8 @@ const Main = () => {
     console.log(loginResult);
     const memberNick = useSelector(state => state.member.nickname);
 
-    const gettest = async () => {
-        const { data } = await URL.get('/');
-        return data;
-    };
-    const query = useQuery('test', gettest);
-
+    const { status, data: banklist, error, isFetching, refetch } = useBank();
+    console.log(banklist);
     const openModal = () => {
         setOpen(true);
     };
@@ -55,49 +52,92 @@ const Main = () => {
         // dispatch(mainPageLoad(dispatch));
     }, []);
 
+    const renderByStatus = useCallback(() => {
+        switch (status) {
+            case 'loading':
+                return <div>loading</div>;
+            case 'error':
+                if (error instanceof Error) {
+                    return (
+                        <>
+                            <div style={{ width: '60%' }}>
+                                <FlexDiv column="column">
+                                    <FlexDiv column="column">
+                                        <Title>HOME</Title>
+                                        <NonBankSubTitle>
+                                            새 적금을
+                                            <br /> 만들어보세요!
+                                        </NonBankSubTitle>
+                                        <NoneBankText>
+                                            적금 정보가 존재하지 않습니다.
+                                        </NoneBankText>
+                                    </FlexDiv>
+                                    <CreditStatus>
+                                        <FlexDiv>
+                                            <div>
+                                                <p>현재 소연님의</p>
+                                                <p>신용상태는</p>
+                                            </div>
+                                            <p>{angryPhase(0)}</p>
+                                        </FlexDiv>
+                                    </CreditStatus>
+                                </FlexDiv>
+                            </div>
+                        </>
+                    );
+                }
+                break;
+            default:
+                return (
+                    <>
+                        <FlexDiv>
+                            <FlexDiv column="column">
+                                <Title>HOME</Title>
+                                <Subtitle>곧 터지기 직전!</Subtitle>
+                                <AngryState>
+                                    <FlexDiv column="column">
+                                        <p>극대노 2번</p>
+                                        <p>대노 2번</p>
+                                        <p>중노 2번</p>
+                                        <p>소노 2번</p>
+                                        <p>극소노 2번</p> 남았어요!
+                                    </FlexDiv>
+                                </AngryState>
+                                <FlexDiv>
+                                    <div>
+                                        <p>현재 소연님의</p>
+                                        <p>신용상태는</p>
+                                    </div>
+                                    <p>{angryPhase(0)}</p>
+                                </FlexDiv>
+                                <Button
+                                    is_disabled={true}
+                                    onClick={() => {
+                                        // dispatch(CreateDiary({ dispatch, "test" }));
+                                        console.log('test');
+                                    }}
+                                >
+                                    아직 적금을 깰 수 없습니다.
+                                </Button>
+                            </FlexDiv>
+                            <FlexDiv>
+                                test
+                                <Button
+                                    onClick={() => {
+                                        // dispatch(CreateDiary({ dispatch, "test" }));
+                                        console.log('test');
+                                    }}
+                                ></Button>
+                            </FlexDiv>
+                        </FlexDiv>
+                    </>
+                );
+        }
+    }, [status, isFetching]);
     return (
         <>
             <Warp>
-                <FlexDiv>
-                    <FlexDiv column="column">
-                        <Title>HOME</Title>
-                        <Subtitle>곧 터지기 직전!</Subtitle>
-                        <AngryState>
-                            <FlexDiv column="column">
-                                <p>극대노 2번</p>
-                                <p>대노 2번</p>
-                                <p>중노 2번</p>
-                                <p>소노 2번</p>
-                                <p>극소노 2번</p> 남았어요!
-                            </FlexDiv>
-                        </AngryState>
-                        <FlexDiv>
-                            <div>
-                                <p>현재 소연님의</p>
-                                <p>신용상태는</p>
-                            </div>
-                            <p>{angryPhase(0)}</p>
-                        </FlexDiv>
-                        <Button
-                            is_disabled={true}
-                            onClick={() => {
-                                // dispatch(CreateDiary({ dispatch, "test" }));
-                                console.log('test');
-                            }}
-                        >
-                            아직 적금을 깰 수 없습니다.
-                        </Button>
-                    </FlexDiv>
-                    <FlexDiv>
-                        test
-                        <Button
-                            onClick={() => {
-                                // dispatch(CreateDiary({ dispatch, "test" }));
-                                console.log('test');
-                            }}
-                        ></Button>
-                    </FlexDiv>
-                </FlexDiv>
+                {renderByStatus()}
 
                 {/* <div className="grid grid-cols-2 gap-4">
                 <div className="grid col-start-1">
@@ -146,8 +186,8 @@ const Main = () => {
 
 const Warp = styled.div`
     height: 100%;
-    width: 100%;
-    padding: 20px 100px 50px 50px;
+    width: calc(100vh - 5rem);
+    /* padding: 20px 100px 50px 50px; */
     background-color: ${theme.color.black};
 `;
 const Title = styled.div`
@@ -159,6 +199,30 @@ const Title = styled.div`
     /* identical to box height */
 
     color: #f6f6f6;
+`;
+
+const NonBankSubTitle = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 90px;
+    line-height: 123px;
+`;
+
+const NoneBankText = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 65px;
+    padding: 82px 0px;
+`;
+
+const CreditStatus = styled.div`
+    display: flex;
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
 `;
 
 const Subtitle = styled.div`
