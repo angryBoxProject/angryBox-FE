@@ -104,7 +104,7 @@ const ElButton = styled.button`
         props.is_disabled
             ? `background-color:${theme.color.gray1};`
             : `background-color:${theme.color.red};`}
-    ${props => (props.is_disabled ? `opacity:0.4` : `opacity:1`)}
+    ${props => (props.is_disabled ? `opacity:0.4` : `opacity:1;`)}
     ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 
