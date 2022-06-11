@@ -6,6 +6,7 @@ import { ReactComponent as CloseButton } from '../../static/image/CloseButton.sv
 import Button from '../../elements/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
+import { setMakeBank } from '../../redux/modules/bank';
 
 const ModalMakeBank = props => {
     const {
@@ -26,7 +27,20 @@ const ModalMakeBank = props => {
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
+    const [name, setName] = useState();
+    const [angrylimit, setAngrylimit] = useState();
+    const [reward, setReward] = useState();
+    const [memo, setMemo] = useState();
 
+    const handleMakeBank = () => {
+        const data = {
+            name: name,
+            angryLimit: parseInt(angrylimit),
+            reward: reward,
+            memo: memo,
+        };
+        dispatch(setMakeBank(data));
+    };
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
@@ -43,11 +57,87 @@ const ModalMakeBank = props => {
                                     </FlexDiv>
                                     <CloseButton onClick={close} />
                                 </FlexDiv>
-                                <FlexDiv justify="flex-start" padding="10px">
-                                    <ModalTextTitle>레이아웃1</ModalTextTitle>
-                                    <FlexDiv>
-                                        <ModalInput placeholder="적금명을 입력하세요." />
-                                        <ModalTextTitle>한계치</ModalTextTitle>
+                                <FlexDiv
+                                    justify="flex-start"
+                                    padding="10px"
+                                    width="100%"
+                                >
+                                    <div
+                                        style={{
+                                            width: '10%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <ModalTextTitle>적금명</ModalTextTitle>
+                                    </div>
+                                    <FlexDiv width="90%">
+                                        <ModalInput
+                                            width="70%"
+                                            placeholder="적금명을 입력하세요."
+                                            _onChange={e => {
+                                                setName(e.target.value);
+                                            }}
+                                        />
+                                        <ModalTextTitle width="10%">
+                                            한계치
+                                        </ModalTextTitle>
+                                        <ModalInput
+                                            width="20%"
+                                            placeholder="직접 입력"
+                                            _onChange={e => {
+                                                setAngrylimit(e.target.value);
+                                            }}
+                                        />
+                                    </FlexDiv>
+                                </FlexDiv>
+                                <FlexDiv
+                                    justify="flex-start"
+                                    padding="10px"
+                                    width="100%"
+                                >
+                                    <div
+                                        style={{
+                                            width: '10%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <ModalTextTitle>보상</ModalTextTitle>
+                                    </div>
+                                    <FlexDiv width="90%">
+                                        <ModalInput
+                                            width="100%"
+                                            placeholder="적금을 깰 때의 보상을 입력하세요. ex) 치킨데이"
+                                            _onChange={e => {
+                                                setReward(e.target.value);
+                                            }}
+                                        />
+                                    </FlexDiv>
+                                </FlexDiv>
+                                <FlexDiv
+                                    justify="flex-start"
+                                    padding="10px"
+                                    width="100%"
+                                >
+                                    <div
+                                        style={{
+                                            width: '10%',
+                                            display: 'flex',
+                                            alignItems: 'flex-start',
+                                        }}
+                                    >
+                                        <ModalTextTitle>메모</ModalTextTitle>
+                                    </div>
+                                    <FlexDiv width="90%">
+                                        <ModalInput
+                                            multiLine={true}
+                                            width="100%"
+                                            placeholder="메모 내용을 입력하세요."
+                                            _onChange={e => {
+                                                setMemo(e.target.value);
+                                            }}
+                                        />
                                     </FlexDiv>
                                 </FlexDiv>
 
@@ -55,7 +145,10 @@ const ModalMakeBank = props => {
                                     <Button margin="10px" onClick={close}>
                                         닫기
                                     </Button>
-                                    <Button margin="10px" onClick={close}>
+                                    <Button
+                                        margin="10px"
+                                        onClick={handleMakeBank}
+                                    >
                                         만들기
                                     </Button>
                                 </ModalButton>
@@ -121,6 +214,11 @@ const ModalTextTitle = styled.div`
     line-height: 25px;
     color: ${theme.color.white};
     padding-right: 9px;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    ${props => (props.width ? `width:${props.width};` : '')}
 `;
 const ModalTypeingArea = styled.div`
     background-color: orange;

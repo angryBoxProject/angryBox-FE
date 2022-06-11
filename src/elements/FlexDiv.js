@@ -2,8 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FlexDiv = props => {
-    const { children, padding, column, justify, align, grow, onClick, height } =
-        props;
+    const {
+        children,
+        padding,
+        column,
+        justify,
+        align,
+        grow,
+        onClick,
+        height,
+        width,
+    } = props;
     const styles = {
         padding: padding,
         column: column,
@@ -11,6 +20,7 @@ const FlexDiv = props => {
         align: align,
         grow: grow,
         height: height,
+        width: width,
     };
     return (
         <>
@@ -30,5 +40,6 @@ const Flex = styled.div`
     padding: ${props => props.padding};
     flex-grow: ${props => props.grow};
     ${props => (props.height ? `height:${props.height}` : '')}
+    ${props => (props.width ? `width:${props.width}` : '')}
 `;
 export default FlexDiv;

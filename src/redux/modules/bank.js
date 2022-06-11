@@ -53,6 +53,20 @@ export const getBankPostList = createAsyncThunk(
         }
     },
 );
+export const setMakeBank = createAsyncThunk(
+    'setMakeBank',
+    async (data, { rejectWithValue }) => {
+        console.log('setMakeBank', data);
+        try {
+            return await tokenURL.post(`/bank`, data).then(res => {
+                console.log(res);
+            });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 export const bankSlice = createSlice({
     name: 'bank',
     initialState: {
@@ -94,7 +108,8 @@ export const bankSlice = createSlice({
                 state.Postlistloading = false;
                 if (state.lastDiaryId === 1) state.hasMoreBankPosts = false;
                 // state.bankpostlist = action.payload;
-            });
+            })
+            .addCase(setMakeBank.fulfilled, (state, action) => {});
     },
 });
 

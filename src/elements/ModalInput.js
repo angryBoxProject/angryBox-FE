@@ -13,9 +13,22 @@ const ModalInput = props => {
         _onClick,
         _onKeyDown,
         value,
+        multiLine,
         width,
     } = props;
 
+    if (multiLine) {
+        return (
+            <>
+                <ElTextarea
+                    rows={15}
+                    placeholder={placeholder}
+                    onChange={_onChange}
+                    width={width}
+                ></ElTextarea>
+            </>
+        );
+    }
     return (
         <React.Fragment>
             <ElInput
@@ -45,9 +58,21 @@ const ElInput = styled.input`
     border-bottom: 1px solid #f6f6f6;
     width: 100%;
     padding: 12px 12px;
-    margin-top: 14px;
     box-sizing: border-box;
     background: #2e2e2e;
+    ${props => (props.width ? `width:${props.width};` : '')}
+`;
+const ElTextarea = styled.textarea`
+    ${props => (props.width ? `width:${props.width};` : '')}
+    background: #2e2e2e;
+    padding: 12px 4px;
+    box-sizing: border-box;
+    border: 1px solid #f6f6f6;
+    border-radius: 4px;
+    ::placeholder {
+        display: flex;
+        align-items: center;
+    }
 `;
 const FloatInput = styled.div`
     width: 54px;
