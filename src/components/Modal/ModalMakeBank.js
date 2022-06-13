@@ -7,6 +7,7 @@ import Button from '../../elements/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
 import { setMakeBank } from '../../redux/modules/bank';
+import { useNavigate } from 'react-router-dom';
 
 const ModalMakeBank = props => {
     const {
@@ -25,6 +26,7 @@ const ModalMakeBank = props => {
     const { lastDiaryId, bankpostlist, hasMoreBankPosts, Postlistloading } =
         useSelector(state => state.bank);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
     const [name, setName] = useState();
@@ -39,7 +41,7 @@ const ModalMakeBank = props => {
             reward: reward,
             memo: memo,
         };
-        dispatch(setMakeBank(data));
+        dispatch(setMakeBank({ data, navigate }));
     };
     return (
         <>

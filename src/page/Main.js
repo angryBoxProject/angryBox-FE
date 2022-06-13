@@ -14,6 +14,7 @@ import theme from '../Styles/theme';
 import styled from 'styled-components';
 import { useBank } from '../hooks/useBank';
 import ModalMakeBank from '../components/Modal/ModalMakeBank';
+import Posts from '../components/Main/Posts';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Main = () => {
     // const { openModal } = props;
     const [isOpen, setOpen] = useState(false);
     const [isViewOpen, setViewOpen] = useState(false);
-    const memberNick = useSelector(state => state.member.nickname);
+    const memberNick = useSelector(state => state.member.user_info).nickname;
     const [modalmakebank, Setmodalmakebank] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
@@ -123,16 +124,32 @@ const Main = () => {
                                 <Subtitle>곧 터지기 직전!</Subtitle>
                                 <AngryState>
                                     <FlexDiv column="column">
-                                        <p>극대노 2번</p>
-                                        <p>대노 2번</p>
-                                        <p>중노 2번</p>
-                                        <p>소노 2번</p>
-                                        <p>극소노 2번</p> 남았어요!
+                                        <p>
+                                            극대노{' '}
+                                            {banklist.remainingDiaryNum[4]}번
+                                        </p>
+                                        <p>
+                                            대노 {banklist.remainingDiaryNum[3]}
+                                            번
+                                        </p>
+                                        <p>
+                                            중노 {banklist.remainingDiaryNum[2]}
+                                            번
+                                        </p>
+                                        <p>
+                                            소노 {banklist.remainingDiaryNum[1]}
+                                            번
+                                        </p>
+                                        <p>
+                                            극소노{' '}
+                                            {banklist.remainingDiaryNum[0]}번
+                                        </p>{' '}
+                                        남았어요!
                                     </FlexDiv>
                                 </AngryState>
                                 <FlexDiv>
                                     <div>
-                                        <p>현재 소연님의</p>
+                                        <p>현재 {memberNick}님의</p>
                                         <p>신용상태는</p>
                                     </div>
                                     <p>{angryPhase(0)}</p>
@@ -147,16 +164,25 @@ const Main = () => {
                                     아직 적금을 깰 수 없습니다.
                                 </Button>
                             </FlexDiv>
-                            <FlexDiv>
-                                test
-                                <Button
-                                    onClick={() => {
-                                        // dispatch(CreateDiary({ dispatch, "test" }));
-                                        Setmodalmakebank(true);
+                            <FlexDiv column="column" width="50%">
+                                <FlexDiv justify="space-between">
+                                    <div>{banklist.name}</div>
+                                    <div>총 게시글</div>
+                                    <div>총 쓰담 수</div>
+                                </FlexDiv>
+                                <FlexDiv column="column">
+                                    <Posts />
+                                </FlexDiv>
+                                <FlexDiv>
+                                    <Button
+                                        onClick={() => {
+                                            // dispatch(CreateDiary({ dispatch, "test" }));
+                                            Setmodalmakebank(true);
 
-                                        console.log('test');
-                                    }}
-                                ></Button>
+                                            console.log('test');
+                                        }}
+                                    ></Button>
+                                </FlexDiv>
                             </FlexDiv>
                         </FlexDiv>
                     </>

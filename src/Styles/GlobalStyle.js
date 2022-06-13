@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -20,5 +21,6 @@ const GlobalStyle = createGlobalStyle`
   button,img{
     cursor:pointer;
   }
+
 `;
 export default GlobalStyle;
