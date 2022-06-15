@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { useBank } from '../hooks/useBank';
 import ModalMakeBank from '../components/Modal/ModalMakeBank';
 import Posts from '../components/Main/Posts';
+import { getBankPostList } from '../redux/modules/main';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -23,6 +24,8 @@ const Main = () => {
     const [isOpen, setOpen] = useState(false);
     const [isViewOpen, setViewOpen] = useState(false);
     const memberNick = useSelector(state => state.member.user_info).nickname;
+    const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
+    const postlist = useSelector(state => state.main.bankpostlist);
     const [modalmakebank, Setmodalmakebank] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
@@ -152,7 +155,7 @@ const Main = () => {
                                         <p>현재 {memberNick}님의</p>
                                         <p>신용상태는</p>
                                     </div>
-                                    <p>{angryPhase(0)}</p>
+                                    <p>{banklist.creditStatus}</p>
                                 </FlexDiv>
                                 <Button
                                     is_disabled={true}
@@ -167,11 +170,11 @@ const Main = () => {
                             <FlexDiv column="column" width="50%">
                                 <FlexDiv justify="space-between">
                                     <div>{banklist.name}</div>
-                                    <div>총 게시글</div>
-                                    <div>총 쓰담 수</div>
+                                    <div>총 게시글 {banklist.diaryCount}</div>
+                                    <div>총 쓰담 수 {banklist.todackCount}</div>
                                 </FlexDiv>
                                 <FlexDiv column="column">
-                                    <Posts />
+                                    {postlist && <Posts postlist={postlist} />}
                                 </FlexDiv>
                                 <FlexDiv>
                                     <Button
@@ -189,6 +192,16 @@ const Main = () => {
                 );
         }
     }, [status, isFetching]);
+
+    useEffect(() => {
+        if (status === 'success') {
+            const data = {
+                coinBankId: banklist.id,
+                lastDiaryId: mainlastDiaryId,
+            };
+            dispatch(getBankPostList(data));
+        }
+    }, []);
     return (
         <>
             <Warp>
@@ -296,7 +309,7 @@ const Subtitle = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 90px;
+    font-size: 80px;
     line-height: 123px;
     /* identical to box height */
 
@@ -306,7 +319,7 @@ const AngryState = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 68px;
+    font-size: 66px;
     line-height: 93px;
 
     color: #f6f6f6;
