@@ -69,8 +69,8 @@ export const setMakeBank = createAsyncThunk(
         }
     },
 );
-export const bankSlice = createSlice({
-    name: 'bank',
+export const mainSlice = createSlice({
+    name: 'main',
     initialState: {
         lastnotiId: 0,
         banklist: [],
@@ -115,6 +115,6 @@ export const bankSlice = createSlice({
     },
 });
 
-export const { setnotilist } = bankSlice.actions;
+export const { setnotilist } = mainSlice.actions;
 
-export default bankSlice.reducer;
+export default mainSlice.reducer;
