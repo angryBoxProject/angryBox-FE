@@ -2,17 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FlexDiv = props => {
-    const { children, padding, column, justify, align, grow } = props;
+    const {
+        children,
+        padding,
+        column,
+        justify,
+        align,
+        grow,
+        onClick,
+        height,
+        width,
+    } = props;
     const styles = {
         padding: padding,
         column: column,
         justify: justify,
         align: align,
         grow: grow,
+        height: height,
+        width: width,
     };
     return (
         <>
-            <Flex {...styles}>{children}</Flex>
+            <Flex onClick={onClick} {...styles}>
+                {children}
+            </Flex>
         </>
     );
 };
@@ -25,5 +39,7 @@ const Flex = styled.div`
     align-items: ${props => props.align};
     padding: ${props => props.padding};
     flex-grow: ${props => props.grow};
+    ${props => (props.height ? `height:${props.height}` : '')}
+    ${props => (props.width ? `width:${props.width}` : '')}
 `;
 export default FlexDiv;

@@ -29,6 +29,7 @@ const Button = props => {
         is_edit: is_edit,
         abled: abled,
         is_green: is_green,
+        is_disabled: is_disabled,
     };
 
     if (is_float) {
@@ -95,28 +96,15 @@ Button.defaultProps = {
 
 const ElButton = styled.button`
     width: ${props => props.width};
-
     box-sizing: border-box;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     padding: ${props => props.padding};
     ${props =>
-        props.is_edit
-            ? props =>
-                  props.abled
-                      ? `background-color:${theme.color.gray5};
-            color: ${theme.color.gray1};`
-                      : `background-color:${theme.color.white};
-            color: ${theme.color.orange};
-  border: 1px solid ${theme.color.orange};
-            `
-            : props =>
-                  props.abled
-                      ? `background-color:${theme.color.orange};
-            color: ${theme.color.white};`
-                      : `background-color:${theme.color.red};
-            color: ${theme.color.white};`}
-
+        props.is_disabled
+            ? `background-color:${theme.color.gray1};`
+            : `background-color:${theme.color.red};`}
+    ${props => (props.is_disabled ? `opacity:0.4` : `opacity:1;`)}
     ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 

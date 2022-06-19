@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 import Profile from '../components/mypage/Profile';
 import NewPw from '../components/mypage/NewPw';
+import theme from '../Styles/theme';
 
 const Mypage = props => {
     // const email = useSelector(state => state.member.user_info.email);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [newpw, setNewPw] = useState('');
-    const [openpw, setOpenpw] = useState(false);
+    const [openpw, setOpenpw] = useState(true);
 
     useEffect(() => {});
     return (
@@ -30,10 +31,25 @@ const Mypage = props => {
                             setOpenpw(true);
                         }}
                     >
-                        test
+                        비밀번호
+                    </Button>
+                    <Button
+                        abled
+                        width="104px"
+                        padding="9px"
+                        onClick={() => {
+                            //클릭이벤트
+                        }}
+                    >
+                        분노 저금통
                     </Button>
                     {openpw && (
-                        <div style={{ paddingTop: '70px' }}>
+                        <div
+                            style={{
+                                paddingTop: '70px',
+                                backgroundColor: 'black',
+                            }}
+                        >
                             <NewPw />
                         </div>
                     )}

@@ -27,7 +27,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/login"
+                            to="/bamboo"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
@@ -39,7 +39,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
-                            to="/signup"
+                            to="/angrybook"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
                                 color: isActive ? '#DA463C' : '#222222',
@@ -61,6 +61,18 @@ const Nav = props => {
                             <BsPerson size="20px" />
                         </NavLink>
                     </div>
+                    <div>
+                        <NavLink
+                            to="/login"
+                            style={({ isActive }) => ({
+                                textDecoration: 'none',
+                                color: isActive ? '#DA463C' : '#222222',
+                                fontWeight: isActive ? '800' : '400',
+                            })}
+                        >
+                            <RiFileListLine size="20px" />
+                        </NavLink>
+                    </div>
                 </FlexDiv>
             </StyledWrap>
         </>
@@ -78,7 +90,7 @@ const StyledWrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: 999;
+    z-index: 98;
     transition: all 0.2s ease-in-out;
 `;
 const FlexDiv = styled.div`

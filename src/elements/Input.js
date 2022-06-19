@@ -12,7 +12,7 @@ ${props => (props.cardsize === '1' ? `h-I01 px-4` : '')};
 `;
 
 const TextAreaField = tw.textarea`
-w-full px-4 py-4 border border-dgray-400 border-box
+w-full px-4 py-4 border border-dgray-400 border-box 
   rounded-md shadow-md outline-none resize-none font-min1
   hover:border-dpurple-200 active:border-dpurple-300
 ${props => (props.cardsize === '2' ? `h-I02 px-4` : '')};

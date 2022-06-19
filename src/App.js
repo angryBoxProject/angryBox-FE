@@ -2,6 +2,7 @@ import './App.css';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import theme from './Styles/theme';
 
 //나중에 lazy로딩 사용하기전
 //page
@@ -17,6 +18,10 @@ import { useDispatch } from 'react-redux';
 import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
 import Header from './components/Header';
+import Bamboo from './page/Bamboo';
+import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
+import BambooTopDiary from './components/bamboo/BambooTopDiary';
+import AngryBook from './page/AngryBook';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -26,6 +31,7 @@ import Header from './components/Header';
 function App() {
     const dispatch = useDispatch();
     const mytoken = getCookie('token');
+
     useEffect(() => {
         if (mytoken) {
             dispatch(setLogin());
@@ -42,6 +48,16 @@ function App() {
                             <Route path="/main" element={<Main />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/mypage" element={<Mypage />} />
+                            <Route path="/bamboo" element={<Bamboo />} />
+                            <Route path="/angrybook" element={<AngryBook />} />
+                            <Route
+                                path="/bamboo/realtimediary"
+                                element={<BambooRealTimeDiary />}
+                            />
+                            <Route
+                                path="/bamboo/topdiary"
+                                element={<BambooTopDiary />}
+                            />
                             <Route
                                 path="/oauth2/kakao/callback"
                                 element={<Kakaocallback />}
@@ -60,12 +76,14 @@ function App() {
 }
 
 const StyledWrap = styled.div`
-    background-color: black;
+    background-color: ${theme.color.black};
     width: 100%;
+    height: 100vh;
     display: flex;
 `;
 const Warp = styled.div`
     width: 100%;
     padding-left: 20%;
+    height: calc(100vh - 5rem);
 `;
 export default App;
