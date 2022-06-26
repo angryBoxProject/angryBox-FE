@@ -72,27 +72,22 @@ export const setMakeBank = createAsyncThunk(
 export const setMakePost = createAsyncThunk(
     'setMakePost',
     async ({ data, navigate }, { rejectWithValue }) => {
+        console.log(data);
         const formdatas = new FormData();
         formdatas.append('file', null);
         formdatas.append('file', null);
-        formdatas.append('diary', JSON.stringify(data));
+        formdatas.append(
+            'diary',
+            new Blob([JSON.stringify(data)], { type: 'application/json' }),
+        );
         formdatas.append('public', data.publiccount);
         console.log(formdatas);
-        console.log(data);
         try {
-            return await tokenURL
-                .post(`/diary`, data, {
-                    withCredentials: true,
-
-                    headers: {
-                        'Content-Type': `multipart/form-data`,
-                    },
-                })
-                .then(res => {
-                    navigate('/main');
-                    location.reload();
-                    console.log(res);
-                });
+            return await tokenURL.post(`/diary`, formdatas).then(res => {
+                navigate('/main');
+                location.reload();
+                console.log(res);
+            });
         } catch (error) {
             console.log(error);
             return rejectWithValue(error.response.data);
