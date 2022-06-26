@@ -53,7 +53,6 @@ const refreshaxios = async _ => {
             withCredentials: true,
             headers: {
                 Authorization: getCookie('token'),
-                'Content-Type': 'application/json',
             },
         },
     );
