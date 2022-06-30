@@ -14,7 +14,6 @@ const PostList = props => {
 
     const { lastDiaryId, bankpostlist, hasMoreBankPosts, listloading } =
         useSelector(state => state.main);
-    console.log(bankpostlist);
     const data = {
         coinBankId: bankId,
         lastDiaryId: lastDiaryId,
