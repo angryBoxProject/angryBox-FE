@@ -1,6 +1,10 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
+import { ReactComponent as Kakaologo } from '../../static/image/KakaoTalk_logo.svg';
+
+
+
 
 const SocialLogin = props => {
     //kakao
@@ -21,7 +25,7 @@ const SocialLogin = props => {
     };
     return (
         <div>
-            <KaKaoBtn href={KAKAO_AUTH_URL}>카카오</KaKaoBtn>
+            <KaKaoBtn href={KAKAO_AUTH_URL}><Kakaologo/></KaKaoBtn>
             {/* <KaKaoBtn href={GOOGLE_AUTH_URL}>구글</KaKaoBtn>
             <GoogleLogin
                 buttonText="Login with Google"
@@ -35,13 +39,14 @@ const SocialLogin = props => {
 
 export default SocialLogin;
 const KaKaoBtn = styled.a`
-    width: 420px;
-    height: 68px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 56px;
-    background: #221d7e;
+    background: white;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 400;
