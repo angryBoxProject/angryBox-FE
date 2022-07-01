@@ -2,20 +2,20 @@ import React from 'react';
 import tw from 'tailwind-styled-components';
 
 const InputStyles = tw.input`
-w-full px-4 border border-dgray-400 rounded-md py-1
-hover:border-dpurple-200 border-box peer
-active:border-dpurple-300 invalid:text-pink-600
-focus:border-dpurple-300 font-min1
-outline-none
+w-full px-4 border-0 border-b-2 border-[#DA463C] rounded-t-lg py-1
+hover:border-[#DA463C] border-box peer
+active:border-[#DA463C] text-neutral-400
+focus:border-[#DA463C] font-min1 bg-[#484848] border-b-[#DA463C]
+outline-0
 ${props => (props.is_error ? `ring-1 ring-dred-400` : '')};
 ${props => (props.cardsize === '1' ? `h-I01 px-4` : '')};
 ${props => (props.cardsize === '2' ? `h-44 px-4` : '')};
 `;
 
 const TextareaStyles = tw.textarea`
-w-full px-4 border border-dgray-400 rounded-md py-1
+w-full px-4 border border-dgray-400 rounded-t-lg py-1
 hover:border-dpurple-200 border-box peer
-active:border-dpurple-300 invalid:text-pink-600
+active:border-dpurple-300 text-neutral-400
 focus:border-dpurple-300 font-min1 p-2
 outline-none
 ${props => (props.is_error ? `ring-1 ring-dred-400` : '')};
@@ -80,7 +80,7 @@ const InputNoTitle = props => {
     if (textarea) {
         return (
             <>
-                <div className="col-start-3 col-end-8 row-start-1">
+                <div className="col-start-3 col-end-8 row-start-1 mb-8">
                     <label id={label}>
                         <TextareaStyles
                             textarea
@@ -109,7 +109,7 @@ const InputNoTitle = props => {
     } else
         return (
             <>
-                <div className="col-start-3 col-end-8 row-start-1">
+                <div className="col-start-3 col-end-8 row-start-1 mb-8">
                     <label id={label}>
                         <InputStyles
                             type={type}
