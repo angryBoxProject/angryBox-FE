@@ -7,8 +7,8 @@ const fetchDiaryList = async date => {
     return data.data;
 };
 
-export const usePostDetail = date => {
-    return useQuery(['PostDetail', date], () => fetchDiaryList(date), {
+export const usePostOneDetail = date => {
+    return useQuery(['PostOneDetail', date], () => fetchDiaryList(date), {
         refetchOnWindowFocus: false,
         // enabled: !!date,
         // refetchInterval: 2000,

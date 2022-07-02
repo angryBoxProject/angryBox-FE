@@ -6,6 +6,7 @@ import { ReactComponent as CloseButton } from '../../static/image/CloseButton.sv
 import Button from '../../elements/Button';
 import { useBanks } from '../../hooks/useBanks';
 import ModalImportposttoBank from './ModalImportposttoBank';
+import ModaPostDetail from './ModaPostDetail';
 
 const ModalImportBook = props => {
     const {
@@ -98,49 +99,51 @@ const ModalImportBook = props => {
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
-                    <Section>
-                        <MainModal width={width} height={height}>
-                            <ModalPopup>
-                                {renderByStatus()}
+                    <>
+                        <Section>
+                            <MainModal width={width} height={height}>
+                                <ModalPopup>
+                                    {renderByStatus()}
 
-                                <ModalText></ModalText>
-                                <ModalButton>
-                                    <Button
-                                        is_disabled={!selectbankId}
-                                        onClick={() => {
-                                            SetmodalPost(true);
-                                        }}
-                                    >
-                                        test
-                                    </Button>
-                                    {/* <ModalButtonCancel
-                                        className="close"
-                                        onClick={close}
-                                    >
-                                        취소
-                                    </ModalButtonCancel>
-                                    <ModalButtonConfirm
-                                        onClick={() => {
-                                            _onChange();
-                                        }}
-                                    >
-                                        확인
-                                    </ModalButtonConfirm> */}
-                                </ModalButton>
-                            </ModalPopup>
-                        </MainModal>
-                        <ModalImportposttoBank
-                            title="FILE LIST"
-                            subtitle="게시글 목록"
-                            width="80%"
-                            height="80%"
-                            bankId={selectbankId}
-                            open={modalstatePost}
-                            close={() => {
-                                SetmodalPost(false);
-                            }}
-                        />
-                    </Section>
+                                    <ModalText></ModalText>
+                                    <ModalButton>
+                                        <Button
+                                            is_disabled={!selectbankId}
+                                            onClick={() => {
+                                                SetmodalPost(true);
+                                            }}
+                                        >
+                                            불러오기
+                                        </Button>
+                                        {/* <ModalButtonCancel
+                                    className="close"
+                                    onClick={close}
+                                >
+                                    취소
+                                </ModalButtonCancel>
+                                <ModalButtonConfirm
+                                    onClick={() => {
+                                        _onChange();
+                                    }}
+                                >
+                                    확인
+                                </ModalButtonConfirm> */}
+                                    </ModalButton>
+                                </ModalPopup>
+                            </MainModal>
+                            <ModalImportposttoBank
+                                title="FILE LIST"
+                                subtitle="게시글 목록"
+                                width="80%"
+                                height="80%"
+                                bankId={selectbankId}
+                                open={modalstatePost}
+                                close={() => {
+                                    SetmodalPost(false);
+                                }}
+                            />
+                        </Section>
+                    </>
                 ) : null}
             </div>
         </>

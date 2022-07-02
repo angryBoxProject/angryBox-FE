@@ -48,6 +48,7 @@ const Post = props => {
                             setModalPost(false);
                         }}
                         data={data}
+                        button1name={'닫기'}
                     ></ModaPostDetail>
                 </div>
             )}

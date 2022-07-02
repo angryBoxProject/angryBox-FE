@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
 import { getPost, setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
-import { usePostDetail } from '../../hooks/usePostDetail';
+import { usePostOneDetail } from '../../hooks/usePostOneDetail ';
 
-const ModaPostDetail = props => {
+const ModaPostOneDetail = props => {
     const {
         open,
         close,
@@ -28,24 +28,23 @@ const ModaPostDetail = props => {
         button1name,
         button2name,
         is_allclosebutton,
-        button2onClick,
     } = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
-    const [edit, setEdit] = useState();
+    const [name, setName] = useState();
     const [angryPhase, setAngryPhase] = useState('극소노');
     const [ispublic, setIspublic] = useState('비공개');
     const [memo, setMemo] = useState();
-
+    if (data === undefined) return null;
     const {
         status,
         data: detailList,
         error,
         isFetching,
         refetch,
-    } = usePostDetail(data.id);
+    } = usePostOneDetail(data.id);
 
     const handlePublic = v => {
         return v ? '공개글' : '비공개';
@@ -53,23 +52,6 @@ const ModaPostDetail = props => {
     const handleAngryState = v => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
         return list[v];
-    };
-    const datas = {
-        angryPhaseId: 4,
-        coinBankId: 2,
-        content: 'content자동',
-        dailyTopId: 0,
-        dateTime: '2022-07-02 08:40:00',
-        deleted: false,
-        diaryNo: 3768,
-        id: 5057,
-        memberId: 1,
-        public: true,
-        title: 'title자동',
-        todackCount: 0,
-        todayTopId: 0,
-        viewCount: 4846,
-        diary: 'adfasdf',
     };
 
     return (
@@ -176,7 +158,7 @@ const ModaPostDetail = props => {
                                                                   is_white
                                                                   margin="10px"
                                                                   onClick={
-                                                                      button2onClick
+                                                                      close
                                                                   }
                                                               >
                                                                   {
@@ -229,7 +211,7 @@ const Section = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    z-index: 99;
+    z-index: 999;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -319,7 +301,7 @@ const ModalButton = styled.div`
 `;
 
 // default props 작성 위치
-ModaPostDetail.defaultProps = {
+ModaPostOneDetail.defaultProps = {
     open: false,
     close: false,
     title: '',
@@ -330,4 +312,4 @@ ModaPostDetail.defaultProps = {
     height: '80%',
 };
 
-export default ModaPostDetail;
+export default ModaPostOneDetail;
