@@ -26,6 +26,7 @@ const ModalInput = props => {
                     placeholder={placeholder}
                     onChange={_onChange}
                     width={width}
+                    value={value}
                 ></ElTextarea>
             </>
         );
@@ -39,6 +40,7 @@ const ModalInput = props => {
                 placeholder={placeholder}
                 onChange={_onChange}
                 width={width}
+                value={value}
             />
         </React.Fragment>
     );

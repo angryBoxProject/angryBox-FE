@@ -34,11 +34,8 @@ const ModaPostDetail = props => {
     const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
-    const [edit, setEdit] = useState();
-    const [angryPhase, setAngryPhase] = useState('극소노');
-    const [ispublic, setIspublic] = useState('비공개');
-    const [memo, setMemo] = useState();
 
+    const [edit, setEdit] = useState();
     const {
         status,
         data: detailList,
@@ -46,14 +43,19 @@ const ModaPostDetail = props => {
         isFetching,
         refetch,
     } = usePostDetail(data.id);
-
+    console.log(detailList);
+    const list = ['극대노', '대노', '중노', '소노', '극소노'];
+    const [name, setName] = useState(detailList.diary.title);
+    const [angryPhase, setAngryPhase] = useState(
+        list[detailList.diary.angryPhaseId],
+    );
+    const [ispublic, setIspublic] = useState(detailList.diary.public);
+    const [memo, setMemo] = useState(detailList.diary.content);
     const handlePublic = v => {
+        // const publ = detailList.diary.public;
         return v ? '공개글' : '비공개';
     };
-    const handleAngryState = v => {
-        const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[v];
-    };
+
     const datas = {
         angryPhaseId: 4,
         coinBankId: 2,
@@ -71,150 +73,207 @@ const ModaPostDetail = props => {
         viewCount: 4846,
         diary: 'adfasdf',
     };
+    const handleMakePost = () => {
+        console.log('수정하기');
+        setEdit(!edit);
+        return;
+        let publiccount = false;
+        const angrystate = [
+            '극소노',
+            '소노',
+            '중노',
+            '대노',
+            '극대노',
+        ].findIndex(e => e === angryPhase);
+        if (['비공개', '공개글'].findIndex(e => e === ispublic)) {
+            publiccount = true;
+        }
 
+        const data = {
+            title: name,
+            content: memo,
+            angryPhaseId: angrystate,
+            interimId: 0,
+            publiccount: publiccount,
+        };
+        console.log(data);
+
+        dispatch(setMakePost({ data, navigate }));
+    };
     return (
         <>
             {detailList && (
                 <div className={open ? 'openModal modal' : 'modal'}>
-                    {open
-                        ? (refetch(),
-                          (
-                              <Section>
-                                  <MainModal width={width} height={height}>
-                                      <ModalPopup>
-                                          <FlexDiv
-                                              justify="space-between"
-                                              padding="10px"
-                                          >
-                                              <FlexDiv>
-                                                  <ModalTitle>
-                                                      {title}
-                                                  </ModalTitle>
-                                                  <ModalSubTitle>
-                                                      {subtitle}
-                                                  </ModalSubTitle>
-                                              </FlexDiv>
-                                              <CloseButton onClick={close} />
-                                          </FlexDiv>
-                                          <FlexDiv
-                                              justify="flex-start"
-                                              padding="10px"
-                                              width="100%"
-                                          >
-                                              <FlexDiv width="100%">
-                                                  <ModalDetailTitle>
-                                                      {detailList.diary.title}
-                                                  </ModalDetailTitle>
-                                                  <ModalDetailBox width="25%">
-                                                      <p
-                                                          style={{
-                                                              color: `${theme.color.white}`,
-                                                          }}
-                                                      >
-                                                          토닥 수
-                                                      </p>
-                                                      {
-                                                          detailList.diary
-                                                              .todackCount
-                                                      }
-                                                  </ModalDetailBox>
-                                                  <ModalDetailBox width="20%">
-                                                      {handlePublic(
-                                                          detailList.diary
-                                                              .public,
-                                                      )}
-                                                  </ModalDetailBox>
-                                                  <ModalDetailBox width="20%">
-                                                      {handleAngryState(
-                                                          detailList.diary
-                                                              .angryPhaseId,
-                                                      )}
-                                                  </ModalDetailBox>
-                                              </FlexDiv>
-                                          </FlexDiv>
-                                          <FlexDiv
-                                              justify="flex-start"
-                                              padding="10px"
-                                              width="100%"
-                                          ></FlexDiv>
-                                          <FlexDiv
-                                              justify="flex-start"
-                                              padding="10px"
-                                              width="100%"
-                                          >
-                                              <FlexDiv width="100%">
-                                                  <ModalDetailContentOutLine>
-                                                      <ModalDetailContent>
-                                                          {
-                                                              detailList.diary
-                                                                  .content
-                                                          }
-                                                      </ModalDetailContent>
-                                                  </ModalDetailContentOutLine>
-                                              </FlexDiv>
-                                          </FlexDiv>
+                    {open ? (
+                        <Section>
+                            <MainModal width={width} height={height}>
+                                <ModalPopup>
+                                    <FlexDiv
+                                        justify="space-between"
+                                        padding="10px"
+                                    >
+                                        <FlexDiv>
+                                            <ModalTitle>{title}</ModalTitle>
+                                            <ModalSubTitle>
+                                                {subtitle}
+                                            </ModalSubTitle>
+                                        </FlexDiv>
+                                        <CloseButton onClick={close} />
+                                    </FlexDiv>
+                                    <FlexDiv
+                                        justify="flex-start"
+                                        padding="10px"
+                                        width="100%"
+                                    >
+                                        <FlexDiv width="100%">
+                                            {edit ? (
+                                                <ModalInput
+                                                    width="100%"
+                                                    placeholder="제목을 입력하세요."
+                                                    _onChange={e => {
+                                                        setName(e.target.value);
+                                                    }}
+                                                    value={name}
+                                                ></ModalInput>
+                                            ) : (
+                                                <ModalDetailTitle>
+                                                    {name}
+                                                </ModalDetailTitle>
+                                            )}
+                                            <ModalDetailBox width="25%">
+                                                <p
+                                                    style={{
+                                                        color: `${theme.color.white}`,
+                                                    }}
+                                                >
+                                                    토닥 수
+                                                </p>
+                                                {detailList.diary.todackCount}
+                                            </ModalDetailBox>
+                                            {edit ? (
+                                                <>
+                                                    <Select
+                                                        ispublic
+                                                        onChange={e => {
+                                                            setIspublic(
+                                                                e.target.value,
+                                                            );
+                                                        }}
+                                                    ></Select>
+                                                    <Select
+                                                        onChange={e => {
+                                                            setAngryPhase(
+                                                                e.target.value,
+                                                            );
+                                                            console.log(
+                                                                e.target.value,
+                                                            );
+                                                        }}
+                                                    />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <ModalDetailBox width="20%">
+                                                        {handlePublic(ispublic)}
+                                                    </ModalDetailBox>
+                                                    <ModalDetailBox width="20%">
+                                                        {angryPhase}
+                                                    </ModalDetailBox>
+                                                </>
+                                            )}
+                                        </FlexDiv>
+                                    </FlexDiv>
+                                    <FlexDiv
+                                        justify="flex-start"
+                                        padding="10px"
+                                        width="100%"
+                                    ></FlexDiv>
+                                    <FlexDiv
+                                        justify="flex-start"
+                                        padding="10px"
+                                        width="100%"
+                                    >
+                                        <FlexDiv width="100%">
+                                            {edit ? (
+                                                <ModalInput
+                                                    row={18}
+                                                    multiLine={true}
+                                                    width="100%"
+                                                    placeholder="본문 내용을 입력하세요.."
+                                                    _onChange={e => {
+                                                        setMemo(e.target.value);
+                                                    }}
+                                                    value={memo}
+                                                />
+                                            ) : (
+                                                <ModalDetailContentOutLine>
+                                                    <ModalDetailContent>
+                                                        {memo}
+                                                    </ModalDetailContent>
+                                                </ModalDetailContentOutLine>
+                                            )}
+                                        </FlexDiv>
+                                    </FlexDiv>
 
-                                          <ModalButton>
-                                              {is_allclosebutton ? (
-                                                  <Button
-                                                      margin="10px"
-                                                      onClick={close}
-                                                  >
-                                                      {props.button1name}
-                                                  </Button>
-                                              ) : (
-                                                  <>
-                                                      <div
-                                                          style={{
-                                                              width: '50%',
-                                                              marginRight:
-                                                                  '30px',
-                                                          }}
-                                                      >
-                                                          {is_twobutton ? (
-                                                              <Button
-                                                                  is_white
-                                                                  margin="10px"
-                                                                  onClick={
-                                                                      button2onClick
-                                                                  }
-                                                              >
-                                                                  {
-                                                                      props.button2name
-                                                                  }
-                                                              </Button>
-                                                          ) : (
-                                                              <div
-                                                                  style={{
-                                                                      width: '50%',
-                                                                  }}
-                                                              ></div>
-                                                          )}
-                                                      </div>
-                                                      <div
-                                                          style={{
-                                                              width: '50%',
-                                                              marginRight:
-                                                                  '30px',
-                                                          }}
-                                                      >
-                                                          <Button
-                                                              margin="10px"
-                                                              onClick={close}
-                                                          >
-                                                              {
-                                                                  props.button1name
-                                                              }
-                                                          </Button>
-                                                      </div>
-                                                  </>
-                                              )}
-                                          </ModalButton>
-                                      </ModalPopup>
-                                  </MainModal>
-                              </Section>
-                          ))
-                        : null}
+                                    <ModalButton>
+                                        {is_allclosebutton ? (
+                                            <Button
+                                                margin="10px"
+                                                onClick={close}
+                                            >
+                                                {props.button1name}
+                                            </Button>
+                                        ) : (
+                                            <>
+                                                <div
+                                                    style={{
+                                                        width: '50%',
+                                                        marginRight: '30px',
+                                                    }}
+                                                >
+                                                    {is_twobutton ? (
+                                                        <Button
+                                                            is_white
+                                                            margin="10px"
+                                                            onClick={e => {
+                                                                if (!edit) {
+                                                                    setEdit(
+                                                                        !edit,
+                                                                    );
+                                                                } else
+                                                                    handleMakePost();
+                                                            }}
+                                                        >
+                                                            {props.button2name}
+                                                        </Button>
+                                                    ) : (
+                                                        <div
+                                                            style={{
+                                                                width: '50%',
+                                                            }}
+                                                        ></div>
+                                                    )}
+                                                </div>
+                                                <div
+                                                    style={{
+                                                        width: '50%',
+                                                        marginRight: '30px',
+                                                    }}
+                                                >
+                                                    <Button
+                                                        margin="10px"
+                                                        onClick={close}
+                                                    >
+                                                        {props.button1name}
+                                                    </Button>
+                                                </div>
+                                            </>
+                                        )}
+                                    </ModalButton>
+                                </ModalPopup>
+                            </MainModal>
+                        </Section>
+                    ) : null}
                 </div>
             )}
         </>
