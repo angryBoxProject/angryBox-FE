@@ -5,5 +5,15 @@ import Spinner from './Spinner';
 import FlexDiv from './FlexDiv';
 import MainCard from './MainCard';
 import ModalInput from './ModalInput';
+import Select from './Select';
 
-export { Input, ModalInput, Button, InputNoTitle, Spinner, FlexDiv, MainCard };
+export {
+    Input,
+    ModalInput,
+    Button,
+    InputNoTitle,
+    Select,
+    Spinner,
+    FlexDiv,
+    MainCard,
+};

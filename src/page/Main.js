@@ -16,6 +16,8 @@ import { useBank } from '../hooks/useBank';
 import ModalMakeBank from '../components/Modal/ModalMakeBank';
 import Posts from '../components/Main/Posts';
 import { getBankPostList } from '../redux/modules/main';
+import PostList from '../components/Main/PostList';
+import ModalMakePost from '../components/Modal/ModalMakePost';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -25,8 +27,8 @@ const Main = () => {
     const [isViewOpen, setViewOpen] = useState(false);
     const memberNick = useSelector(state => state.member.user_info).nickname;
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
-    const postlist = useSelector(state => state.main.bankpostlist);
     const [modalmakebank, Setmodalmakebank] = useState(false);
+    const [modalmakePost, SetmodalmakePost] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
     console.log(banklist);
@@ -174,17 +176,19 @@ const Main = () => {
                                     <div>총 쓰담 수 {banklist.todackCount}</div>
                                 </FlexDiv>
                                 <FlexDiv column="column">
-                                    {postlist && <Posts postlist={postlist} />}
+                                    <PostList bankId={banklist.id} />
                                 </FlexDiv>
                                 <FlexDiv>
                                     <Button
                                         onClick={() => {
                                             // dispatch(CreateDiary({ dispatch, "test" }));
-                                            Setmodalmakebank(true);
+                                            SetmodalmakePost(true);
 
                                             console.log('test');
                                         }}
-                                    ></Button>
+                                    >
+                                        분노 저금하기
+                                    </Button>
                                 </FlexDiv>
                             </FlexDiv>
                         </FlexDiv>
@@ -257,6 +261,19 @@ const Main = () => {
                         Setmodalmakebank(false);
                     }}
                 />
+                {banklist && (
+                    <ModalMakePost
+                        title="ANGRY SAVING"
+                        subtitle="분노 게시글 작성"
+                        width="70%"
+                        height="80%"
+                        open={modalmakePost}
+                        close={() => {
+                            SetmodalmakePost(false);
+                        }}
+                        coinBankId={banklist.id}
+                    ></ModalMakePost>
+                )}
             </Warp>
         </>
     );

@@ -69,6 +69,45 @@ export const setMakeBank = createAsyncThunk(
         }
     },
 );
+export const setMakePost = createAsyncThunk(
+    'setMakePost',
+    async ({ data, navigate }, { rejectWithValue }) => {
+        console.log(data);
+        const formdatas = new FormData();
+        formdatas.append('file', null);
+        formdatas.append('file', null);
+        formdatas.append(
+            'diary',
+            new Blob([JSON.stringify(data)], { type: 'application/json' }),
+        );
+        formdatas.append('public', data.publiccount);
+        console.log(formdatas);
+        try {
+            return await tokenURL.post(`/diary`, formdatas).then(res => {
+                navigate('/main');
+                location.reload();
+                console.log(res);
+            });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const getPost = createAsyncThunk(
+    'getPost',
+    async ({ data, navigate }, { rejectWithValue }) => {
+        console.log('getPost', data);
+        try {
+            return await tokenURL.get(`/diaries/${data.id}`).then(res => {
+                return res.data.data.diary;
+            });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 export const bankSlice = createSlice({
     name: 'bank',
     initialState: {
@@ -80,6 +119,7 @@ export const bankSlice = createSlice({
         bankpostlist: [],
         hasMoreBankPosts: true,
         Postlistloading: false,
+        showDetail: [],
     },
     reducers: {
         setlastnotiId: (state, action) => {
@@ -111,7 +151,11 @@ export const bankSlice = createSlice({
                 if (state.lastDiaryId === 1) state.hasMoreBankPosts = false;
                 // state.bankpostlist = action.payload;
             })
-            .addCase(setMakeBank.fulfilled, (state, action) => {});
+            .addCase(setMakeBank.fulfilled, (state, action) => {})
+            .addCase(setMakePost.fulfilled, (state, action) => {})
+            .addCase(getPost.fulfilled, (state, action) => {
+                state.showDetail = action.payload;
+            });
     },
 });
 

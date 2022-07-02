@@ -14,6 +14,7 @@ const ModalInput = props => {
         _onKeyDown,
         value,
         multiLine,
+        row,
         width,
     } = props;
 
@@ -21,7 +22,7 @@ const ModalInput = props => {
         return (
             <>
                 <ElTextarea
-                    rows={15}
+                    rows={row}
                     placeholder={placeholder}
                     onChange={_onChange}
                     width={width}
@@ -49,6 +50,7 @@ ModalInput.defaultProps = {
     is_float: false,
     width: '',
     height: '',
+    rows: 15,
     _onChange: () => {},
     _onClick: () => {},
     _onKeyDown: () => {},
