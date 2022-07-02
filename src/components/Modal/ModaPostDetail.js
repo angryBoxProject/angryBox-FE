@@ -46,6 +46,7 @@ const ModaPostDetail = props => {
         isFetching,
         refetch,
     } = usePostDetail(data.id);
+    if (status !== 'success') return;
     console.log(detailList);
     const list = ['극대노', '대노', '중노', '소노', '극소노'];
     const [name, setName] = useState(detailList.diary.title);
