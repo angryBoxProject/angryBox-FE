@@ -34,11 +34,11 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "client-s3-deploy": "aws s3 sync ./build s3://angrybox --profile=angrybox",
-        "purge": "aws cloudfront create-invalidation --distribution-id E2828D2WMG4VFD --paths /* --profile angrybox",
-        "deploys": "aws s3 sync ./build s3://angrybox --profile=angrybox",
-        "deploy": "npm run build && npm run client-s3-deploy && npm run purge",
-        "invalidate": "aws cloudfront create-invalidation --profile=angrybox --distribution-id E3CEGQYJ1VNNIG --paths /*",
+        "client-s3-deploy": "aws s3 sync ./build s3://angrybank-s3-bucket --profile=angrybox",
+        "purge_notuse": "aws cloudfront create-invalidation --distribution-id E2828D2WMG4VFD --paths /* --profile angrybox",
+        "deploys_notuse": "aws s3 sync ./build s3://angrybox --profile=angrybox",
+        "deploy": "npm run build && npm run client-s3-deploy  && yarn invalidate",
+        "invalidate": "aws cloudfront create-invalidation --profile=angrybox --distribution-id E25CRZXVOYHEH9 --paths /*",
         "all": "yarn-run-all -s build deploy invalidate"
     },
     "eslintConfig": {
