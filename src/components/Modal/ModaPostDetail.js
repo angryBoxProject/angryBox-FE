@@ -34,7 +34,10 @@ const ModaPostDetail = props => {
     const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
-
+    const ismember = useSelector(state => state.member.user_info).memberId;
+    let memberId = 0;
+    if (ismember)
+        memberId = useSelector(state => state.member.user_info).memberId;
     const [edit, setEdit] = useState();
     const {
         status,

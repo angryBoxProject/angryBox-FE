@@ -38,18 +38,20 @@ const Post = props => {
                             </FlexDiv>
                         </Warp>
                     </BackGround>
-                    <ModaPostDetail
-                        title="ANGRY SAVING"
-                        subtitle="분노 게시글"
-                        width="70%"
-                        height="80%"
-                        open={modalPost}
-                        close={() => {
-                            setModalPost(false);
-                        }}
-                        data={data}
-                        button1name={'닫기'}
-                    ></ModaPostDetail>
+                    {data && (
+                        <ModaPostDetail
+                            title="ANGRY SAVING"
+                            subtitle="분노 게시글"
+                            width="70%"
+                            height="80%"
+                            open={modalPost}
+                            close={() => {
+                                setModalPost(false);
+                            }}
+                            data={data}
+                            button1name={'닫기'}
+                        ></ModaPostDetail>
+                    )}
                 </div>
             )}
         </>
