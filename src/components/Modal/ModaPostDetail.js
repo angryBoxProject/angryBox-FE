@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
 import { getPost, setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
+import { usePostDetail } from '../../hooks/usePostDetail';
 
 const ModaPostDetail = props => {
     const {
@@ -37,11 +38,19 @@ const ModaPostDetail = props => {
     if (ismember)
         memberId = useSelector(state => state.member.user_info).memberId;
 
-    console.log(data);
     useEffect(() => {
         if (open) dispatch(getPost({ data, navigate }));
     }, [open]);
 
+    const {
+        status,
+        data: detailList,
+        error,
+        isFetching,
+        refetch,
+    } = usePostDetail(data.id);
+
+    console.log(detailList);
     const handleMakePost = () => {
         let publiccount = false;
         const angrystate = [
@@ -68,8 +77,9 @@ const ModaPostDetail = props => {
             id: 0,
         };
         console.log(data);
-        dispatch(setMakePost({ data, navigate }));
+        // dispatch(setMakePost({ data, navigate }));
     };
+
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
