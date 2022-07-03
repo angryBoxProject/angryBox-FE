@@ -57,7 +57,6 @@ const ModalMakePost = props => {
             publiccount: publiccount,
         };
         console.log(data);
-        //극소노 버그있음
 
         dispatch(setMakePost({ data, navigate }));
     };

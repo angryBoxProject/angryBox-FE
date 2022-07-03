@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
@@ -6,6 +6,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getTopDiary } from '../../redux/modules/bamboo';
 import { ReactComponent as Fire } from '../../static/image/Fire.svg';
 import theme from '../../Styles/theme';
+import ModaPostDetail from '../Modal/ModaPostDetail';
 import BambooListCard from './BambooListCard';
 
 const BambooTopDiary = props => {
@@ -15,6 +16,7 @@ const BambooTopDiary = props => {
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
+    const [modalPost, setModalPost] = useState();
 
     useEffect(() => {
         function onScroll() {
@@ -68,7 +70,24 @@ const BambooTopDiary = props => {
                                 todackCount={data.todackCount}
                                 todayTopId={data.todayTopId}
                                 viewCount={data.viewCount}
+                                onClick={() => {
+                                    setModalPost(true);
+                                }}
                             />
+                            <ModaPostDetail
+                                title="ANGRY SAVING"
+                                subtitle="분노 게시글"
+                                width="70%"
+                                height="80%"
+                                open={modalPost}
+                                close={() => {
+                                    setModalPost(false);
+                                }}
+                                data={data}
+                                button1name={'닫기'}
+                                is_twobutton
+                                button2name={'수정하기'}
+                            ></ModaPostDetail>
                         </>
                     ))}
                 </ListScroll>

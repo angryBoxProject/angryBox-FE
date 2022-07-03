@@ -21,10 +21,11 @@ const BambooListCard = props => {
         todackCount,
         todayTopId,
         viewCount,
+        onClick,
     } = props;
     return (
         <>
-            <Warp>
+            <Warp onClick={onClick}>
                 <FlexDiv justify="space-between">
                     <div>{title}</div>
                     <FlexDiv>

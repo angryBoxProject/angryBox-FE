@@ -10,6 +10,8 @@ import {
     getBankFirstPostList,
     getBankPostList,
 } from '../../redux/modules/bank';
+import ModaPostDetail from './ModaPostDetail';
+import ModaPostOneDetail from './ModaPostOneDetail';
 
 const ModalImportposttoBank = props => {
     const {
@@ -24,12 +26,13 @@ const ModalImportposttoBank = props => {
         _onChange,
         listclick,
     } = props;
-
     const { lastDiaryId, bankpostlist, hasMoreBankPosts, Postlistloading } =
         useSelector(state => state.bank);
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
+    const [modalPost, setModalPostDetail] = useState();
+    const [modaldata, setModalData] = useState(0);
 
     useEffect(() => {
         const data = {
@@ -41,32 +44,15 @@ const ModalImportposttoBank = props => {
     }, [bankId]);
     useEffect(() => {
         function onScroll() {
-            console.log('test');
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
-            console.log(
-                'clientHeight',
-                clientHeight,
-                'scrollTop',
-                scrollTop,
-                'scrollHeight',
-                scrollHeight,
-                'sum',
-                clientHeight + scrollTop > scrollHeight - 30,
-            );
+
             if (clientHeight + scrollTop > scrollHeight - 30) {
-                console.log(
-                    'hasMoreBankPosts',
-                    hasMoreBankPosts,
-                    '!Postlistloading',
-                    Postlistloading,
-                );
                 if (
                     hasMoreBankPosts &&
                     bankpostlist &&
                     !Postlistloading &&
                     isMount.current
                 ) {
-                    console.log('dispatch');
                     const data = {
                         coinBankId: bankId,
                         lastDiaryId: lastDiaryId,
@@ -90,66 +76,109 @@ const ModalImportposttoBank = props => {
         bankId,
         scrollRef,
     ]);
+    console.log('bankpostlist', bankpostlist);
 
     return (
         <>
             <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
-                    <Section>
-                        <MainModal width={width} height={height}>
-                            <ModalPopup>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <FlexDiv>
-                                        <ModalTitle>{title}</ModalTitle>
-                                        <ModalSubTitle>
-                                            {subtitle}
-                                        </ModalSubTitle>
-                                    </FlexDiv>
-                                    <CloseButton onClick={close} />
-                                </FlexDiv>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <ModalTextNo select={true}>No</ModalTextNo>
-                                    <ModalTextBankName select={true}>
-                                        게시글명
-                                    </ModalTextBankName>
-                                    <ModalTextBankdes select={true}>
-                                        본문
-                                    </ModalTextBankdes>
-                                    <ModalTextBankTime select={true}>
-                                        작성일
-                                    </ModalTextBankTime>
-                                </FlexDiv>
-                                <hr />
-                                <ListScroll ref={scrollRef}>
-                                    {bankpostlist?.map((data, index) => (
-                                        <FlexDiv
-                                            key={index}
-                                            justify="space-between"
-                                            padding="10px"
-                                        >
-                                            <ModalTextNo select={true}>
-                                                {data.diaryNo}
-                                            </ModalTextNo>
-                                            <ModalTextBankName select={true}>
-                                                {data.title}
-                                            </ModalTextBankName>
-                                            <ModalTextBankdes select={true}>
-                                                {data.content}
-                                            </ModalTextBankdes>
-                                            <ModalTextBankTime select={true}>
-                                                {data.dateTime}
-                                            </ModalTextBankTime>
+                    <>
+                        <Section>
+                            <MainModal width={width} height={height}>
+                                <ModalPopup>
+                                    <FlexDiv
+                                        justify="space-between"
+                                        padding="10px"
+                                    >
+                                        <FlexDiv>
+                                            <ModalTitle>{title}</ModalTitle>
+                                            <ModalSubTitle>
+                                                {subtitle}
+                                            </ModalSubTitle>
                                         </FlexDiv>
-                                    ))}
-                                </ListScroll>
+                                        <CloseButton onClick={close} />
+                                    </FlexDiv>
+                                    <FlexDiv
+                                        justify="space-between"
+                                        padding="10px"
+                                    >
+                                        <ModalTextNo select={true}>
+                                            No
+                                        </ModalTextNo>
+                                        <ModalTextBankName select={true}>
+                                            게시글명
+                                        </ModalTextBankName>
+                                        <ModalTextBankdes select={true}>
+                                            본문
+                                        </ModalTextBankdes>
+                                        <ModalTextBankTime select={true}>
+                                            작성일
+                                        </ModalTextBankTime>
+                                    </FlexDiv>
+                                    <hr />
+                                    <ListScroll ref={scrollRef}>
+                                        {bankpostlist?.map((data, index) => (
+                                            <>
+                                                <FlexDiv
+                                                    key={index}
+                                                    justify="space-between"
+                                                    padding="10px"
+                                                    onClick={() => {
+                                                        setModalData(data);
+                                                        setModalPostDetail(
+                                                            true,
+                                                        );
+                                                    }}
+                                                >
+                                                    <ModalTextNo select={true}>
+                                                        {data.diaryNo}
+                                                    </ModalTextNo>
+                                                    <ModalTextBankName
+                                                        select={true}
+                                                    >
+                                                        {data.title}
+                                                    </ModalTextBankName>
+                                                    <ModalTextBankdes
+                                                        select={true}
+                                                    >
+                                                        {data.content}
+                                                    </ModalTextBankdes>
+                                                    <ModalTextBankTime
+                                                        select={true}
+                                                    >
+                                                        {data.dateTime}
+                                                    </ModalTextBankTime>
+                                                </FlexDiv>
+                                            </>
+                                        ))}
+                                    </ListScroll>
 
-                                {/* <ModalText></ModalText> */}
-                                <ModalButton>
-                                    <Button onClick={close}>닫기</Button>
-                                </ModalButton>
-                            </ModalPopup>
-                        </MainModal>
-                    </Section>
+                                    {/* <ModalText></ModalText> */}
+                                    <ModalButton>
+                                        <Button onClick={close}>닫기</Button>
+                                    </ModalButton>
+                                </ModalPopup>
+                            </MainModal>
+                        </Section>
+                        {modaldata !== null && (
+                            <ModaPostOneDetail
+                                title="ANGRY SAVING"
+                                subtitle="분노 게시글"
+                                width="70%"
+                                height="80%"
+                                open={modalPost}
+                                close={() => {
+                                    setModalPostDetail(false);
+                                    setModalData(0);
+                                }}
+                                data={modaldata}
+                                button1name={'닫기'}
+                                is_twobutton
+                                button2name={'수정하기'}
+                                is_allclosebutton
+                            ></ModaPostOneDetail>
+                        )}
+                    </>
                 ) : null}
             </div>
         </>

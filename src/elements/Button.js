@@ -18,7 +18,7 @@ const Button = props => {
         _type,
         abled,
         value,
-        is_green,
+        is_white,
     } = props;
 
     const styles = {
@@ -28,7 +28,7 @@ const Button = props => {
         padding: padding,
         is_edit: is_edit,
         abled: abled,
-        is_green: is_green,
+        is_white: is_white,
         is_disabled: is_disabled,
     };
 
@@ -49,17 +49,17 @@ const Button = props => {
         );
     }
 
-    if (is_green) {
+    if (is_white) {
         return (
             <React.Fragment>
-                <GreenButton
+                <WhiteButton
                     disabled={is_disabled}
                     value={value}
                     {...styles}
                     onClick={onClick}
                 >
                     {children}
-                </GreenButton>
+                </WhiteButton>
             </React.Fragment>
         );
     }
@@ -108,20 +108,19 @@ const ElButton = styled.button`
     ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `;
 
-const GreenButton = styled.button`
+const WhiteButton = styled.button`
     width: ${props => props.width};
-    padding: ${props => props.padding};
     box-sizing: border-box;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
+    padding: ${props => props.padding};
     ${props =>
-        props.is_green
-            ? `background-color:${theme.color.green};
-            color: ${theme.color.white};`
-            : `background-color:${theme.color.gray5};
-            color: ${theme.color.gray1};
-            `}
+        props.is_disabled
+            ? `background-color:${theme.color.gray1};`
+            : `background-color:${theme.color.white};`}
+    ${props => (props.is_disabled ? `opacity:0.4` : `opacity:1;`)}
     ${props => (props.margin ? `margin: ${props.margin};` : '')}
+    color: ${theme.color.black};
 `;
 
 const FloatButton = styled.button`

@@ -35,7 +35,7 @@ const Profile = props => {
 
         ProfileImageMutation.mutate(formData);
     };
-
+    console.log(status);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
