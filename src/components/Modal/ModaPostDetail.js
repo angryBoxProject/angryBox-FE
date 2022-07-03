@@ -34,31 +34,31 @@ const ModaPostDetail = props => {
     const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
-    const ismember = useSelector(state => state.member.user_info).memberId;
-    let memberId = 0;
-    if (ismember)
-        memberId = useSelector(state => state.member.user_info).memberId;
-    const [edit, setEdit] = useState();
-    const {
-        status,
-        data: detailList,
-        error,
-        isFetching,
-        refetch,
-    } = usePostDetail(data.id);
-    if (status !== 'success') return;
-    console.log(detailList);
+    // const ismember = useSelector(state => state.member.user_info).memberId;
+    // let memberId = 0;
+    // if (ismember)
+    //     memberId = useSelector(state => state.member.user_info).memberId;
+    // const [edit, setEdit] = useState();
+    // const {
+    //     status,
+    //     data: detailList,
+    //     error,
+    //     isFetching,
+    //     refetch,
+    // } = usePostDetail(data.id);
+    // if (status !== 'success') return;
+    // console.log(detailList);
     const list = ['극대노', '대노', '중노', '소노', '극소노'];
-    const [name, setName] = useState(detailList.diary.title);
-    const [angryPhase, setAngryPhase] = useState(
-        list[detailList.diary.angryPhaseId],
-    );
-    const [ispublic, setIspublic] = useState(detailList.diary.public);
-    const [memo, setMemo] = useState(detailList.diary.content);
-    const handlePublic = v => {
-        // const publ = detailList.diary.public;
-        return v ? '공개글' : '비공개';
-    };
+    // const [name, setName] = useState(detailList.diary.title);
+    // const [angryPhase, setAngryPhase] = useState(
+    //     list[detailList.diary.angryPhaseId],
+    // );
+    // const [ispublic, setIspublic] = useState(detailList.diary.public);
+    // const [memo, setMemo] = useState(detailList.diary.content);
+    // const handlePublic = v => {
+    //     // const publ = detailList.diary.public;
+    //     return v ? '공개글' : '비공개';
+    // };
 
     const datas = {
         angryPhaseId: 4,
@@ -104,6 +104,7 @@ const ModaPostDetail = props => {
 
         dispatch(setMakePost({ data, navigate }));
     };
+    return <div>test</div>;
     return (
         <>
             {detailList && (
