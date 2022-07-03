@@ -108,6 +108,35 @@ export const getPost = createAsyncThunk(
         }
     },
 );
+export const setEditPost = createAsyncThunk(
+    'setEditPost',
+    async (data, { rejectWithValue }) => {
+        console.log(data.newdata);
+        const formdatas = new FormData();
+        formdatas.append('file', null);
+        formdatas.append('file', null);
+        formdatas.append(
+            'diary',
+            new Blob([JSON.stringify(data.newdata)], {
+                type: 'application/json',
+            }),
+        );
+        formdatas.append('public', data.newdata.publiccount);
+        console.log(formdatas);
+        try {
+            return await tokenURL
+                .put(`/diaries/${data.newdata.id}`, formdatas)
+                .then(res => {
+                    data.navigate('/main');
+                    location.reload();
+                    console.log(res);
+                });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
 export const bankSlice = createSlice({
     name: 'bank',
     initialState: {
@@ -155,6 +184,9 @@ export const bankSlice = createSlice({
             .addCase(setMakePost.fulfilled, (state, action) => {})
             .addCase(getPost.fulfilled, (state, action) => {
                 state.showDetail = action.payload;
+            })
+            .addCase(setEditPost.fulfilled, (state, action) => {
+                // state.showDetail
             });
     },
 });
