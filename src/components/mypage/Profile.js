@@ -83,10 +83,10 @@ const Profile = props => {
                                 <FlexDiv
                                     column={true}
                                     justify="center"
-                                    padding="0 0 0 10px;"
+                                    padding="0 0 0 0;"
                                 >
                                     <Nickname>
-                                        {profileList.nickname}님
+                                        <NicknameBold>{profileList.nickname}</NicknameBold>님
                                     </Nickname>
                                     <Nickname>좋은하루 되세요!</Nickname>
                                     <EmailAddres>sdaf</EmailAddres>
@@ -102,7 +102,7 @@ const Profile = props => {
                                     padding="30px 30px 30px 0px"
                                     justify="space-between"
                                 >
-                                    <Countbox>분노일기 수</Countbox>
+                                    <Countbox>분노 통장수</Countbox>
                                     <Counttext>
                                         {profileList.diaryCount} 개
                                     </Counttext>
@@ -217,6 +217,13 @@ const ProfileImage = styled.div`
 const Nickname = styled.p`
     font-size: 24px;
     font-weight: 500;
+    font-family: 'NotoSans-Medium';
+`;
+
+const NicknameBold = styled.span`
+    font-size : 26px;
+    font-weight: 900;
+    font-family: 'NotoSans-Bold';
 `;
 const EmailAddres = styled.div`
     border: 1px solid #ffffff;
