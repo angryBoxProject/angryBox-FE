@@ -4,12 +4,18 @@ import { tokenURL } from '../../Apis/API';
 export const getDiary = createAsyncThunk(
     'getDiary',
     async (lastDiaryId, { rejectWithValue }) => {
-        console.log('lastDiaryId:::', lastDiaryId);
+        console.log('lastDiaryIdlastDiaryId:::', lastDiaryId);
+        const data = {
+            startData: '',
+            endDate: '',
+            imageFilter: 2,
+            angry: [],
+        };
         try {
             return await tokenURL
-                .get(`/diaries?lastDiaryId=${lastDiaryId}&size=5`)
+                .post(`/diaries?lastDiaryId=${lastDiaryId}&size=5`, data)
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     return res.data.data.diaries;
                 });
         } catch (error) {
@@ -22,11 +28,17 @@ export const getFirstDiary = createAsyncThunk(
     'getFirstDiary',
     async (lastDiaryId, { rejectWithValue }) => {
         console.log('lastDiaryId:::', lastDiaryId);
+        const data = {
+            startData: '',
+            endDate: '',
+            imageFilter: 2,
+            angry: [],
+        };
         try {
             return await tokenURL
-                .get(`/diaries?lastDiaryId=0&size=5`)
+                .post(`/diaries?lastDiaryId=0&size=5`, data)
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     return res.data.data.diaries;
                 });
         } catch (error) {

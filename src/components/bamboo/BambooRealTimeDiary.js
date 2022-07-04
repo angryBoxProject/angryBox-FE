@@ -35,6 +35,7 @@ const BambooRealTimeDiary = props => {
                     !listloading &&
                     isMount.current
                 ) {
+                    console.log('test');
                     dispatch(getDiary(lastDiaryId));
                 }
             }

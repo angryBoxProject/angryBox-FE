@@ -438,7 +438,7 @@ const ModalDetailContentOutLine = styled.div`
     height: 50vh;
     width: 100%;
 `;
-const ModalDetailContent = styled.p`
+const ModalDetailContent = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 300;
