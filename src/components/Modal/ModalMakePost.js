@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
 import { setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
+import ModalLinterimList from './ModalLinterimList';
 
 const ModalMakePost = props => {
     const {
@@ -29,6 +30,7 @@ const ModalMakePost = props => {
     const scrollRef = useRef();
     const isMount = useIsMount();
     const [name, setName] = useState();
+    const [modalstatelinterim, Setmodallinterim] = useState(false);
     const [angryPhase, setAngryPhase] = useState('극소노');
     const [ispublic, setIspublic] = useState('비공개');
     const [memo, setMemo] = useState();
@@ -39,6 +41,32 @@ const ModalMakePost = props => {
     const handleMakePost = () => {
         let publiccount = false;
         const angrystate = [
+            '',
+            '극소노',
+            '소노',
+            '중노',
+            '대노',
+            '극대노',
+        ].findIndex(e => e === angryPhase);
+        if (['비공개', '공개글'].findIndex(e => e === ispublic)) {
+            publiccount = true;
+        }
+
+        const data = {
+            title: name,
+            content: memo,
+            angryPhaseId: angrystate,
+            interimId: 0,
+            publiccount: publiccount,
+        };
+        console.log(data);
+
+        dispatch(setMakePost({ data, navigate }));
+    };
+    const handleMakelinterim = () => {
+        let publiccount = false;
+        const angrystate = [
+            '',
             '극소노',
             '소노',
             '중노',
@@ -126,18 +154,47 @@ const ModalMakePost = props => {
                                 </FlexDiv>
 
                                 <ModalButton>
-                                    <Button margin="10px" onClick={close}>
-                                        닫기
+                                    <Button
+                                        is_white
+                                        margin="10px"
+                                        onClick={() => {
+                                            console.log('임시저장');
+                                        }}
+                                    >
+                                        임시저장하기
+                                    </Button>
+                                    <Button
+                                        is_white
+                                        margin="10px"
+                                        onClick={() => {
+                                            console.log('임시저장불러오기');
+                                            Setmodallinterim(true);
+                                        }}
+                                    >
+                                        임시저장불러오기
                                     </Button>
                                     <Button
                                         margin="10px"
                                         onClick={handleMakePost}
                                     >
-                                        만들기
+                                        완료
                                     </Button>
                                 </ModalButton>
                             </ModalPopup>
                         </MainModal>
+                        <ModalLinterimList
+                            title="IMPORT FILE"
+                            subtitle="게시글 불러오기"
+                            width="50%"
+                            height="50%"
+                            open={modalstatelinterim}
+                            close={() => {
+                                Setmodallinterim(false);
+                            }}
+                            listclick={() => {
+                                SetmodalPost(true);
+                            }}
+                        />
                     </Section>
                 ) : null}
             </div>

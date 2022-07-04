@@ -9,8 +9,7 @@ import ModaPostDetail from '../Modal/ModaPostDetail';
 
 const Post = props => {
     const { width, height, data, index } = props;
-    const [modalPost, setModalPost] = useState();
-
+    const [modalPost, setModalPost] = useState(false);
     return (
         <>
             {data && (
@@ -50,6 +49,8 @@ const Post = props => {
                             }}
                             data={data}
                             button1name={'닫기'}
+                            is_twobutton
+                            button2name={'수정하기'}
                         ></ModaPostDetail>
                     )}
                 </div>

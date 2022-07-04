@@ -13,6 +13,7 @@ import {
 } from '../redux/modules/bamboo';
 import TopDiary from '../components/bamboo/TopDiary';
 import RealTimeDiary from '../components/bamboo/RealTimeDiary';
+import BambooGallayList from '../components/bamboo/BambooGallayList';
 const Bamboo = props => {
     const dispatch = useDispatch();
     const { TopDiarylist } = useSelector(state => state.bamboo);
@@ -31,7 +32,10 @@ const Bamboo = props => {
                         <TopDiary TopDiarylist={TopDiarylist} />
                         <RealTimeDiary Diarylist={Diarylist} />
                     </ListDiary>
-                    <Titlepagename>BAMBOO FOREST</Titlepagename>
+                    <FlexDiv column="column">
+                        <Titlepagename>BAMBOO FOREST</Titlepagename>
+                        <BambooGallayList />
+                    </FlexDiv>
                 </FlexDiv>
             </Warp>
             <BambooSocket />

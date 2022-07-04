@@ -50,7 +50,8 @@ const ModaPostOneDetail = props => {
         return v ? '공개글' : '비공개';
     };
     const handleAngryState = v => {
-        const list = ['극대노', '대노', '중노', '소노', '극소노'];
+        const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
+
         return list[v];
     };
 
