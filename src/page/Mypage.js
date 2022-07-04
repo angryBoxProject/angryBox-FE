@@ -37,6 +37,7 @@ const Mypage = props => {
                         abled
                         width="104px"
                         padding="9px"
+                        margin="0 0 0 15px"
                         onClick={() => {
                             //클릭이벤트
                         }}
