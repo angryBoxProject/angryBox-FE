@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useIsMount from '../../hooks/useIsMount';
+import { getGallery } from '../../redux/modules/bamboo';
 import { getBankFirstPostList } from '../../redux/modules/bank';
 import { getBankPostList } from '../../redux/modules/main';
 import theme from '../../Styles/theme';
@@ -12,11 +13,16 @@ const BambooGallayList = props => {
     const {} = props;
     const [modalPost, setModalPost] = useState();
 
-    const { lastDiaryId, bankpostlist, hasMoreBankPosts, listloading } =
-        useSelector(state => state.main);
-    const data = {
-        lastDiaryId: lastDiaryId,
+    const {
+        lastGalleryId,
+        Gallerylist,
+        hasMoreGallerylist,
+        Gallerylistloading,
+    } = useSelector(state => state.bamboo);
+    let data = {
+        lastDiaryId: lastGalleryId,
     };
+    console.log(lastGalleryId);
 
     const dispatch = useDispatch();
     const scrollRef = useRef();
@@ -24,7 +30,7 @@ const BambooGallayList = props => {
     let flag = false;
     useEffect(() => {
         if (!flag) {
-            dispatch(getBankFirstPostList(data));
+            dispatch(getGallery(data));
             flag = true;
         }
     }, []);
@@ -35,25 +41,27 @@ const BambooGallayList = props => {
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
             if (clientHeight + scrollTop > scrollHeight - 300) {
                 if (
-                    hasMoreBankPosts &&
-                    bankpostlist &&
-                    !listloading &&
+                    hasMoreGallerylist &&
+                    Gallerylist &&
+                    !Gallerylistloading &&
                     isMount.current
                 ) {
-                    dispatch(getBankPostList(data));
+                    dispatch(getGallery(data));
                 }
             }
         }
-        scrollRef.current.addEventListener('scroll', onScroll);
-        return () => {
-            scrollRef.current.removeEventListener('scroll', onScroll);
-        };
-    }, [hasMoreBankPosts, bankpostlist, listloading, isMount]);
+        // scrollRef.current.addEventListener('scroll', onScroll);
+        // return () => {
+        //     scrollRef.current.removeEventListener('scroll', onScroll);
+        // };
+    }, [hasMoreGallerylist, Gallerylist, Gallerylistloading, isMount]);
     return (
         <>
-            <ListScroll ref={scrollRef}>
-                {bankpostlist && <Posts postlist={bankpostlist} />}
-            </ListScroll>
+            {Gallerylist && (
+                <ListScroll ref={scrollRef}>
+                    {Gallerylist && <Posts postlist={Gallerylist} />}
+                </ListScroll>
+            )}
         </>
     );
 };

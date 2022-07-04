@@ -418,7 +418,7 @@ const ModalDetailTitle = styled.p`
     height: 60px;
     color: #f6f6f6;
 `;
-const ModalDetailBox = styled.p`
+const ModalDetailBox = styled.div`
     width: ${props => props.width};
     margin: 10px;
     border: 1px solid #f6f6f6;
@@ -438,7 +438,7 @@ const ModalDetailContentOutLine = styled.div`
     height: 50vh;
     width: 100%;
 `;
-const ModalDetailContent = styled.p`
+const ModalDetailContent = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 300;
