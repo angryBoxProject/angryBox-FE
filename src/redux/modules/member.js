@@ -114,6 +114,7 @@ export const memberSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.user_info = action.payload;
                 state.isLogin = true;
+                localStorage.setItem('nickname', state.user_info.nickname);
             })
             .addCase(signup.fulfilled, (state, action) => {
                 state.user_info = action.payload;
