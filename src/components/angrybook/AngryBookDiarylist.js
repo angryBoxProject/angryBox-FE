@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
@@ -6,9 +6,12 @@ import { useBankDiarylist } from '../../hooks/useBankDiarylist';
 import bank, { getMonthDiaryList } from '../../redux/modules/bank';
 import Moment from 'react-moment';
 import moment from 'moment';
+import ModaPostDetail from '../Modal/ModaPostDetail';
 
 const AngryBookDiarylist = props => {
     const dispatch = useDispatch();
+    const [modalPost, setModalPost] = useState();
+    console.log(modalPost);
     const data = {
         date: '2022-06-01',
         lastDiaryId: 0,
@@ -24,7 +27,6 @@ const AngryBookDiarylist = props => {
 
     // const month = moment('2019-12-10', 'YYYY-MM-DD');
 
-    console.log();
     console.log(bankdiarylist);
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
@@ -51,18 +53,41 @@ const AngryBookDiarylist = props => {
                     <>
                         <Warp>
                             {bankdiarylist?.map((data, index) => (
-                                <FlexDiv
-                                    justify="space-between"
-                                    padding="1% 0px 0px 0px"
-                                >
-                                    <div>
-                                        {monthdate(data.dateTime) +
-                                            '/' +
-                                            daydate(data.dateTime)}
-                                    </div>
-                                    <div>{data.title}</div>
-                                    <div>{angryPhase(data.angryPhaseId)}</div>
-                                </FlexDiv>
+                                <>
+                                    <FlexDiv
+                                        justify="space-between"
+                                        padding="1% 0px 0px 0px"
+                                        onClick={() => {
+                                            setModalPost(true);
+                                            // console.log('testse');
+                                        }}
+                                    >
+                                        <div>
+                                            {monthdate(data.dateTime) +
+                                                '/' +
+                                                daydate(data.dateTime)}
+                                        </div>
+                                        <div>{data.title}</div>
+                                        <div>
+                                            {angryPhase(data.angryPhaseId)}
+                                        </div>
+                                    </FlexDiv>
+                                    <ModaPostDetail
+                                        title="ANGRY SAVING"
+                                        subtitle="분노 게시글"
+                                        width="70%"
+                                        height="80%"
+                                        open={modalPost}
+                                        close={() => {
+                                            setModalPost(false);
+                                        }}
+                                        data={data}
+                                        button1name={'닫기'}
+                                        is_twobutton
+                                        button2name={'수정하기'}
+                                        is_allclosebutton
+                                    ></ModaPostDetail>
+                                </>
                             ))}
                         </Warp>
                     </>

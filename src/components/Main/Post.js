@@ -1,36 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
 import moment from 'moment';
 import { ReactComponent as Locked } from '../../static/image/Locked.svg';
 import { ReactComponent as UnLocked } from '../../static/image/UnLock.svg';
+import ModaPostDetail from '../Modal/ModaPostDetail';
 
 const Post = props => {
     const { width, height, data, index } = props;
-    console.log(data);
+    const [modalPost, setModalPost] = useState(false);
     return (
         <>
             {data && (
-                <BackGround>
-                    <Warp width={width} height={height}>
-                        <FlexDiv juFlexDiv justify="space-between">
-                            <div>NO.{data.diaryNo}</div>
-                            <Lockicon>
-                                {data.public ? <UnLocked /> : <Locked />}
-                            </Lockicon>
-                        </FlexDiv>
-                        <FlexDiv>
-                            <FlexDiv column="column">
-                                <div>
-                                    {moment(data.dateTime).format('MM.DD')}
-                                </div>
-                                <div>{data.title}</div>
+                <div>
+                    <BackGround
+                        onClick={() => {
+                            setModalPost(true);
+                        }}
+                    >
+                        <Warp width={width} height={height}>
+                            <FlexDiv juFlexDiv justify="space-between">
+                                <div>NO.{data.diaryNo}</div>
+                                <Lockicon>
+                                    {data.public ? <UnLocked /> : <Locked />}
+                                </Lockicon>
                             </FlexDiv>
-                            <div>{data.content}</div>
-                        </FlexDiv>
-                    </Warp>
-                </BackGround>
+                            <FlexDiv>
+                                <FlexDiv column="column">
+                                    <div>
+                                        {moment(data.dateTime).format('MM.DD')}
+                                    </div>
+                                    <div>{data.title}</div>
+                                </FlexDiv>
+                                <div>{data.content}</div>
+                            </FlexDiv>
+                        </Warp>
+                    </BackGround>
+                    {data && (
+                        <ModaPostDetail
+                            title="ANGRY SAVING"
+                            subtitle="분노 게시글"
+                            width="70%"
+                            height="80%"
+                            open={modalPost}
+                            close={() => {
+                                setModalPost(false);
+                            }}
+                            data={data}
+                            button1name={'닫기'}
+                            is_twobutton
+                            button2name={'수정하기'}
+                        ></ModaPostDetail>
+                    )}
+                </div>
             )}
         </>
     );

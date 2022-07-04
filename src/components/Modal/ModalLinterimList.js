@@ -4,11 +4,11 @@ import { FlexDiv } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
-import { useBanks } from '../../hooks/useBanks';
 import ModalImportposttoBank from './ModalImportposttoBank';
 import ModaPostDetail from './ModaPostDetail';
+import { useLinterims } from '../../hooks/useLinterims';
 
-const ModalImportBook = props => {
+const ModalLinterimList = props => {
     const {
         open,
         close,
@@ -24,8 +24,15 @@ const ModalImportBook = props => {
     const [selectbankId, setSelectbankId] = useState();
     const [modalstatePost, SetmodalPost] = useState(false);
 
-    const { status, data: bankList, error, isFetching, refetch } = useBanks();
+    const {
+        status,
+        data: linterimList,
+        error,
+        isFetching,
+        refetch,
+    } = useLinterims();
 
+    console.log(linterimList);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
@@ -48,17 +55,17 @@ const ModalImportBook = props => {
                         <FlexDiv justify="space-between" padding="10px">
                             <ModalTextNo select={true}>No</ModalTextNo>
                             <ModalTextBankName select={true}>
-                                적금명
+                                게시글명
                             </ModalTextBankName>
                             <ModalTextBankdes select={true}>
-                                세부 설명
+                                본문
                             </ModalTextBankdes>
                             <ModalTextBankTime select={true}>
-                                설계일
+                                작성일
                             </ModalTextBankTime>
                         </FlexDiv>
                         <hr />
-                        {bankList.coinBankList.map((data, index) => (
+                        {linterimList.map((data, index) => (
                             <FlexDiv
                                 key={index}
                                 justify="space-between"
@@ -71,23 +78,19 @@ const ModalImportBook = props => {
                                 }}
                             >
                                 <ModalTextNo select={select}>
-                                    {data.coinBankId}
+                                    {data.id}
                                 </ModalTextNo>
                                 <ModalTextBankName select={select}>
-                                    {data.coinBankName}
+                                    {data.title}
                                 </ModalTextBankName>
                                 <ModalTextBankdes select={select}>
                                     게시글 수
                                     <ModalTextBankdesNum>
-                                        {data.diaryCount}
-                                    </ModalTextBankdesNum>
-                                    {` `}총 쓰담 수
-                                    <ModalTextBankdesNum>
-                                        {data.todackCount}
+                                        {data.content}
                                     </ModalTextBankdesNum>
                                 </ModalTextBankdes>
                                 <ModalTextBankTime select={select}>
-                                    {data.bankAccount}
+                                    {data.dateTime}
                                 </ModalTextBankTime>
                             </FlexDiv>
                         ))}
@@ -131,7 +134,7 @@ const ModalImportBook = props => {
                                     </ModalButton>
                                 </ModalPopup>
                             </MainModal>
-                            <ModalImportposttoBank
+                            {/* <ModalImportposttoBank
                                 title="FILE LIST"
                                 subtitle="게시글 목록"
                                 width="80%"
@@ -141,7 +144,7 @@ const ModalImportBook = props => {
                                 close={() => {
                                     SetmodalPost(false);
                                 }}
-                            />
+                            /> */}
                         </Section>
                     </>
                 ) : null}
@@ -281,7 +284,7 @@ const ModalButtonCancel = styled.div`
 `;
 
 // default props 작성 위치
-ModalImportBook.defaultProps = {
+ModalLinterimList.defaultProps = {
     open: false,
     close: false,
     title: '',
@@ -292,4 +295,4 @@ ModalImportBook.defaultProps = {
     height: '80%',
 };
 
-export default ModalImportBook;
+export default ModalLinterimList;

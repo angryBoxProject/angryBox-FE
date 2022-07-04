@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '../../Styles/theme';
 import { FlexDiv } from '../../elements';
@@ -9,11 +9,14 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getTopDiary, removelistTopDiary } from '../../redux/modules/bamboo';
+import ModaPostDetail from '../Modal/ModaPostDetail';
 const TopDiary = props => {
     const { TopDiarylist } = props;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [modalPost, setModalPost] = useState();
+
     console.log(TopDiarylist);
     return (
         <>
@@ -42,17 +45,39 @@ const TopDiary = props => {
                 {TopDiarylist?.map((data, index) => {
                     if (index < 5) {
                         return (
-                            <FlexDiv
-                                padding="13px 0px 14px 0px"
-                                justify="space-between"
-                                key={index}
-                            >
-                                <span>{data.title}</span>
-                                <Todack />
-                                <span>{data.todackCount}</span>
-                                <View />
-                                <span>{data.viewCount}</span>
-                            </FlexDiv>
+                            <>
+                                <FlexDiv
+                                    padding="13px 0px 14px 0px"
+                                    justify="space-between"
+                                    key={index}
+                                    onClick={() => {
+                                        setModalPost(true);
+                                    }}
+                                >
+                                    <span>{data.title}</span>
+                                    <Todack />
+                                    <span>{data.todackCount}</span>
+                                    <View />
+                                    <span>{data.viewCount}</span>
+                                </FlexDiv>
+                                <ModaPostDetail
+                                    title="ANGRY SAVING"
+                                    subtitle="분노 게시글"
+                                    width="70%"
+                                    height="80%"
+                                    open={modalPost}
+                                    close={() => {
+                                        setModalPost(false);
+                                    }}
+                                    data={data}
+                                    button1name={'닫기'}
+                                    is_twobutton
+                                    button2name={'수정하기'}
+                                    button2onClick={() => {
+                                        console.log('button2onClick');
+                                    }}
+                                ></ModaPostDetail>
+                            </>
                         );
                     }
                 })}

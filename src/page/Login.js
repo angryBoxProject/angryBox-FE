@@ -49,9 +49,8 @@ const Login = () => {
     return (
         <>
             <LoginBox>
-                로그인
-                <div className="col-start-2 col-end-5 xl:grid">
-                    가입하신 이메일 주소로 로그인하세요
+                <LogoBox>ANGRY BANK</LogoBox>
+                <WrapBox>
                     <div className="flex flex-col mt-10">
                         <InputNoTitle
                             cardSize="2"
@@ -72,13 +71,13 @@ const Login = () => {
                             onKeyDown={handleKeyDownSendMessage}
                         />
                         <Button size="3" onClick={loginhandle}>
-                            로그인
+                            로그인하기
                         </Button>
                         <SocialLogin />
-                        <button className="bg-yellow-400">카카오로그인</button>
-                        <button className="bg-yellow-100">구글로그인</button>
+                        {/* <button className="bg-yellow-400">카카오로그인</button> */}
+                        {/* <button className="bg-yellow-100">구글로그인</button> */}
                     </div>
-                </div>
+                </WrapBox>
             </LoginBox>
         </>
     );
@@ -86,6 +85,17 @@ const Login = () => {
 
 const LoginBox = tw.div`
 flex flex-col p-3 justify-center items-center
+`;
+
+const LogoBox = styled.div`
+    font-weight: 900; 
+    font-size: 40px;
+    color: red;
+    font-family: 'Hanson';
+`;
+
+const WrapBox = styled.div`
+    width: 632px;
 `;
 
 export default Login;
