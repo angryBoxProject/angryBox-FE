@@ -25,7 +25,7 @@ const Main = () => {
     // const { openModal } = props;
     const [isOpen, setOpen] = useState(false);
     const [isViewOpen, setViewOpen] = useState(false);
-    const memberNick = useSelector(state => state.member.user_info).nickname;
+    const memberNick = localStorage.getItem('nickname');
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
     const [modalmakebank, Setmodalmakebank] = useState(false);
     const [modalmakePost, SetmodalmakePost] = useState(false);
