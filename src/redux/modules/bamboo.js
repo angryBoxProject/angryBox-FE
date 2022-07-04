@@ -4,10 +4,19 @@ import { tokenURL } from '../../Apis/API';
 export const getDiary = createAsyncThunk(
     'getDiary',
     async (lastDiaryId, { rejectWithValue }) => {
-        console.log('lastDiaryId:::', lastDiaryId);
+        console.log('lastDiaryIdlastDiaryId:::', lastDiaryId);
+        const data = {
+            startDate: '',
+            endDate: '',
+            imageFilter: 2,
+            angry: [],
+        };
         try {
             return await tokenURL
-                .get(`/diaries?lastDiaryId=${lastDiaryId}&size=5`)
+                .post(
+                    `https://angrybox.link/diaries?lastDiaryId=${lastDiaryId}&size=5`,
+                    data,
+                )
                 .then(res => {
                     // console.log(res);
                     return res.data.data.diaries;
@@ -22,11 +31,20 @@ export const getFirstDiary = createAsyncThunk(
     'getFirstDiary',
     async (lastDiaryId, { rejectWithValue }) => {
         console.log('lastDiaryId:::', lastDiaryId);
+        const data = {
+            startData: '',
+            endDate: '',
+            imageFilter: 2,
+            angry: [],
+        };
         try {
             return await tokenURL
-                .get(`/diaries?lastDiaryId=0&size=5`)
+                .post(
+                    `https://angrybox.link/diaries?lastDiaryId=0&size=5`,
+                    data,
+                )
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     return res.data.data.diaries;
                 });
         } catch (error) {
@@ -67,17 +85,39 @@ export const getFirstTopDiary = createAsyncThunk(
         }
     },
 );
+export const getGallery = createAsyncThunk(
+    'getGallery',
+    async (data, { rejectWithValue }) => {
+        console.log('lastTopDiaryId:::', data.lastDiaryId);
+        try {
+            return await tokenURL
+                .get(`/gallery?lastDiaryId=10&size=10`)
+                .then(res => {
+                    console.log(res);
+                    return res.data.data.list;
+                });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 export const bambooSlice = createSlice({
     name: 'bamboo',
     initialState: {
         lastDiaryId: 0,
         lastTopDiaryId: 0,
+        lastGalleryId: 0,
         Diarylist: [],
         TopDiarylist: [],
+        Gallerylist: [],
         hasMorelist: true,
         hasMoreToplist: true,
+        hasMoreGallerylist: true,
         listloading: false,
         Toplistloading: false,
+        Gallerylistloading: false,
     },
     reducers: {
         pushrealDiary: (state, action) => {
@@ -136,6 +176,23 @@ export const bambooSlice = createSlice({
                 state.Toplistloading = false;
                 if (state.lastTopDiaryId === 1) state.hasMoreToplist = false;
             })
+            .addCase(getGallery.pending, state => {
+                state.Gallerylistloading = true;
+            })
+            .addCase(getGallery.fulfilled, (state, action) => {
+                if (!state.Gallerylistloading) return;
+                state.Gallerylist.push(...action.payload);
+                // // const data = state.notilist.filter(data => {
+                // //     console.log(data.id);
+                // // });
+                // //중복제거해야함
+                state.lastGalleryId =
+                    state.Gallerylist[state.Gallerylist.length - 1].id;
+                state.hasMoreGallerylist = action.payload.length === 5;
+                state.Gallerylistloading = false;
+                if (state.lastGalleryId === 1) state.hasMoreGallerylist = false;
+            })
+
             .addCase(getFirstTopDiary.fulfilled, (state, action) => {
                 state.TopDiarylist = [];
                 state.TopDiarylist.push(...action.payload);

@@ -12,7 +12,7 @@ export const login = createAsyncThunk(
             }).then(response => {
                 console.log(response);
                 setCookie('token', response.headers.authorization);
-                navigate('/main');
+                navigate('/main', { replace: true });
 
                 return response.data.data;
             });
