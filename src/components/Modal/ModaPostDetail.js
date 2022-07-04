@@ -418,7 +418,7 @@ const ModalDetailTitle = styled.p`
     height: 60px;
     color: #f6f6f6;
 `;
-const ModalDetailBox = styled.p`
+const ModalDetailBox = styled.div`
     width: ${props => props.width};
     margin: 10px;
     border: 1px solid #f6f6f6;
