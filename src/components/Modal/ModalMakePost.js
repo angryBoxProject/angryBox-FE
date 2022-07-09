@@ -59,7 +59,6 @@ const ModalMakePost = props => {
             interimId: 0,
             publiccount: publiccount,
         };
-        console.log(data);
 
         dispatch(setMakePost({ data, navigate }));
     };
@@ -84,7 +83,6 @@ const ModalMakePost = props => {
             interimId: 0,
             publiccount: publiccount,
         };
-        console.log(data);
 
         dispatch(setMakePost({ data, navigate }));
     };
@@ -154,7 +152,7 @@ const ModalMakePost = props => {
                                 </FlexDiv>
 
                                 <ModalButton>
-                                    <Button
+                                    {/* <Button
                                         is_white
                                         margin="10px"
                                         onClick={() => {
@@ -172,7 +170,7 @@ const ModalMakePost = props => {
                                         }}
                                     >
                                         임시저장불러오기
-                                    </Button>
+                                    </Button> */}
                                     <Button
                                         margin="10px"
                                         onClick={handleMakePost}

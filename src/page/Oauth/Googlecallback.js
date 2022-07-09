@@ -11,7 +11,6 @@ const Googlecallback = props => {
     useEffect(() => {
         // dispatch(googleLogin({ code, navigate }));
     }, [dispatch]);
-    console.log(code);
     return (
         <>
             <Spinner></Spinner>

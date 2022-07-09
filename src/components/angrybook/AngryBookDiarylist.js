@@ -11,9 +11,10 @@ import ModaPostDetail from '../Modal/ModaPostDetail';
 const AngryBookDiarylist = props => {
     const dispatch = useDispatch();
     const [modalPost, setModalPost] = useState();
-    console.log(modalPost);
+    const selectDay = useSelector(state => state.main.calendarDay);
+    console.log(selectDay);
     const data = {
-        date: '2022-06-01',
+        date: selectDay,
         lastDiaryId: 0,
         size: 5,
     };
@@ -23,11 +24,10 @@ const AngryBookDiarylist = props => {
         error,
         isFetching,
         refetch,
-    } = useBankDiarylist('2022-06-01');
+    } = useBankDiarylist(selectDay);
 
     // const month = moment('2019-12-10', 'YYYY-MM-DD');
 
-    console.log(bankdiarylist);
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
         return list[id];
@@ -38,6 +38,7 @@ const AngryBookDiarylist = props => {
     const daydate = date => {
         return moment(date, 'YYYY-MM-DD').day();
     };
+    console.log(bankdiarylist);
 
     const renderByStatus = useCallback(() => {
         switch (status) {
@@ -104,7 +105,47 @@ const AngryBookDiarylist = props => {
     //     dispatch(getMonthDiaryList(data));
     // }, []);
     // console.log(banklist);
-    return <>{renderByStatus()}</>;
+    return (
+        <>
+            <Warp>
+                {bankdiarylist?.map((data, index) => (
+                    <>
+                        <FlexDiv
+                            justify="space-between"
+                            padding="1% 0px 0px 0px"
+                            onClick={() => {
+                                setModalPost(true);
+                                // console.log('testse');
+                            }}
+                        >
+                            <div>
+                                {monthdate(data.dateTime) +
+                                    '/' +
+                                    daydate(data.dateTime)}
+                            </div>
+                            <div>{data.title}</div>
+                            <div>{angryPhase(data.angryPhaseId)}</div>
+                        </FlexDiv>
+                        <ModaPostDetail
+                            title="ANGRY SAVING"
+                            subtitle="분노 게시글"
+                            width="70%"
+                            height="80%"
+                            open={modalPost}
+                            close={() => {
+                                setModalPost(false);
+                            }}
+                            data={data}
+                            button1name={'닫기'}
+                            is_twobutton
+                            button2name={'수정하기'}
+                            is_allclosebutton
+                        ></ModaPostDetail>
+                    </>
+                ))}
+            </Warp>
+        </>
+    );
 };
 
 const Warp = styled.div`

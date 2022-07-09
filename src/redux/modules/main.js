@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 import { tokenURL } from '../../Apis/API';
 
 export const getMonthDiaryList = createAsyncThunk(
@@ -80,10 +81,14 @@ export const mainSlice = createSlice({
         bankpostlist: [],
         hasMoreBankPosts: true,
         Postlistloading: false,
+        calendarDay: moment().format('YYYY-MM-DD'),
     },
     reducers: {
         setlastnotiId: (state, action) => {
             state.lastnotiId = state.notilist[state.notilist.length - 1].id;
+        },
+        setCalendarDay: (state, action) => {
+            state.calendarDay = action.payload;
         },
     },
     extraReducers: builder => {
@@ -115,6 +120,6 @@ export const mainSlice = createSlice({
     },
 });
 
-export const { setnotilist } = mainSlice.actions;
+export const { setnotilist, setCalendarDay } = mainSlice.actions;
 
 export default mainSlice.reducer;

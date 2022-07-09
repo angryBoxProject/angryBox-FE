@@ -22,6 +22,7 @@ import Bamboo from './page/Bamboo';
 import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
 import BambooTopDiary from './components/bamboo/BambooTopDiary';
 import AngryBook from './page/AngryBook';
+import Splash from './page/Splash';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -45,6 +46,7 @@ function App() {
                     <Warp>
                         <Header title="헤더 "></Header>
                         <Routes>
+                            <Route path="/" element={<Splash />} />
                             <Route path="/main" element={<Main />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/mypage" element={<Mypage />} />
