@@ -15,6 +15,7 @@ const Nav = props => {
                 <FlexDiv grow="1" column={true}>
                     <IconWrapBox>
                         <NavLink
+                            reloadDocument
                             to="/main"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -27,6 +28,7 @@ const Nav = props => {
                     </IconWrapBox>
                     <IconWrapBox>
                         <NavLink
+                            reloadDocument
                             to="/bamboo"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -39,6 +41,7 @@ const Nav = props => {
                     </IconWrapBox>
                     <IconWrapBox>
                         <NavLink
+                            reloadDocument
                             to="/angrybook"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -51,6 +54,7 @@ const Nav = props => {
                     </IconWrapBox>
                     <IconWrapBox>
                         <NavLink
+                            reloadDocument
                             to="/mypage"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -60,9 +64,13 @@ const Nav = props => {
                         >
                             <BsPerson size="27px"/>
                         </NavLink>
+
+
                     </IconWrapBox>
-                    <IconWrapBox>
+                   /* <IconWrapBox>
+
                         <NavLink
+                            reloadDocument
                             to="/login"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -72,7 +80,9 @@ const Nav = props => {
                         >
                             <RiFileListLine size="27px"/>
                         </NavLink>
-                    </IconWrapBox>
+
+                    </IconWrapBox> */
+
                 </FlexDiv>
             </StyledWrap>
         </>

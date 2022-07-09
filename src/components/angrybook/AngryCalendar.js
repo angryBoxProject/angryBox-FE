@@ -5,26 +5,41 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { useMonthBankCalender } from '../../hooks/useMonthBankCalender';
 import useIsMount from '../../hooks/useIsMount';
+import { useDispatch } from 'react-redux';
+import { setCalendarDay } from '../../redux/modules/main';
 
 const AngryCalendar = props => {
-    const Selectdate = '2022-04';
     const [value, SetValue] = useState();
     const [mark, setMark] = useState(['']);
+    const [selectMonth, setSelectMonth] = useState(moment().format('YYYY-MM'));
+    const dispatch = useDispatch();
     const {
         status,
         data: Markerlist,
         error,
         isFetching,
         refetch,
-    } = useMonthBankCalender(Selectdate);
+    } = useMonthBankCalender(selectMonth);
+    // console.log(Object.keys(Markerlist));
     const ismount = useIsMount();
     useEffect(() => {
+        if (status === 'success') {
+            if (Markerlist) {
+                setMark(prev => [
+                    ...new Set([...prev, ...Object.keys(Markerlist)]),
+                ]);
+            }
+        }
         // if (ismount.current) {
         //     if(status)
         //     setMark(Object.keys(Markerlist));
         // }
-    }, [ismount]);
-    console.log(mark);
+    }, [ismount, status, selectMonth]);
+
+    useEffect(() => {
+        refetch();
+    }, [selectMonth]);
+    // setSelectMonth(moment(date).format('YYYY-MM'));
 
     return (
         <>
@@ -32,11 +47,23 @@ const AngryCalendar = props => {
                 <Calendar
                     onChange={e => {
                         SetValue(e);
-                        console.log('onChange', e);
+                        dispatch(
+                            setCalendarDay(moment(e).format('YYYY-MM-DD')),
+                        );
+                    }}
+                    onActiveStartDateChange={({
+                        action,
+                        activeStartDate,
+                        value,
+                        view,
+                    }) => {
+                        setSelectMonth(
+                            moment(activeStartDate).format('YYYY-MM'),
+                        );
                     }}
                     value={value}
                     formatMonthYear={(locale, date) =>
-                        moment(date).format('YYYY.MM')
+                        moment(date).format('YYYY-MM')
                     }
                     // 날짜표기형식 01 => 1
                     formatDay={(locale, date) => moment(date).format('D')}
@@ -63,7 +90,6 @@ const AngryCalendar = props => {
                                 )
                             ) {
                                 isDot.push(<div className="dot"></div>);
-                                console.log(isDot);
                             }
                         return (
                             <>

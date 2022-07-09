@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getDiary, getTopDiary } from '../../redux/modules/bamboo';
 import { ReactComponent as Eyes } from '../../static/image/Eyes.svg';
 import theme from '../../Styles/theme';
+import ModaPostDetail from '../Modal/ModaPostDetail';
 import BambooListCard from './BambooListCard';
 
 const BambooRealTimeDiary = props => {
@@ -18,24 +19,18 @@ const BambooRealTimeDiary = props => {
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
+    const [modalPost, setModalPost] = useState();
 
     useEffect(() => {
         function onScroll() {
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
             if (clientHeight + scrollTop > scrollHeight - 300) {
-                console.log(
-                    'hasMorelist',
-                    hasMorelist,
-                    '!listloading',
-                    listloading,
-                );
                 if (
                     hasMorelist &&
                     Diarylist &&
                     !listloading &&
                     isMount.current
                 ) {
-                    console.log('test');
                     dispatch(getDiary(lastDiaryId));
                 }
             }
@@ -45,7 +40,6 @@ const BambooRealTimeDiary = props => {
             scrollRef.current.removeEventListener('scroll', onScroll);
         };
     }, [hasMorelist, Diarylist, listloading, isMount]);
-    console.log('Diarylist::', Diarylist);
     return (
         <>
             <Warp>
@@ -77,7 +71,24 @@ const BambooRealTimeDiary = props => {
                                 todackCount={data.todackCount}
                                 todayTopId={data.todayTopId}
                                 viewCount={data.viewCount}
+                                onClick={() => {
+                                    setModalPost(true);
+                                }}
                             />
+                            <ModaPostDetail
+                                title="ANGRY SAVING"
+                                subtitle="분노 게시글"
+                                width="70%"
+                                height="80%"
+                                open={modalPost}
+                                close={() => {
+                                    setModalPost(false);
+                                }}
+                                data={data}
+                                button1name={'닫기'}
+                                is_twobutton
+                                button2name={'수정하기'}
+                            ></ModaPostDetail>
                         </>
                     ))}
                 </ListScroll>

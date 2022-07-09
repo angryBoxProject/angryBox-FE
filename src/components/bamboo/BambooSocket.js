@@ -28,7 +28,6 @@ const BambooSocket = props => {
     }, []);
 
     const connect = () => {
-        console.log('connet');
         client.connect({}, onConnected, onError);
         sock.addEventListener('open', () => {
             console.log('Connected to Browser!!!😀');

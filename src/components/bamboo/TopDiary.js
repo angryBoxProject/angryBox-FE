@@ -17,7 +17,6 @@ const TopDiary = props => {
     const dispatch = useDispatch();
     const [modalPost, setModalPost] = useState();
 
-    console.log(TopDiarylist);
     return (
         <>
             <div>
@@ -73,9 +72,7 @@ const TopDiary = props => {
                                     button1name={'닫기'}
                                     is_twobutton
                                     button2name={'수정하기'}
-                                    button2onClick={() => {
-                                        console.log('button2onClick');
-                                    }}
+                                    button2onClick={() => {}}
                                 ></ModaPostDetail>
                             </>
                         );

@@ -12,7 +12,6 @@ export const history = createBrowserHistory();
 
 export const store = configureStore({
     reducer: {
-        image: imageReducer,
         member: memberReducer,
         noti: notiReducer,
         bamboo: bambooReducer,

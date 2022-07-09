@@ -6,13 +6,13 @@ const fetchDiaryList = async date => {
     const { data } = await tokenURL.get(
         `bank/statistics/calender?select=${date}`,
     );
-    console.log(data);
     return data.data;
 };
 
 export const useMonthBankCalender = date => {
     return useQuery(['MonthBankCalender', date], () => fetchDiaryList(date), {
         refetchOnWindowFocus: false,
+        refetchInterval: date,
         enabled: !!date,
         // refetchInterval: 2000,
     });

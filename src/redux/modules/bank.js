@@ -59,13 +59,27 @@ export const setMakeBank = createAsyncThunk(
         console.log('setMakeBank', data);
         try {
             return await tokenURL.post(`/bank`, data).then(res => {
-                navigate('/main');
+                navigate('/main', { replace: true });
                 location.reload();
                 console.log(res);
             });
         } catch (error) {
             console.log(error);
             return rejectWithValue(error.response.data);
+        }
+    },
+);
+export const expiredBank = createAsyncThunk(
+    'bank/delete',
+    async ({ data, navigate }, { rejectWithValue }) => {
+        try {
+            return await tokenURL.put(`/expired-bank`, data).then(res => {
+                console.log(res);
+                navigate('/main', { replace: true });
+            });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response);
         }
     },
 );
@@ -181,6 +195,7 @@ export const bankSlice = createSlice({
                 // state.bankpostlist = action.payload;
             })
             .addCase(setMakeBank.fulfilled, (state, action) => {})
+            .addCase(expiredBank.fulfilled, (state, action) => {})
             .addCase(setMakePost.fulfilled, (state, action) => {})
             .addCase(getPost.fulfilled, (state, action) => {
                 state.showDetail = action.payload;
