@@ -53,7 +53,6 @@ const ModaPostDetail = props => {
         refetch,
     } = usePostDetail(data.id);
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
-    console.log(detailList);
     const [angryPhase, setAngryPhase] = useState('극소노');
     // const [ispublic, setIspublic] = useState(detailList.diary.public);
     // const [memo, setMemo] = useState(detailList.diary.content);
@@ -128,7 +127,6 @@ const ModaPostDetail = props => {
         try {
             await tokenURL.post(`/todack/${data.id}`, null);
         } catch (error) {
-            console.log('test');
             await tokenURL.delete(`/todack/${data.id}`);
         }
         refetch();

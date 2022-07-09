@@ -76,7 +76,6 @@ const ModalImportposttoBank = props => {
         bankId,
         scrollRef,
     ]);
-    console.log('bankpostlist', bankpostlist);
 
     return (
         <>

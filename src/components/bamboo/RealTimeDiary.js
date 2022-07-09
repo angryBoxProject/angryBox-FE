@@ -13,7 +13,6 @@ import ModaPostDetail from '../Modal/ModaPostDetail';
 
 const RealTimeDiary = props => {
     const { Diarylist } = props;
-    console.log(Diarylist);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [modalPost, setModalPost] = useState();
@@ -73,9 +72,7 @@ const RealTimeDiary = props => {
                                     button1name={'닫기'}
                                     is_twobutton
                                     button2name={'수정하기'}
-                                    button2onClick={() => {
-                                        console.log('button2onClick');
-                                    }}
+                                    button2onClick={() => {}}
                                 ></ModaPostDetail>
                             </>
                         );

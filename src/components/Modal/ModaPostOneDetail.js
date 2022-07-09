@@ -58,7 +58,6 @@ const ModaPostOneDetail = props => {
         try {
             await tokenURL.post(`/todack/${data.id}`, null);
         } catch (error) {
-            console.log('test');
             await tokenURL.delete(`/todack/${data.id}`);
         }
         refetch();

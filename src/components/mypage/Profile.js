@@ -17,7 +17,6 @@ const Profile = props => {
         isFetching,
         refetch,
     } = useProfile();
-    console.log(profileList);
 
     const ProfileImageMutation = useMutation(Data => {
         tokenURL.put(`/profile/image`, Data).then(res => {
@@ -35,7 +34,6 @@ const Profile = props => {
 
         ProfileImageMutation.mutate(formData);
     };
-    console.log(status);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':

@@ -23,7 +23,6 @@ const Bamboo = props => {
             dispatch(getDiary(0));
         }
         if (!TopDiarylist.length) {
-            console.log('test');
             dispatch(getTopDiary(0));
         }
         // dispatch(getDiary(-1));

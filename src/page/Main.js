@@ -18,6 +18,7 @@ import Posts from '../components/Main/Posts';
 import { getBankPostList } from '../redux/modules/main';
 import PostList from '../components/Main/PostList';
 import ModalMakePost from '../components/Modal/ModalMakePost';
+import { expiredBank } from '../redux/modules/bank';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -31,8 +32,7 @@ const Main = () => {
     const [modalmakePost, SetmodalmakePost] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
-    console.log('banklist', banklist);
-    console.log('banklist', banklist?.remainingDiaryNum.length);
+    const isbreakbank = banklist?.remainingDiaryNum.length === 0 ? true : false;
     const openModal = () => {
         setOpen(true);
     };
@@ -42,7 +42,6 @@ const Main = () => {
     };
 
     const openViewDetail = () => {
-        console.log('zzz');
         setViewOpen(true);
     };
 
@@ -111,7 +110,6 @@ const Main = () => {
                             <Button
                                 onClick={() => {
                                     Setmodalmakebank(true);
-                                    console.log('button click');
                                 }}
                                 width="94%"
                             >
@@ -127,32 +125,69 @@ const Main = () => {
                         <FlexDiv>
                             <FlexDiv column="column">
                                 <Title>HOME</Title>
-                                <Subtitle>곧 터지기 직전!</Subtitle>
-                                <AngryState>
-                                    <FlexDiv column="column">
-                                        <p>
-                                            극대노{' '}
-                                            {banklist.remainingDiaryNum[4]}번
-                                        </p>
-                                        <p>
-                                            대노 {banklist.remainingDiaryNum[3]}
-                                            번
-                                        </p>
-                                        <p>
-                                            중노 {banklist.remainingDiaryNum[2]}
-                                            번
-                                        </p>
-                                        <p>
-                                            소노 {banklist.remainingDiaryNum[1]}
-                                            번
-                                        </p>
-                                        <p>
-                                            극소노{' '}
-                                            {banklist.remainingDiaryNum[0]}번
-                                        </p>{' '}
-                                        남았어요!
-                                    </FlexDiv>
-                                </AngryState>
+                                {isbreakbank ? (
+                                    <div
+                                        style={{ width: '100%', height: '90%' }}
+                                    >
+                                        <FlexDiv column="column" height="98%">
+                                            <BreakBank>
+                                                분노 적금 만땅!
+                                            </BreakBank>
+                                            <Subtitle>
+                                                {banklist.reward}
+                                            </Subtitle>
+                                        </FlexDiv>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Subtitle>곧 터지기 직전!</Subtitle>
+                                        <AngryState>
+                                            <FlexDiv column="column">
+                                                <p>
+                                                    극대노{' '}
+                                                    {
+                                                        banklist
+                                                            .remainingDiaryNum[4]
+                                                    }
+                                                    번
+                                                </p>
+                                                <p>
+                                                    대노{' '}
+                                                    {
+                                                        banklist
+                                                            .remainingDiaryNum[3]
+                                                    }
+                                                    번
+                                                </p>
+                                                <p>
+                                                    중노{' '}
+                                                    {
+                                                        banklist
+                                                            .remainingDiaryNum[2]
+                                                    }
+                                                    번
+                                                </p>
+                                                <p>
+                                                    소노{' '}
+                                                    {
+                                                        banklist
+                                                            .remainingDiaryNum[1]
+                                                    }
+                                                    번
+                                                </p>
+                                                <p>
+                                                    극소노{' '}
+                                                    {
+                                                        banklist
+                                                            .remainingDiaryNum[0]
+                                                    }
+                                                    번
+                                                </p>{' '}
+                                                남았어요!
+                                            </FlexDiv>
+                                        </AngryState>
+                                    </>
+                                )}
                                 <FlexDiv>
                                     <div>
                                         <p>현재 {memberNick}님의</p>
@@ -161,13 +196,18 @@ const Main = () => {
                                     <p>{banklist.creditStatus}</p>
                                 </FlexDiv>
                                 <Button
-                                    is_disabled={true}
+                                    is_disabled={!isbreakbank}
                                     onClick={() => {
                                         // dispatch(CreateDiary({ dispatch, "test" }));
-                                        console.log('test');
+                                        const data = { id: banklist.id };
+                                        dispatch(
+                                            expiredBank({ data, navigate }),
+                                        );
                                     }}
                                 >
-                                    아직 적금을 깰 수 없습니다.
+                                    {isbreakbank
+                                        ? '버튼을 눌러 적금을 깨보세요!!'
+                                        : '아직 적금을 깰 수 없습니다.'}
                                 </Button>
                             </FlexDiv>
                             <FlexDiv column="column" width="50%">
@@ -184,8 +224,6 @@ const Main = () => {
                                         onClick={() => {
                                             // dispatch(CreateDiary({ dispatch, "test" }));
                                             SetmodalmakePost(true);
-
-                                            console.log('test');
                                         }}
                                     >
                                         분노 저금하기
@@ -332,6 +370,16 @@ const Subtitle = styled.div`
     /* identical to box height */
 
     color: #f6f6f6;
+`;
+const BreakBank = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 123px;
+    /* identical to box height */
+
+    color: ${theme.color.red};
 `;
 const AngryState = styled.div`
     font-family: 'Noto Sans';

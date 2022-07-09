@@ -65,7 +65,7 @@ const Nav = props => {
                             <BsPerson size="20px" />
                         </NavLink>
                     </div>
-                    <div>
+                    {/* <div>
                         <NavLink
                             reloadDocument
                             to="/login"
@@ -77,7 +77,7 @@ const Nav = props => {
                         >
                             <RiFileListLine size="20px" />
                         </NavLink>
-                    </div>
+                    </div> */}
                 </FlexDiv>
             </StyledWrap>
         </>

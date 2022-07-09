@@ -25,19 +25,12 @@ const BambooRealTimeDiary = props => {
         function onScroll() {
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
             if (clientHeight + scrollTop > scrollHeight - 300) {
-                console.log(
-                    'hasMorelist',
-                    hasMorelist,
-                    '!listloading',
-                    listloading,
-                );
                 if (
                     hasMorelist &&
                     Diarylist &&
                     !listloading &&
                     isMount.current
                 ) {
-                    console.log('test');
                     dispatch(getDiary(lastDiaryId));
                 }
             }
@@ -47,7 +40,6 @@ const BambooRealTimeDiary = props => {
             scrollRef.current.removeEventListener('scroll', onScroll);
         };
     }, [hasMorelist, Diarylist, listloading, isMount]);
-    console.log('Diarylist::', Diarylist);
     return (
         <>
             <Warp>
