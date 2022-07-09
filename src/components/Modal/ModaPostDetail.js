@@ -10,6 +10,7 @@ import { getPost, setEditPost, setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
 import { usePostDetail } from '../../hooks/usePostDetail';
 import { data } from 'autoprefixer';
+import { tokenURL } from '../../Apis/API';
 
 const ModaPostDetail = props => {
     const {
@@ -36,6 +37,9 @@ const ModaPostDetail = props => {
     const scrollRef = useRef();
     const isMount = useIsMount();
     const ismember = useSelector(state => state.member.user_info).memberId;
+
+    const ismy = data?.memberId === ismember;
+
     // let memberId = 0;
     // if (ismember)
     //     memberId = useSelector(state => state.member.user_info).memberId;
@@ -49,7 +53,7 @@ const ModaPostDetail = props => {
         refetch,
     } = usePostDetail(data.id);
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
-
+    console.log(detailList);
     const [angryPhase, setAngryPhase] = useState('극소노');
     // const [ispublic, setIspublic] = useState(detailList.diary.public);
     // const [memo, setMemo] = useState(detailList.diary.content);
@@ -120,6 +124,15 @@ const ModaPostDetail = props => {
 
         setEdit(!edit);
     };
+    const tokackhandle = async () => {
+        try {
+            await tokenURL.post(`/todack/${data.id}`, null);
+        } catch (error) {
+            console.log('test');
+            await tokenURL.delete(`/todack/${data.id}`);
+        }
+        refetch();
+    };
 
     const renderByStatus = useCallback(() => {
         switch (status) {
@@ -177,19 +190,34 @@ const ModaPostDetail = props => {
                                                             }
                                                         </ModalDetailTitle>
                                                     )}
-                                                    <ModalDetailBox width="25%">
-                                                        <p
-                                                            style={{
-                                                                color: `${theme.color.white}`,
+                                                    {ismy ? (
+                                                        <ModalDetailBox width="25%">
+                                                            <p
+                                                                style={{
+                                                                    color: `${theme.color.white}`,
+                                                                }}
+                                                            >
+                                                                토닥 수
+                                                            </p>
+                                                            {
+                                                                detailList.diary
+                                                                    .todackCount
+                                                            }
+                                                        </ModalDetailBox>
+                                                    ) : (
+                                                        <Button
+                                                            width="25%"
+                                                            onClick={() => {
+                                                                tokackhandle();
                                                             }}
                                                         >
-                                                            토닥 수
-                                                        </p>
-                                                        {
-                                                            detailList.diary
-                                                                .todackCount
-                                                        }
-                                                    </ModalDetailBox>
+                                                            토닥{' '}
+                                                            {
+                                                                detailList.diary
+                                                                    .todackCount
+                                                            }
+                                                        </Button>
+                                                    )}
                                                     {edit ? (
                                                         <>
                                                             <Select

@@ -15,6 +15,7 @@ const Nav = props => {
                 <FlexDiv grow="1" column={true}>
                     <div>
                         <NavLink
+                            reloadDocument
                             to="/main"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -27,6 +28,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
+                            reloadDocument
                             to="/bamboo"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -39,6 +41,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
+                            reloadDocument
                             to="/angrybook"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -51,6 +54,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
+                            reloadDocument
                             to="/mypage"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
@@ -63,6 +67,7 @@ const Nav = props => {
                     </div>
                     <div>
                         <NavLink
+                            reloadDocument
                             to="/login"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',

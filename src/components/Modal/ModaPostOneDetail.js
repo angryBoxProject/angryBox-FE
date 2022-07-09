@@ -9,6 +9,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getPost, setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
 import { usePostOneDetail } from '../../hooks/usePostOneDetail ';
+import { tokenURL } from '../../Apis/API';
 
 const ModaPostOneDetail = props => {
     const {
@@ -33,10 +34,9 @@ const ModaPostOneDetail = props => {
     const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
-    const [name, setName] = useState();
-    const [angryPhase, setAngryPhase] = useState('극소노');
-    const [ispublic, setIspublic] = useState('비공개');
-    const [memo, setMemo] = useState();
+    const ismember = useSelector(state => state.member.user_info).memberId;
+
+    const ismy = data?.memberId === ismember;
     if (data === undefined) return null;
     const {
         status,
@@ -54,7 +54,15 @@ const ModaPostOneDetail = props => {
 
         return list[v];
     };
-
+    const tokackhandle = async () => {
+        try {
+            await tokenURL.post(`/todack/${data.id}`, null);
+        } catch (error) {
+            console.log('test');
+            await tokenURL.delete(`/todack/${data.id}`);
+        }
+        refetch();
+    };
     return (
         <>
             {detailList && (

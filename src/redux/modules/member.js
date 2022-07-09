@@ -32,7 +32,7 @@ export const kakaoLogin = createAsyncThunk(
             .then(res => {
                 console.log(res);
                 // sessionStorage.setItem('userInfo', JSON.stringify(res.data));
-                navigate('/main');
+                navigate('/main', { replace: true });
             })
             .catch(err => {
                 console.error(err);
@@ -115,6 +115,7 @@ export const memberSlice = createSlice({
                 state.user_info = action.payload;
                 state.isLogin = true;
                 localStorage.setItem('nickname', state.user_info.nickname);
+                localStorage.setItem('memberId', state.user_info.memberId);
             })
             .addCase(signup.fulfilled, (state, action) => {
                 state.user_info = action.payload;
@@ -122,14 +123,20 @@ export const memberSlice = createSlice({
             .addCase(kakaoLogin.fulfilled, (state, action) => {
                 state.user_info = action.payload;
                 state.isLogin = true;
+                localStorage.setItem('nickname', state.user_info.nickname);
+                localStorage.setItem('memberId', state.user_info.memberId);
             })
             .addCase(googleLogin.fulfilled, (state, action) => {
                 state.user_info = action.payload;
                 state.isLogin = true;
+                localStorage.setItem('nickname', state.user_info.nickname);
+                localStorage.setItem('memberId', state.user_info.memberId);
             })
             .addCase(setLogin.fulfilled, (state, action) => {
                 state.user_info = action.payload;
                 state.isLogin = true;
+                localStorage.setItem('nickname', state.user_info.nickname);
+                localStorage.setItem('memberId', state.user_info.memberId);
             });
     },
 });

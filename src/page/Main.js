@@ -31,7 +31,8 @@ const Main = () => {
     const [modalmakePost, SetmodalmakePost] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
-    console.log(banklist);
+    console.log('banklist', banklist);
+    console.log('banklist', banklist?.remainingDiaryNum.length);
     const openModal = () => {
         setOpen(true);
     };
