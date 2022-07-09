@@ -23,7 +23,7 @@ const Nav = props => {
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <AiOutlineHome size="27px"/>
+                            <AiOutlineHome size="27px" />
                         </NavLink>
                     </IconWrapBox>
                     <IconWrapBox>
@@ -62,12 +62,10 @@ const Nav = props => {
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <BsPerson size="27px"/>
+                            <BsPerson size="27px" />
                         </NavLink>
-
-
                     </IconWrapBox>
-                   /* <IconWrapBox>
+                    {/* <IconWrapBox>
 
                         <NavLink
                             reloadDocument
@@ -81,8 +79,7 @@ const Nav = props => {
                             <RiFileListLine size="27px"/>
                         </NavLink>
 
-                    </IconWrapBox> */
-
+                    </IconWrapBox>  */}
                 </FlexDiv>
             </StyledWrap>
         </>
@@ -114,14 +111,14 @@ const FlexDiv = styled.div`
 `;
 
 const NavLogoBox = styled.div`
-    font-weight: 600; 
+    font-weight: 600;
     font-size: 20px;
     color: red;
     font-family: 'Hanson';
 `;
 
 const IconWrapBox = styled.div`
-    margin-top : 40px;
+    margin-top: 40px;
 `;
 
 export default Nav;
