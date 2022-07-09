@@ -320,7 +320,7 @@ const Main = () => {
 
 const Warp = styled.div`
     width: 100%;
-    height: calc(100vh - 5rem);
+    //height: calc(100vh - 10rem);
     /* padding: 20px 100px 50px 50px; */
     background-color: ${theme.color.black};
 `;

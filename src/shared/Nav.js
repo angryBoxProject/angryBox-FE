@@ -11,73 +11,78 @@ const Nav = props => {
     return (
         <>
             <StyledWrap>
-                <div>nav</div>
+                <NavLogoBox>ANGRY BANK</NavLogoBox>
                 <FlexDiv grow="1" column={true}>
-                    <div>
+                    <IconWrapBox>
                         <NavLink
                             reloadDocument
                             to="/main"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
-                                color: isActive ? '#DA463C' : '#222222',
+                                color: isActive ? '#DA463C' : '#747474',
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <AiOutlineHome size="20px" />
+                            <AiOutlineHome size="27px"/>
                         </NavLink>
-                    </div>
-                    <div>
+                    </IconWrapBox>
+                    <IconWrapBox>
                         <NavLink
                             reloadDocument
                             to="/bamboo"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
-                                color: isActive ? '#DA463C' : '#222222',
+                                color: isActive ? '#DA463C' : '#747474',
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <TiMessageTyping size="20px" />
+                            <TiMessageTyping size="27px" />
                         </NavLink>
-                    </div>
-                    <div>
+                    </IconWrapBox>
+                    <IconWrapBox>
                         <NavLink
                             reloadDocument
                             to="/angrybook"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
-                                color: isActive ? '#DA463C' : '#222222',
+                                color: isActive ? '#DA463C' : '#747474',
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <RiFileListLine size="20px" />
+                            <RiFileListLine size="27px" />
                         </NavLink>
-                    </div>
-                    <div>
+                    </IconWrapBox>
+                    <IconWrapBox>
                         <NavLink
                             reloadDocument
                             to="/mypage"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
-                                color: isActive ? '#DA463C' : '#222222',
+                                color: isActive ? '#DA463C' : '#747474',
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <BsPerson size="20px" />
+                            <BsPerson size="27px"/>
                         </NavLink>
-                    </div>
-                    {/* <div>
+
+
+                    </IconWrapBox>
+                   /* <IconWrapBox>
+
                         <NavLink
                             reloadDocument
                             to="/login"
                             style={({ isActive }) => ({
                                 textDecoration: 'none',
-                                color: isActive ? '#DA463C' : '#222222',
+                                color: isActive ? '#DA463C' : '#747474',
                                 fontWeight: isActive ? '800' : '400',
                             })}
                         >
-                            <RiFileListLine size="20px" />
+                            <RiFileListLine size="27px"/>
                         </NavLink>
-                    </div> */}
+
+                    </IconWrapBox> */
+
                 </FlexDiv>
             </StyledWrap>
         </>
@@ -91,7 +96,7 @@ const StyledWrap = styled.div`
     background-color: #2e2e2e;
     height: 100vh;
     width: 20%;
-    padding: 120px 20px 20px;
+    padding: 20px 0 20px 5%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -106,6 +111,17 @@ const FlexDiv = styled.div`
     align-items: ${props => props.align};
     padding: ${props => props.padding};
     flex-grow: ${props => props.grow};
+`;
+
+const NavLogoBox = styled.div`
+    font-weight: 600; 
+    font-size: 20px;
+    color: red;
+    font-family: 'Hanson';
+`;
+
+const IconWrapBox = styled.div`
+    margin-top : 40px;
 `;
 
 export default Nav;
