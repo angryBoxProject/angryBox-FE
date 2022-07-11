@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { FlexDiv, ModalInput, Select } from '../../elements';
+import {
+    FlexDiv,
+    ModalInput,
+    Select,
+    SwipeableTextMobileStepper,
+    SwiperImage,
+} from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
@@ -52,6 +58,34 @@ const ModaPostDetail = props => {
         isFetching,
         refetch,
     } = usePostDetail(data.id);
+    // const [imagelist, setImagelist] = useState();
+    console.log(detailList);
+    let imagelist = null;
+    if (status === 'success') {
+        // console.log(Object.keys(detailList));
+        if (Object.keys(detailList)?.length > 1) {
+            for (let i = 1; i < Object.keys(detailList)?.length; i++) {
+                console.log(Object.keys(detailList)[i]);
+                console.log(Object.values(detailList)[i]?.fileLink);
+            }
+        }
+    }
+    // useEffect(() => {
+    //     if (status === 'success') {
+    //         // console.log(Object.keys(detailList));
+    //         if (Object.keys(detailList)?.length > 1) {
+    //             for (let i = 1; i < Object.keys(detailList)?.length; i++) {
+    //                 console.log(Object.keys(detailList)[i]);
+    //                 console.log(Object.values(detailList)[i]?.fileLink);
+    //                 setImagelist(prev => [
+    //                     ...prev,
+    //                     Object.values(detailList)[i]?.fileLink,
+    //                 ]);
+    //             }
+    //         }
+    //     }
+    // }, [detailList]);
+    console.log(imagelist);
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
     const [angryPhase, setAngryPhase] = useState('극소노');
     // const [ispublic, setIspublic] = useState(detailList.diary.public);
@@ -261,6 +295,32 @@ const ModaPostDetail = props => {
                                                 padding="10px"
                                                 width="100%"
                                             ></FlexDiv>
+                                            <div>test</div>
+                                            {imagelist && (
+                                                <SwipeableTextMobileStepper
+                                                    images={imagelist}
+                                                />
+                                            )}
+                                            {Object.values(detailList)?.map(
+                                                (data, index) => (
+                                                    <>
+                                                        {data?.fileLink && (
+                                                            <>
+                                                                {/* <ImageView
+                                                                    bgImg={`url(${
+                                                                        process
+                                                                            .env
+                                                                            .REACT_APP_IP +
+                                                                        data?.fileLink
+                                                                    })`}
+                                                                ></ImageView> */}
+                                                                {/* <SwipeableTextMobileStepper></SwipeableTextMobileStepper> */}
+                                                            </>
+                                                        )}
+                                                    </>
+                                                ),
+                                            )}
+
                                             <FlexDiv
                                                 justify="flex-start"
                                                 padding="10px"
@@ -477,6 +537,12 @@ const ModalButton = styled.div`
     bottom: 20px;
     width: 97.5%;
     justify-content: space-between;
+`;
+const ImageView = styled.div`
+    background-image: ${props => props.bgImg};
+    background-size: cover;
+    width: 100%;
+    height: 100%;
 `;
 
 // default props 작성 위치

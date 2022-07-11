@@ -88,8 +88,10 @@ export const setMakePost = createAsyncThunk(
     async ({ data, navigate }, { rejectWithValue }) => {
         console.log(data);
         const formdatas = new FormData();
-        formdatas.append('file', null);
-        formdatas.append('file', null);
+        for (let i = 0; i < data?.files.length; i++)
+            formdatas.append('file', data?.files[i]);
+        // formdatas.append('file', null);
+        // formdatas.append('file', null);
         formdatas.append(
             'diary',
             new Blob([JSON.stringify(data)], { type: 'application/json' }),

@@ -123,7 +123,7 @@ const Main = () => {
                 return (
                     <>
                         <FlexDiv>
-                            <FlexDiv column="column">
+                            <FlexDiv column="column" padding="2px">
                                 <Title>HOME</Title>
                                 {isbreakbank ? (
                                     <div
@@ -210,7 +210,7 @@ const Main = () => {
                                         : '아직 적금을 깰 수 없습니다.'}
                                 </Button>
                             </FlexDiv>
-                            <FlexDiv column="column" width="50%">
+                            <FlexDiv column="column" width="50%" padding="2px">
                                 <FlexDiv justify="space-between">
                                     <div>{banklist.name}</div>
                                     <div>총 게시글 {banklist.diaryCount}</div>
