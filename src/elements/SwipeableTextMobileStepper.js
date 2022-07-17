@@ -41,7 +41,7 @@ const SwipeableTextMobileStepper = props => {
     console.log(images);
     const utheme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = images.length - 1;
+    const maxSteps = images.length;
     if (maxSteps === 0) return null;
 
     const handleNext = () => {
@@ -77,32 +77,24 @@ const SwipeableTextMobileStepper = props => {
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
-                {images?.map(
-                    (step, index) => (
-                        console.log(step),
-                        (
-                            <div key={step.fileId}>
-                                {Math.abs(activeStep - index) <= 2 ? (
-                                    <Box
-                                        component="img"
-                                        sx={{
-                                            height: 255,
-                                            display: 'block',
-                                            maxWidth: 400,
-                                            overflow: 'hidden',
-                                            width: '100%',
-                                        }}
-                                        src={
-                                            process.env.REACT_APP_IP +
-                                            step.fileLink
-                                        }
-                                        alt={step.fileId}
-                                    />
-                                ) : null}
-                            </div>
-                        )
-                    ),
-                )}
+                {images?.map((step, index) => (
+                    <div key={step.fileId}>
+                        {Math.abs(activeStep - index) <= 2 ? (
+                            <Box
+                                component="img"
+                                sx={{
+                                    height: 255,
+                                    display: 'block',
+                                    maxWidth: 400,
+                                    overflow: 'hidden',
+                                    width: '100%',
+                                }}
+                                src={process.env.REACT_APP_IP + step.fileLink}
+                                alt={step.fileId}
+                            />
+                        ) : null}
+                    </div>
+                ))}
             </AutoPlaySwipeableViews>
             <MobileStepper
                 steps={maxSteps}

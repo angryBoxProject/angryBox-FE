@@ -198,6 +198,7 @@ const Main = () => {
                                 <Button
                                     is_disabled={!isbreakbank}
                                     onClick={() => {
+                                        console.log('test');
                                         // dispatch(CreateDiary({ dispatch, "test" }));
                                         const data = { id: banklist.id };
                                         dispatch(

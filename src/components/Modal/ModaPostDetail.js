@@ -51,6 +51,7 @@ const ModaPostDetail = props => {
     //     memberId = useSelector(state => state.member.user_info).memberId;
     const [edit, setEdit] = useState(false);
     const [name, setName] = useState();
+
     const {
         status,
         data: detailList,
@@ -58,55 +59,12 @@ const ModaPostDetail = props => {
         isFetching,
         refetch,
     } = usePostDetail(data.id);
-    const [imagelist, setImagelist] = useState('adsf');
-    console.log(detailList);
-    // let imagelist = null;
-    // if (status === 'success') {
-    //     // console.log(Object.keys(detailList));
-    //     if (Object.keys(detailList)?.length > 1) {
-    //         for (let i = 1; i < Object.keys(detailList)?.length; i++) {
-    //             console.log(Object.keys(detailList)[i]);
-    //             console.log(Object.values(detailList)[i]?.fileLink);
-    //             setImagelist([
-    //                 ...imagelist,
-    //                 Object.values(detailList)[i]?.fileLink,
-    //             ]);
-    //         }
-    //     }
-    // }
-
+    const [showimage, setShowImage] = useState();
+    // const showimage = detailList?.fileList.length > 0;
     useEffect(() => {
-        if (status === 'success') {
-            // console.log(Object.keys(detailList));
-            if (Object.keys(detailList)?.length > 1) {
-                for (let i = 1; i < Object.keys(detailList)?.length; i++) {
-                    console.log(Object.keys(detailList)[i]);
-                    console.log(Object.values(detailList)[i]?.fileLink);
-                    setImagelist(
-                        ...imagelist,
-                        Object.values(detailList)[i]?.fileLink,
-                    );
-                }
-            }
-        }
-    }, [open]);
-    // console.log(imagelist);
-    // useEffect(() => {
-    //     if (status === 'success') {
-    //         // console.log(Object.keys(detailList));
-    //         if (Object.keys(detailList)?.length > 1) {
-    //             for (let i = 1; i < Object.keys(detailList)?.length; i++) {
-    //                 console.log(Object.keys(detailList)[i]);
-    //                 console.log(Object.values(detailList)[i]?.fileLink);
-    //                 setImagelist(prev => [
-    //                     ...prev,
-    //                     Object.values(detailList)[i]?.fileLink,
-    //                 ]);
-    //             }
-    //         }
-    //     }
-    // }, [detailList]);
-    console.log(imagelist);
+        if (detailList?.fileList) setShowImage(detailList?.fileList.length);
+    }, [detailList]);
+    // console.log(showimage);
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
     const [angryPhase, setAngryPhase] = useState('극소노');
     // const [ispublic, setIspublic] = useState(detailList.diary.public);
@@ -185,6 +143,15 @@ const ModaPostDetail = props => {
             await tokenURL.delete(`/todack/${data.id}`);
         }
         refetch();
+    };
+    const deletehandle = async () => {
+        try {
+            await tokenURL.delete(`/diaries/${data.id}`);
+            navigate('/main', { replace: true });
+            location.reload();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const renderByStatus = useCallback(() => {
@@ -316,62 +283,52 @@ const ModaPostDetail = props => {
                                                 padding="10px"
                                                 width="100%"
                                             ></FlexDiv>
-                                            <div>test</div>
-                                            {detailList.fileList && (
-                                                <SwipeableTextMobileStepper
-                                                    images={detailList.fileList}
-                                                />
-                                            )}
-                                            {Object.values(detailList)?.map(
-                                                (data, index) => (
-                                                    <>
-                                                        {data?.fileLink && (
-                                                            <>
-                                                                {/* <ImageView
-                                                                    bgImg={`url(${
-                                                                        process
-                                                                            .env
-                                                                            .REACT_APP_IP +
-                                                                        data?.fileLink
-                                                                    })`}
-                                                                ></ImageView> */}
-                                                                {/* <SwipeableTextMobileStepper></SwipeableTextMobileStepper> */}
-                                                            </>
-                                                        )}
-                                                    </>
-                                                ),
-                                            )}
-
-                                            <FlexDiv
-                                                justify="flex-start"
-                                                padding="10px"
-                                                width="100%"
-                                            >
-                                                <FlexDiv width="100%">
-                                                    {edit ? (
-                                                        <ModalInput
-                                                            row={18}
-                                                            multiLine={true}
-                                                            width="100%"
-                                                            placeholder="본문 내용을 입력하세요.."
-                                                            _onChange={e => {
-                                                                setMemo(
-                                                                    e.target
-                                                                        .value,
-                                                                );
-                                                            }}
+                                            <FlexDiv>
+                                                <FlexDiv justify="center">
+                                                    {detailList.fileList && (
+                                                        <SwipeableTextMobileStepper
+                                                            images={
+                                                                detailList.fileList
+                                                            }
                                                         />
-                                                    ) : (
-                                                        <ModalDetailContentOutLine>
-                                                            <ModalDetailContent>
-                                                                {
-                                                                    detailList
-                                                                        .diary
-                                                                        .content
-                                                                }
-                                                            </ModalDetailContent>
-                                                        </ModalDetailContentOutLine>
                                                     )}
+                                                </FlexDiv>
+                                                <FlexDiv
+                                                    justify="flex-start"
+                                                    padding="10px"
+                                                    width={
+                                                        '100%'
+                                                        // showimage
+                                                        //     ? '50%'
+                                                        //     : '100%'
+                                                    }
+                                                >
+                                                    <FlexDiv width="100%">
+                                                        {edit ? (
+                                                            <ModalInput
+                                                                row={18}
+                                                                multiLine={true}
+                                                                width="100%"
+                                                                placeholder="본문 내용을 입력하세요.."
+                                                                _onChange={e => {
+                                                                    setMemo(
+                                                                        e.target
+                                                                            .value,
+                                                                    );
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <ModalDetailContentOutLine>
+                                                                <ModalDetailContent>
+                                                                    {
+                                                                        detailList
+                                                                            .diary
+                                                                            .content
+                                                                    }
+                                                                </ModalDetailContent>
+                                                            </ModalDetailContentOutLine>
+                                                        )}
+                                                    </FlexDiv>
                                                 </FlexDiv>
                                             </FlexDiv>
 
@@ -385,34 +342,47 @@ const ModaPostDetail = props => {
                                                     </Button>
                                                 ) : (
                                                     <>
-                                                        <div
+                                                        <FlexDiv
+                                                            width="50%"
                                                             style={{
-                                                                width: '50%',
+                                                                // width: '50%',
                                                                 marginRight:
                                                                     '30px',
                                                             }}
                                                         >
+                                                            {ismy && (
+                                                                <Button
+                                                                    margin="10px"
+                                                                    onClick={
+                                                                        deletehandle
+                                                                    }
+                                                                >
+                                                                    삭제하기
+                                                                </Button>
+                                                            )}
                                                             {is_twobutton ? (
                                                                 ismember ===
                                                                     data.memberId && (
-                                                                    <Button
-                                                                        is_white
-                                                                        margin="10px"
-                                                                        onClick={e => {
-                                                                            if (
-                                                                                !edit
-                                                                            ) {
-                                                                                setEdit(
-                                                                                    !edit,
-                                                                                );
-                                                                            } else
-                                                                                handleMakePost();
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            props.button2name
-                                                                        }
-                                                                    </Button>
+                                                                    <>
+                                                                        <Button
+                                                                            is_white
+                                                                            margin="10px"
+                                                                            onClick={e => {
+                                                                                if (
+                                                                                    !edit
+                                                                                ) {
+                                                                                    setEdit(
+                                                                                        !edit,
+                                                                                    );
+                                                                                } else
+                                                                                    handleMakePost();
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                props.button2name
+                                                                            }
+                                                                        </Button>
+                                                                    </>
                                                                 )
                                                             ) : (
                                                                 <div
@@ -421,7 +391,7 @@ const ModaPostDetail = props => {
                                                                     }}
                                                                 ></div>
                                                             )}
-                                                        </div>
+                                                        </FlexDiv>
                                                         <div
                                                             style={{
                                                                 width: '50%',

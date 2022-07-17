@@ -49,6 +49,7 @@ const PostList = props => {
             scrollRef.current.removeEventListener('scroll', onScroll);
         };
     }, [hasMoreBankPosts, bankpostlist, listloading, isMount]);
+    console.log(bankpostlist, 'bankpostlist');
     return (
         <>
             <ListScroll ref={scrollRef}>

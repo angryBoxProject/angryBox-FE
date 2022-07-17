@@ -10,6 +10,7 @@ import ModaPostDetail from '../Modal/ModaPostDetail';
 const Post = props => {
     const { width, height, data, index } = props;
     const [modalPost, setModalPost] = useState(false);
+    console.log(data);
     return (
         <>
             {data && (

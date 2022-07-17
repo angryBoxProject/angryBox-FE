@@ -9,18 +9,22 @@ const Posts = props => {
     return (
         <>
             <IsGrid>
-                {postlist?.map((data, index) => (
-                    <Post
-                        key={index}
-                        height="100%"
-                        width="100%"
-                        data={data}
-                        index={index}
-                        onClick={() => {
-                            setModalPost(true);
-                        }}
-                    />
-                ))}
+                {postlist?.map((data, index) => {
+                    if (!data?.deleted) {
+                        return (
+                            <Post
+                                key={index}
+                                height="100%"
+                                width="100%"
+                                data={data}
+                                index={index}
+                                onClick={() => {
+                                    setModalPost(true);
+                                }}
+                            />
+                        );
+                    }
+                })}
             </IsGrid>
         </>
     );
