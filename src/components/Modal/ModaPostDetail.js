@@ -58,18 +58,39 @@ const ModaPostDetail = props => {
         isFetching,
         refetch,
     } = usePostDetail(data.id);
-    // const [imagelist, setImagelist] = useState();
+    const [imagelist, setImagelist] = useState('adsf');
     console.log(detailList);
-    let imagelist = null;
-    if (status === 'success') {
-        // console.log(Object.keys(detailList));
-        if (Object.keys(detailList)?.length > 1) {
-            for (let i = 1; i < Object.keys(detailList)?.length; i++) {
-                console.log(Object.keys(detailList)[i]);
-                console.log(Object.values(detailList)[i]?.fileLink);
+    // let imagelist = null;
+    // if (status === 'success') {
+    //     // console.log(Object.keys(detailList));
+    //     if (Object.keys(detailList)?.length > 1) {
+    //         for (let i = 1; i < Object.keys(detailList)?.length; i++) {
+    //             console.log(Object.keys(detailList)[i]);
+    //             console.log(Object.values(detailList)[i]?.fileLink);
+    //             setImagelist([
+    //                 ...imagelist,
+    //                 Object.values(detailList)[i]?.fileLink,
+    //             ]);
+    //         }
+    //     }
+    // }
+
+    useEffect(() => {
+        if (status === 'success') {
+            // console.log(Object.keys(detailList));
+            if (Object.keys(detailList)?.length > 1) {
+                for (let i = 1; i < Object.keys(detailList)?.length; i++) {
+                    console.log(Object.keys(detailList)[i]);
+                    console.log(Object.values(detailList)[i]?.fileLink);
+                    setImagelist(
+                        ...imagelist,
+                        Object.values(detailList)[i]?.fileLink,
+                    );
+                }
             }
         }
-    }
+    }, [open]);
+    // console.log(imagelist);
     // useEffect(() => {
     //     if (status === 'success') {
     //         // console.log(Object.keys(detailList));
@@ -296,9 +317,9 @@ const ModaPostDetail = props => {
                                                 width="100%"
                                             ></FlexDiv>
                                             <div>test</div>
-                                            {imagelist && (
+                                            {detailList.fileList && (
                                                 <SwipeableTextMobileStepper
-                                                    images={imagelist}
+                                                    images={detailList.fileList}
                                                 />
                                             )}
                                             {Object.values(detailList)?.map(

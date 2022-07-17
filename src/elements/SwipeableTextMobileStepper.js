@@ -9,6 +9,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import theme from '../Styles/theme';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -38,9 +39,10 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const SwipeableTextMobileStepper = props => {
     const { images } = props;
     console.log(images);
-    const theme = useTheme();
+    const utheme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = images.length;
+    const maxSteps = images.length - 1;
+    if (maxSteps === 0) return null;
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -64,35 +66,43 @@ const SwipeableTextMobileStepper = props => {
                     alignItems: 'center',
                     height: 50,
                     pl: 2,
-                    bgcolor: 'background.default',
+                    bgcolor: `${theme.color.black}`,
                 }}
             >
                 {/* <Typography>{images[activeStep].label}</Typography> */}
             </Paper>
             <AutoPlaySwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                axis={utheme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
-                {images.map((step, index) => (
-                    <div key={step.label}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                            <Box
-                                component="img"
-                                sx={{
-                                    height: 255,
-                                    display: 'block',
-                                    maxWidth: 400,
-                                    overflow: 'hidden',
-                                    width: '100%',
-                                }}
-                                src={step.fileLink}
-                                alt={step.label}
-                            />
-                        ) : null}
-                    </div>
-                ))}
+                {images?.map(
+                    (step, index) => (
+                        console.log(step),
+                        (
+                            <div key={step.fileId}>
+                                {Math.abs(activeStep - index) <= 2 ? (
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            height: 255,
+                                            display: 'block',
+                                            maxWidth: 400,
+                                            overflow: 'hidden',
+                                            width: '100%',
+                                        }}
+                                        src={
+                                            process.env.REACT_APP_IP +
+                                            step.fileLink
+                                        }
+                                        alt={step.fileId}
+                                    />
+                                ) : null}
+                            </div>
+                        )
+                    ),
+                )}
             </AutoPlaySwipeableViews>
             <MobileStepper
                 steps={maxSteps}
@@ -105,7 +115,7 @@ const SwipeableTextMobileStepper = props => {
                         disabled={activeStep === maxSteps - 1}
                     >
                         Next
-                        {theme.direction === 'rtl' ? (
+                        {utheme.direction === 'rtl' ? (
                             <KeyboardArrowLeft />
                         ) : (
                             <KeyboardArrowRight />
@@ -118,7 +128,7 @@ const SwipeableTextMobileStepper = props => {
                         onClick={handleBack}
                         disabled={activeStep === 0}
                     >
-                        {theme.direction === 'rtl' ? (
+                        {utheme.direction === 'rtl' ? (
                             <KeyboardArrowRight />
                         ) : (
                             <KeyboardArrowLeft />
