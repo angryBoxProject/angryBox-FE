@@ -17,12 +17,12 @@ import Mypage from './page/Mypage';
 import { useDispatch } from 'react-redux';
 import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
-import Header from './components/Header';
 import Bamboo from './page/Bamboo';
 import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
 import BambooTopDiary from './components/bamboo/BambooTopDiary';
 import AngryBook from './page/AngryBook';
 import Splash from './page/Splash';
+import MainLayout from './Layouts/MainLayout';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -41,51 +41,34 @@ function App() {
     return (
         <>
             <Suspense fallback={<div>Loading...</div>}>
-                <StyledWrap>
-                    <Nav />
-                    <Warp>
-                        <Header title="헤더 "></Header>
-                        <Routes>
-                            <Route path="/" element={<Splash />} />
-                            <Route path="/main" element={<Main />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/mypage" element={<Mypage />} />
-                            <Route path="/bamboo" element={<Bamboo />} />
-                            <Route path="/angrybook" element={<AngryBook />} />
-                            <Route
-                                path="/bamboo/realtimediary"
-                                element={<BambooRealTimeDiary />}
-                            />
-                            <Route
-                                path="/bamboo/topdiary"
-                                element={<BambooTopDiary />}
-                            />
-                            <Route
-                                path="/oauth2/kakao/callback"
-                                element={<Kakaocallback />}
-                            />
-                            <Route
-                                path="/oauth2/google/callback"
-                                element={<Googlecallback />}
-                            />
-                            <Route path="/signup" element={<SignUp />} />
-                        </Routes>
-                    </Warp>
-                </StyledWrap>
+                <Routes>
+                    <Route path="/" element={<Splash />} />
+                    <Route path="/main" element={<Main />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/mypage" element={<Mypage />} />
+                    <Route path="/bamboo" element={<Bamboo />} />
+                    <Route path="/angrybook" element={<AngryBook />} />
+                    <Route
+                        path="/bamboo/realtimediary"
+                        element={<BambooRealTimeDiary />}
+                    />
+                    <Route
+                        path="/bamboo/topdiary"
+                        element={<BambooTopDiary />}
+                    />
+                    <Route
+                        path="/oauth2/kakao/callback"
+                        element={<Kakaocallback />}
+                    />
+                    <Route
+                        path="/oauth2/google/callback"
+                        element={<Googlecallback />}
+                    />
+                    <Route path="/signup" element={<SignUp />} />
+                </Routes>
             </Suspense>
         </>
     );
 }
 
-const StyledWrap = styled.div`
-    background-color: ${theme.color.black};
-    width: 100%;
-    height: 100vh;
-    display: flex;
-`;
-const Warp = styled.div`
-    width: 100%;
-    padding-left: 20%;
-    height: calc(100vh - 5rem);
-`;
 export default App;
