@@ -5,6 +5,7 @@ const FlexDiv = props => {
     const {
         children,
         padding,
+        margin,
         column,
         justify,
         align,
@@ -14,6 +15,7 @@ const FlexDiv = props => {
         width,
     } = props;
     const styles = {
+        margin: margin,
         padding: padding,
         column: column,
         justify: justify,
@@ -38,6 +40,7 @@ const Flex = styled.div`
     justify-content: ${props => props.justify};
     align-items: ${props => props.align};
     padding: ${props => props.padding};
+    margin: ${props => props.margin};
     flex-grow: ${props => props.grow};
     ${props => (props.height ? `height:${props.height}` : '')}
     ${props => (props.width ? `width:${props.width}` : '')}

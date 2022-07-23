@@ -59,9 +59,8 @@ const PostList = props => {
     );
 };
 const ListScroll = styled.div`
-    min-height: 40%;
-    height: calc(100vh - 10.5rem);
     width: 100%;
+    height: calc(100vh - 290px);
     padding-right: 20px;
     overflow-y: auto;
     /* overflow-x: auto; */
