@@ -45,7 +45,6 @@ const KaKaoBtn = styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 56px;
     background: white;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
