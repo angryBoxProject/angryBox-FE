@@ -9,7 +9,7 @@ const Contents = props => {
     } = props;
 
     return (
-        <ContentsWrap style={ header ? {backgroundColor: "#fff"} : {backgroundColor: "#F6F6F6"} }>
+        <ContentsWrap>
             {header && <Header />}
             <ContentsInner>
                 {children}
@@ -18,6 +18,7 @@ const Contents = props => {
     )
 }
 const ContentsWrap = styled.div`
+    background: #F6F6F6;
     width: 100%;
     height: 100vh;
 `;
