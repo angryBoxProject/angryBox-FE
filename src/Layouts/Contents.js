@@ -11,7 +11,7 @@ const Contents = props => {
     return (
         <ContentsWrap>
             {header && <Header />}
-            <ContentsInner>
+            <ContentsInner style={{height: header ? "auto" : "100vh"}}>
                 {children}
             </ContentsInner>
         </ContentsWrap>

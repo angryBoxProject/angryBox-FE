@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, FlexDiv } from '../elements';
+import { Button, FlexDiv } from '../../elements';
 import { useNavigate } from 'react-router-dom';
 
-import Profile from '../components/mypage/Profile';
-import NewPw from '../components/mypage/NewPw';
-import theme from '../Styles/theme';
+import Profile from '../../components/mypage/Profile';
+import NewPw from '../../components/mypage/NewPw';
 
+import MainLayout from '../../Layouts/MainLayout';
+import Contents from '../../Layouts/Contents';
 const Mypage = props => {
     // const email = useSelector(state => state.member.user_info.email);
     const navigate = useNavigate();
@@ -18,45 +19,47 @@ const Mypage = props => {
 
     useEffect(() => {});
     return (
-        <>
-            <PageWarp>
-                <div style={{ width: '50%' }}>
-                    <Profile />
-                </div>
-                <div style={{ width: '50%' }}>
-                    <Button
-                        width="104px"
-                        padding="9px"
-                        onClick={() => {
-                            setOpenpw(true);
-                        }}
-                    >
-                        비밀번호
-                    </Button>
-                    <Button
-                        abled
-                        width="104px"
-                        padding="9px"
-                        margin="0 0 0 15px"
-                        onClick={() => {
-                            //클릭이벤트
-                        }}
-                    >
-                        분노 저금통
-                    </Button>
-                    {openpw && (
-                        <div
-                            style={{
-                                paddingTop: '70px',
-                                backgroundColor: 'black',
+        <MainLayout nav={true}>
+            <Contents header={true}>
+                <PageWarp>
+                    <div style={{ width: '50%' }}>
+                        <Profile />
+                    </div>
+                    <div style={{ width: '50%' }}>
+                        <Button
+                            width="104px"
+                            padding="9px"
+                            onClick={() => {
+                                setOpenpw(true);
                             }}
                         >
-                            <NewPw />
-                        </div>
-                    )}
-                </div>
-            </PageWarp>
-        </>
+                            비밀번호
+                        </Button>
+                        <Button
+                            abled
+                            width="104px"
+                            padding="9px"
+                            margin="0 0 0 15px"
+                            onClick={() => {
+                                //클릭이벤트
+                            }}
+                        >
+                            분노 저금통
+                        </Button>
+                        {openpw && (
+                            <div
+                                style={{
+                                    paddingTop: '70px',
+                                    backgroundColor: 'black',
+                                }}
+                            >
+                                <NewPw />
+                            </div>
+                        )}
+                    </div>
+                </PageWarp>
+            </Contents>
+        </MainLayout>
     );
 };
 const PageWarp = styled.div`

@@ -27,6 +27,7 @@ import SplashN from './page/new/Splash';
 import LoginN from './page/new/Login';
 import SignUpN from './page/new/SignUp';
 import MainN from './page/new/Main';
+import MypageN from './page/new/Mypage';
 import Community from './page/new/Community';
 import Statistic from './page/new/Statistic';
 
@@ -77,7 +78,7 @@ function App() {
                     <Route path="/new/login" element={<LoginN />} />
                     <Route path="/new/signup" element={<SignUpN />} />
                     <Route path="/new/main" element={<MainN />} />
-                    <Route path="/new/mypage" element={<Mypage />} />
+                    <Route path="/new/mypage" element={<MypageN />} />
                     <Route path="/new/community" element={<Community />} />
                     <Route path="/new/statistic" element={<Statistic />} />
                     
