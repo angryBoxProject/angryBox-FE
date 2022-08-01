@@ -22,7 +22,13 @@ import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
 import BambooTopDiary from './components/bamboo/BambooTopDiary';
 import AngryBook from './page/AngryBook';
 import Splash from './page/Splash';
-import MainLayout from './Layouts/MainLayout';
+
+import SplashN from './page/new/Splash';
+import LoginN from './page/new/Login';
+import SignUpN from './page/new/SignUp';
+import MainN from './page/new/Main';
+import Community from './page/new/Community';
+import Statistic from './page/new/Statistic';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -65,6 +71,16 @@ function App() {
                         element={<Googlecallback />}
                     />
                     <Route path="/signup" element={<SignUp />} />
+
+
+                    <Route path="/new/" element={<SplashN />} />
+                    <Route path="/new/login" element={<LoginN />} />
+                    <Route path="/new/signup" element={<SignUpN />} />
+                    <Route path="/new/main" element={<MainN />} />
+                    <Route path="/new/mypage" element={<Mypage />} />
+                    <Route path="/new/community" element={<Community />} />
+                    <Route path="/new/statistic" element={<Statistic />} />
+                    
                 </Routes>
             </Suspense>
         </>
