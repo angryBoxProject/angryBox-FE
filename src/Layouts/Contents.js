@@ -20,7 +20,6 @@ const Contents = props => {
 const ContentsWrap = styled.div`
     background: #F6F6F6;
     width: 100%;
-    height: 100vh;
 `;
 const ContentsInner = styled.div`
     width: 100%;

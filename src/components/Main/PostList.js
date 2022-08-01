@@ -51,32 +51,11 @@ const PostList = props => {
     }, [hasMoreBankPosts, bankpostlist, listloading, isMount]);
     console.log(bankpostlist, 'bankpostlist');
     return (
-        <>
-            <ListScroll ref={scrollRef}>
-                {bankpostlist && <Posts postlist={bankpostlist} />}
-            </ListScroll>
-        </>
+        <List ref={scrollRef}>
+            {bankpostlist && <Posts postlist={bankpostlist} />}
+        </List>
     );
 };
-const ListScroll = styled.div`
-    width: 100%;
-    height: calc(100vh - 290px);
-    padding-right: 20px;
-    overflow-y: auto;
-    /* overflow-x: auto; */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    ::-webkit-scrollbar {
-        //display: none; /* Chrome , Safari , Opera */
-        background-color: ${theme.color.black2};
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: ${theme.color.red};
-        border-radius: 40px;
-    }
-    ::-webkit-scrollbar-track {
-        background-color: ${theme.color.black2};
-        border-radius: 40px;
-    }
+const List = styled.div`
 `;
 export default PostList;
