@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import theme from "../Styles/theme";
 
 import Header from './Header';
 
@@ -10,15 +9,22 @@ const Contents = props => {
     } = props;
 
     return (
-        <ContentsWrap>
+        <ContentsWrap style={ header ? {backgroundColor: "#fff"} : {backgroundColor: "#F6F6F6"} }>
             {header && <Header />}
-            {children}
+            <ContentsInner>
+                {children}
+            </ContentsInner>
         </ContentsWrap>
     )
 }
 const ContentsWrap = styled.div`
-    background-color: ${theme.color.black};
     width: 100%;
     height: 100vh;
 `;
+const ContentsInner = styled.div`
+    width: 100%;
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 0 auto;
+`
 export default Contents;
