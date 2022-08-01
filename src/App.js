@@ -27,9 +27,12 @@ import SplashN from './page/new/Splash';
 import LoginN from './page/new/Login';
 import SignUpN from './page/new/SignUp';
 import MainN from './page/new/Main';
-import MypageN from './page/new/Mypage';
 import Community from './page/new/Community';
+import Best from './page/new/Community/Best';
+import Recent from './page/new/Community/Recent';
+import Gallery from './page/new/Community/Gallery';
 import Statistic from './page/new/Statistic';
+import MypageN from './page/new/Mypage';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -82,6 +85,18 @@ function App() {
                     <Route path="/new/community" element={<Community />} />
                     <Route path="/new/statistic" element={<Statistic />} />
                     
+                    <Route
+                        path="/new/community/best"
+                        element={<Best />}
+                    />
+                    <Route
+                        path="/new/community/recent"
+                        element={<Recent />}
+                    />
+                    <Route
+                        path="/new/community/gallery"
+                        element={<Gallery />}
+                    />
                 </Routes>
             </Suspense>
         </>

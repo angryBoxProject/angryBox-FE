@@ -47,10 +47,10 @@ const Header = props => {
                     </NavLink>
                     <NavLink
                         reloadDocument
-                        to="/new/community"
+                        to="/new/community/"
                     > 
                         <NavItem>
-                            {pathName === "/new/community" ? <CommunityIconOn /> : <CommunityIcon />}
+                            {pathName === "/new/community/" || pathName === "/new/community/best" || pathName === "/new/community/recent" || pathName === "/new/community/gallery" ? <CommunityIconOn /> : <CommunityIcon />}
                         </NavItem>
                     </NavLink>
                     <NavLink

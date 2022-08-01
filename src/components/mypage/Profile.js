@@ -142,6 +142,7 @@ const Profile = props => {
     }, [status, isFetching]);
     return (
         <>
+
             <StyledWrap>
                 {isLogin ? (
                     renderByStatus()
