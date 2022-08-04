@@ -94,6 +94,7 @@ const EditButton = styled.button`
     height: 44px;
     background: #813BF3;
     border-radius: 4px;
+    color: #F6F6F6;
 `
 const Table = styled.div`
 `;
