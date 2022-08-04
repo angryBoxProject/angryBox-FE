@@ -38,7 +38,6 @@ const BambooTopDiary = props => {
         };
     }, [hasMoreToplist, TopDiarylist, Toplistloading, isMount]);
 
-    console.log('TopDiarylistID', TopDiarylist);
     return (
         <>
             <Warp>

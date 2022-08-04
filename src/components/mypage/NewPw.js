@@ -13,7 +13,6 @@ const NewPw = props => {
         tokenURL
             .put(`users`, Data)
             .then(res => {
-                console.log(res);
                 window.alert('변경성공');
             })
             .catch(error => {

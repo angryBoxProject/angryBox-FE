@@ -8,8 +8,7 @@ export const mainPageLoad = createAsyncThunk(
     'diary/all',
     async ({ dispatch }, { rejectWithValue }) => {
         try {
-            return await tokenURL.get(`/diaries/1`)
-            .then(response => {
+            return await tokenURL.get(`/diaries/1`).then(response => {
                 console.log(response);
                 return response.data.data;
             });
@@ -46,11 +45,10 @@ export const CreateDiary = createAsyncThunk(
         try {
             return await URL.post(`/diary?public=${isPublic}`, formData, {
                 headers: {
-                    "content-type": "multipart/form-data",
-                    authorization: token
-                }
-            })
-            .then(response => {
+                    'content-type': 'multipart/form-data',
+                    authorization: token,
+                },
+            }).then(response => {
                 console.log(response);
                 return response.data.data;
             });
@@ -65,9 +63,7 @@ export const CreateDiary = createAsyncThunk(
 
 export const diarySlice = createSlice({
     name: 'diary',
-    initialState: {
-        
-    },
+    initialState: {},
     reducers: {
         setDiarys: (state, action) => {
             state.diarys = action.payload;

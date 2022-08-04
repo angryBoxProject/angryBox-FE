@@ -32,7 +32,6 @@ const ModalLinterimList = props => {
         refetch,
     } = useLinterims();
 
-    console.log(linterimList);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':

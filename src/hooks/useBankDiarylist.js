@@ -2,10 +2,8 @@ import { tokenURL } from '../Apis/API';
 import { useQuery } from 'react-query';
 
 const fetchDiaryList = async date => {
-    console.log('date', date);
     if (!date) return;
-    const { data } = await tokenURL.get(`/diaries/month/${date}/0/3`);
-    console.log(data);
+    const { data } = await tokenURL.get(`/diaries/month/${date}/0/5`);
 
     return data.data.diaryListInMonth;
 };

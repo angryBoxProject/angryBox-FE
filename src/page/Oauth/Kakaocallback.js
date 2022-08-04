@@ -11,7 +11,6 @@ const Kakaocallback = props => {
     useEffect(() => {
         dispatch(kakaoLogin({ code, navigate }));
     }, [dispatch]);
-    console.log(code);
     return (
         <>
             <Spinner></Spinner>

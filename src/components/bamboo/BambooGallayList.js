@@ -22,7 +22,6 @@ const BambooGallayList = props => {
     let data = {
         lastDiaryId: lastGalleryId,
     };
-    console.log(lastGalleryId);
 
     const dispatch = useDispatch();
     const scrollRef = useRef();
@@ -36,7 +35,6 @@ const BambooGallayList = props => {
     }, []);
 
     useEffect(() => {
-        console.log('PostList');
         function onScroll() {
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
             if (clientHeight + scrollTop > scrollHeight - 300) {

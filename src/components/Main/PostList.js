@@ -31,7 +31,6 @@ const PostList = props => {
     }, []);
 
     useEffect(() => {
-        console.log('PostList');
         function onScroll() {
             const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
             if (clientHeight + scrollTop > scrollHeight - 300) {
