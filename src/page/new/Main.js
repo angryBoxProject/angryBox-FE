@@ -15,6 +15,7 @@ import { expiredBank } from '../../redux/modules/bank';
 import styled from 'styled-components';
 import MainLayout from '../../Layouts/MainLayout';
 import Contents from '../../Layouts/Contents';
+import ModalLayout from '../../Layouts/ModalLayout';
 
 import { ReactComponent as Fire } from '../../static/image/main/main_fire.svg';
 import { ReactComponent as ClearButtonIcon } from '../../static/image/main/clearbutton_icon.svg';
@@ -22,6 +23,7 @@ import { ReactComponent as ClearButtonIconOn } from '../../static/image/main/cle
 import { ReactComponent as ListIconLeft } from '../../static/image/main/list_icon1.svg';
 import { ReactComponent as ListIconRight } from '../../static/image/main/list_icon2.svg';
 import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.svg';
+import ModalClearBank from '../../components/Modal/ModalClearBank';
 
 const list = ['극대노', '대노', '중노', '소노', '극소노'];
 
@@ -33,6 +35,7 @@ const Main = () => {
     const [isViewOpen, setViewOpen] = useState(false);
     const [modalmakebank, Setmodalmakebank] = useState(false);
     const [modalmakePost, SetmodalmakePost] = useState(false);
+    const [modalbreakBank, SetmodalbreakBank] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
     const isbreakbank = banklist?.remainingDiaryNum.length === 0 ? true : false;
@@ -199,7 +202,7 @@ const Main = () => {
                             </CreditStatus>
                         </CreditWrap>
                         <ClearButton
-                            onClick={() => {}}
+                            onClick={() => {SetmodalbreakBank(true)}}
                             style={{border: isbreakbank ? "solid 3px #813BF3" : "solid 3px #ECECEC"}}
                         >
                             <ClearButtonValue style={{color: isbreakbank ? "#813BF3" : "#737373"}}>
@@ -251,7 +254,7 @@ const Main = () => {
                         Setmodalmakebank(false);
                     }}
                 />
-                {banklist && (
+                {/* {banklist && (
                     <ModalMakePost
                         title="ANGRY SAVING"
                         subtitle="분노 게시글 작성"
@@ -263,7 +266,9 @@ const Main = () => {
                         }}
                         coinBankId={banklist.id}
                     ></ModalMakePost>
-                )}
+                )} */}
+                {modalmakePost && <ModalLayout modalType="list" title="테스트타이틀" close={() => SetmodalmakePost(false)} />}
+                {modalbreakBank && <ModalClearBank modalType="info" close={() => SetmodalbreakBank(false)} />}
             </MainLayout>
 
     );
