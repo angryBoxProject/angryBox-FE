@@ -84,7 +84,7 @@ const Community = props => {
                                 <MoreIconRight />
                             </More>
                         </TableHead>
-                        <TableBody>
+                        {/* <TableBody>
                             {bestList.map((item, key) => {
                                 return(
                                     <BodyItem>
@@ -102,7 +102,14 @@ const Community = props => {
                                     </BodyItem>
                                 )
                             })}
-                        </TableBody>
+                        </TableBody> */}
+
+                        {/* 게시글 없을 때 */}
+                        <NoData>
+                            <NoDataText>게시된 글이 없습니다!</NoDataText>
+                            <NoDataBtn>먼저 게시글을 작성해보세요!</NoDataBtn>
+                        </NoData>
+
                     </TablelistRecent>
                 </TablelistWrap>
 
@@ -306,5 +313,29 @@ const SaveButtonText = styled.span`
     line-height: 23px;
     color: #813BF3;
     margin-right: 10px;
+`;
+const NoData = styled.div`
+    width: 100%;
+    height: 300px;
+    border: solid 3px #ECECEC;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+const NoDataText = styled.div`
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    text-align: center;
+    color: #737373;
+`;
+const NoDataBtn = styled.div`
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #737373;
 `;
 export default Community;
