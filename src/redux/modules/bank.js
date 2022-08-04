@@ -73,10 +73,13 @@ export const expiredBank = createAsyncThunk(
     'bank/delete',
     async ({ data, navigate }, { rejectWithValue }) => {
         try {
-            return await tokenURL.put(`/expired-bank`, data).then(res => {
-                console.log(res);
-                navigate('/main', { replace: true });
-            });
+            return await tokenURL
+                .put(`/expired-bank?id=${data.id}`, data)
+                .then(res => {
+                    console.log(res);
+                    navigate('/main', { replace: true });
+                    location.reload();
+                });
         } catch (error) {
             console.log(error);
             return rejectWithValue(error.response);
@@ -88,14 +91,20 @@ export const setMakePost = createAsyncThunk(
     async ({ data, navigate }, { rejectWithValue }) => {
         console.log(data);
         const formdatas = new FormData();
-        formdatas.append('file', null);
-        formdatas.append('file', null);
+
+        try {
+            for (let i = 0; i < data?.files.length; i++)
+                formdatas.append('file', data?.files[i]);
+        } catch (error) {
+            formdatas.append('file', null);
+            console.log('undefined');
+        }
+
         formdatas.append(
             'diary',
             new Blob([JSON.stringify(data)], { type: 'application/json' }),
         );
         formdatas.append('public', data.publiccount);
-        console.log(formdatas);
         try {
             return await tokenURL.post(`/diary`, formdatas).then(res => {
                 navigate('/main');

@@ -2,7 +2,7 @@ import { tokenURL } from '../Apis/API';
 import { useQuery } from 'react-query';
 
 const fetchDiaryList = async date => {
-    if (!date) return;
+    // if (!date) return;
     const { data } = await tokenURL.get(`/diaries/${date}`);
     return data.data;
 };

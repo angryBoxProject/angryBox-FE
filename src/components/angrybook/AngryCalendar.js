@@ -77,7 +77,7 @@ const AngryCalendar = props => {
                     // 요일 영어로 표시
                     locale={'en'}
                     formatShortWeekday={(locale, date) =>
-                        ['S', 'M', 'T', 'W', 'T', 'F', 'S'][date.getDay()]
+                        ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]
                     }
                     // 특정 날짜에 표시
                     tileContent={({ date, view }) => {

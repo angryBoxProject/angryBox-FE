@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Header from '../components/Header';
+
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, FlexDiv } from '../elements';

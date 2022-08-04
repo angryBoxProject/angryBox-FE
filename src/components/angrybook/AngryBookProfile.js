@@ -27,20 +27,20 @@ const AngryBookProfile = props => {
             default:
                 return (
                     <>
-                        <FlexDiv column="column" padding="0px 13% 0px 0px">
+                        <FlexDiv column="column">
                             <FlexDiv
                                 justify="space-between"
-                                padding="9px 18px 9px 18px"
+                                padding="0 20px 8px"
                             >
                                 <Underline>분노 계좌번호</Underline>
-                                <div>{profilelist.bankAccount}</div>
+                                <BankAccount>{profilelist.bankAccount}</BankAccount>
                             </FlexDiv>
                             <FlexDiv
                                 justify="space-between"
-                                padding="9px 18px 9px 18px"
+                                padding="8px 20px 0"
                             >
                                 <Underline>총 쓰담 수</Underline>
-                                <div>{profilelist.recieveTodackCount}</div>
+                                <RecieveTodackCount>{profilelist.recieveTodackCount} <Text>회</Text></RecieveTodackCount>
                             </FlexDiv>
                         </FlexDiv>
                     </>
@@ -49,41 +49,63 @@ const AngryBookProfile = props => {
     }, [status, isFetching]);
     return (
         <>
-            <div style={{ maxHeight: '30%', padding: '10% 0 20% 0' }}>
-                <Nickname>{nickname}</Nickname>
-                <Title>님의 4월 분노 적금 통계입니다.</Title>
+            <Wrap>
+                <TitleWrap>
+                    <Nickname>{nickname} </Nickname>
+                    <Title>님의 4월 분노 적금 통계입니다.</Title>
+                </TitleWrap>
                 <div>{renderByStatus()}</div>
-            </div>
-            <hr style={{ paddingBottom: '3%' }}></hr>
+            </Wrap>
         </>
     );
 };
+const Wrap = styled.div`
+    width: 100%;
+    padding-bottom: 39px;
+    border-bottom: solid 1px #737373;
+`;
+const TitleWrap = styled.div`
+    padding-bottom: 52px;
+`
 const Nickname = styled.span`
-    font-family: 'Noto Sans';
-    font-style: normal;
     font-weight: 700;
     font-size: 24px;
-    line-height: 33px;
-    /* identical to box height */
-
-    text-align: right;
+    line-height: 35px;
+    color: #282828;
 `;
 const Title = styled.span`
-    font-family: 'Noto Sans';
-    font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 29px;
+    color: #282828;
 `;
 const Underline = styled.div`
-    font-family: 'Noto Sans';
-    font-style: normal;
     font-weight: 300;
     font-size: 18px;
-    line-height: 25px;
-    /* identical to box height */
-
+    line-height: 26px;
     text-decoration-line: underline;
+    color: #282828;
 `;
+const BankAccount = styled.div`
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: right;
+    color: #282828;
+`;
+const RecieveTodackCount = styled.div`
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: right;
+    color: #282828;
+`;
+const Text = styled.span`
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: right;
+    color: #282828;
+`
 
 export default AngryBookProfile;

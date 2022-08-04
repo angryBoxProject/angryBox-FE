@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FlexDiv, ModalInput, Select } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
+import { ReactComponent as UploadImage } from '../../static/image/UploadImage.svg';
 import Button from '../../elements/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
@@ -34,6 +35,8 @@ const ModalMakePost = props => {
     const [angryPhase, setAngryPhase] = useState('극소노');
     const [ispublic, setIspublic] = useState('비공개');
     const [memo, setMemo] = useState();
+    const [image, setImage] = useState();
+
     const ismember = useSelector(state => state.member.user_info).memberId;
     let memberId = 0;
     if (ismember)
@@ -58,6 +61,7 @@ const ModalMakePost = props => {
             angryPhaseId: angrystate,
             interimId: 0,
             publiccount: publiccount,
+            files: image,
         };
 
         dispatch(setMakePost({ data, navigate }));
@@ -85,6 +89,23 @@ const ModalMakePost = props => {
         };
 
         dispatch(setMakePost({ data, navigate }));
+    };
+
+    const handleFileInput = e => {
+        const files = e.target.files;
+        setImage(e.target.files);
+        console.log(files);
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
+
+        console.log(formData);
+        // const data = { files, planId };
+        // dispatch(setUploadImage(data));
+        // dispatch(getImage(planId));
+        // dispatch(getOnePlan(planId));
     };
     return (
         <>
@@ -115,6 +136,20 @@ const ModalMakePost = props => {
                                                 setName(e.target.value);
                                             }}
                                         />
+                                        <UploadImageButton>
+                                            <UploadImage
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                }}
+                                            />
+                                            <FileInput
+                                                type="file"
+                                                accept="image/*"
+                                                multiple
+                                                onChange={handleFileInput}
+                                            />
+                                        </UploadImageButton>
                                         <Select
                                             ispublic
                                             onChange={e => {
@@ -261,6 +296,32 @@ const ModalTextTitle = styled.div`
 `;
 const ModalTypeingArea = styled.div`
     background-color: orange;
+`;
+const UploadImageButton = styled.div`
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    position: relative;
+`;
+
+const FileInput = styled.input`
+    width: 54px;
+    height: 54px;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    border-radius: 50px;
+    font-size: 45px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+
+    filter: alpha(opacity=0);
+    -ms-filter: 'alpha(opacity=0)';
+    -khtml-opacity: 0;
+    -moz-opacity: 0;
 `;
 const ModalButton = styled.div`
     display: flex;

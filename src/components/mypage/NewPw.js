@@ -32,15 +32,12 @@ const NewPw = props => {
         <>
             <Warp>
                 <FlexDiv column={true} justify="space-around">
-                    <FlexDiv justify="space-between">
+                    <TitleArea justify="space-between">
                         <Subtitle>비밀번호 변경</Subtitle>
-                        <Button width="104px" onClick={handleChagePw}>
+                        <EditButton width="104px" onClick={handleChagePw}>
                             Edit
-                        </Button>
-                    </FlexDiv>
-                    <div style={{ paddingTop: '34px' }}>
-                        <hr />
-                    </div>
+                        </EditButton>
+                    </TitleArea>
                     <Table>
                         <Text>기존비밀번호</Text>
                         <Inputtable
@@ -72,37 +69,57 @@ const NewPw = props => {
 };
 
 const Warp = styled.div`
-    height: 705px;
+    height: 603px;
     width: 100%;
-    background-color: #2e2e2e;
-    border-radius: 20px;
-    padding: 36px;
+    background-color: #ECECEC;
+    padding: 39px 48px 33.25px;
+    margin-top: 50px;
 `;
+const TitleArea = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 33px;
+    border-bottom: solid 1px #737373;
+    margin-bottom: 50.5px;
+`
 const Subtitle = styled.div`
     font-weight: 700;
     font-size: 23px;
-    line-height: 31px;
+    line-height: 33px;
+    color: #737373;
 `;
+const EditButton = styled.button`
+    width: 128px;
+    height: 44px;
+    background: #813BF3;
+    border-radius: 4px;
+    color: #F6F6F6;
+`
 const Table = styled.div`
-    padding: 36px 0px;
 `;
 const Text = styled.div`
     font-weight: 500;
     font-size: 20px;
-    line-height: 27px;
-    padding: 15px 0px;
+    line-height: 29px;
+    color: #737373;
+    padding-bottom: 27.5px;
 `;
 const Inputtable = styled.input`
     width: 100%;
     height: 47px;
-    background-color: #2e2e2e;
-    border: solid white 1px;
+    background: #ECECEC;
+    border: solid #737373 1px;
     border-radius: 4px;
-    padding: 15px 0px;
-    color: white;
+    padding: 15px 19px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: #737373;
+    margin-bottom: 50.5px;
 
-    & {
-        padding: 0px 19px;
+    &:focus {
+        background: #fff;
     }
 `;
 export default NewPw;

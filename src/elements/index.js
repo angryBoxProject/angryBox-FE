@@ -6,6 +6,7 @@ import FlexDiv from './FlexDiv';
 import MainCard from './MainCard';
 import ModalInput from './ModalInput';
 import Select from './Select';
+import SwipeableTextMobileStepper from './SwipeableTextMobileStepper';
 
 export {
     Input,
@@ -16,4 +17,5 @@ export {
     Spinner,
     FlexDiv,
     MainCard,
+    SwipeableTextMobileStepper,
 };
