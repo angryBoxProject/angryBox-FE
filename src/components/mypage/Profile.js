@@ -46,96 +46,93 @@ const Profile = props => {
             default:
                 return (
                     <>
-                        <PageTitle>My page</PageTitle>
-                        <div>
-                            <FlexDiv padding="0px 0px 25% 0px">
-                                <ProfileCircle>
-                                    <ProfileImage
-                                        bgImg={
-                                            isLogin
-                                                ? `url(${
-                                                      process.env.REACT_APP_IP +
-                                                      profileList.file
-                                                  })`
-                                                : 'none'
-                                        }
-                                    >
-                                        <FloatInput>
-                                            <AiOutlineCamera
-                                                size="10px"
-                                                style={{
-                                                    position: 'absolute',
-                                                    top: '6px',
-                                                    left: '6px',
-                                                }}
-                                            ></AiOutlineCamera>
-                                            <FileInput
-                                                type="file"
-                                                accept="image/x-png,image/jpeg"
-                                                onChange={handleFileInput}
-                                            ></FileInput>
-                                        </FloatInput>
-                                    </ProfileImage>
-                                </ProfileCircle>
-
-                                <FlexDiv
-                                    column={true}
-                                    justify="center"
-                                    padding="0 0 0 0;"
+                        <ProfileWrap>
+                            <ProfileCircle>
+                                <ProfileImage
+                                    bgImg={
+                                        isLogin
+                                            ? `url(${
+                                                    process.env.REACT_APP_IP +
+                                                    profileList.file
+                                                })`
+                                            : 'none'
+                                    }
                                 >
-                                    <Nickname>
-                                        <NicknameBold>{profileList.nickname}</NicknameBold>님
-                                    </Nickname>
-                                    <Nickname>좋은하루 되세요!</Nickname>
-                                    <EmailAddres>sdaf</EmailAddres>
-                                </FlexDiv>
-                            </FlexDiv>
-                            <hr></hr>
+                                    <FloatInput>
+                                        <AiOutlineCamera
+                                            size="10px"
+                                            style={{
+                                                position: 'absolute',
+                                                top: '6px',
+                                                left: '6px',
+                                            }}
+                                        ></AiOutlineCamera>
+                                        <FileInput
+                                            type="file"
+                                            accept="image/x-png,image/jpeg"
+                                            onChange={handleFileInput}
+                                        ></FileInput>
+                                    </FloatInput>
+                                </ProfileImage>
+                            </ProfileCircle>
+
                             <FlexDiv
-                                padding="94px 0px 56px 0px"
                                 column={true}
+                                justify="center"
+                                padding="0 0 0 0;"
+                            >
+                                <Nickname>
+                                    <NicknameBold>{profileList.nickname}</NicknameBold>님
+                                </Nickname>
+                                <Nickname>좋은하루 되세요!</Nickname>
+                                <EmailAddres>이메일@네이버점컴</EmailAddres>
+                            </FlexDiv>
+                        </ProfileWrap>
+                        
+                        <FlexDiv
+                            padding="42px 0px 0px 0px"
+                            column={true}
+                            justify="space-between"
+                        >
+                            <FlexDiv
+                                padding="0 15px 50px 0px"
                                 justify="space-between"
                             >
-                                <FlexDiv
-                                    padding="30px 30px 30px 0px"
-                                    justify="space-between"
-                                >
-                                    <Countbox>분노 통장수</Countbox>
-                                    <Counttext>
-                                        {profileList.diaryCount} 개
-                                    </Counttext>
-                                </FlexDiv>
-                                <FlexDiv
-                                    padding="30px 30px 30px 0px"
-                                    justify="space-between"
-                                >
-                                    <Countbox>받은 쓰담수</Countbox>
-                                    <Counttext>
-                                        {profileList.recieveTodakCount} 회
-                                    </Counttext>
-                                </FlexDiv>
-                                <FlexDiv
-                                    padding="30px 30px 30px 0px"
-                                    justify="space-between"
-                                >
-                                    <Countbox>내 쓰담수</Countbox>
-                                    <Counttext>
-                                        {profileList.sendTodakCount} 회
-                                    </Counttext>
-                                </FlexDiv>
-                                <FlexDiv
-                                    padding="30px 30px 30px 0px"
-                                    justify="space-between"
-                                >
-                                    <Countbox>마지막 로그인 시간</Countbox>
-                                    <Counttext>
-                                        2022/04/10
-                                        <br />
-                                        01:57PM
-                                    </Counttext>
-                                </FlexDiv>
+                                <Countbox>분노 통장수</Countbox>
+                                <Counttext>
+                                    {profileList.diaryCount} 개
+                                </Counttext>
                             </FlexDiv>
-                        </div>
+                            <FlexDiv
+                                padding="0 15px 50px 0px"
+                                justify="space-between"
+                            >
+                                <Countbox>받은 쓰담수</Countbox>
+                                <Counttext>
+                                    {profileList.recieveTodakCount} 회
+                                </Counttext>
+                            </FlexDiv>
+                            <FlexDiv
+                                padding="0 15px 50px 0px"
+                                justify="space-between"
+                            >
+                                <Countbox>내 쓰담수</Countbox>
+                                <Counttext>
+                                    {profileList.sendTodakCount} 회
+                                </Counttext>
+                            </FlexDiv>
+                            <FlexDiv
+                                padding="0 15px 50px 0px"
+                                justify="space-between"
+                            >
+                                <Countbox>마지막 로그인 시간</Countbox>
+                                <Counttext>
+                                    2022/04/10
+                                    <br />
+                                    01:57PM
+                                </Counttext>
+                            </FlexDiv>
+                        </FlexDiv>
                     </>
                 );
         }
@@ -154,16 +151,16 @@ const Profile = props => {
     );
 };
 const StyledWrap = styled.div`
-    background-color: black;
-    padding: 0px 108px;
+    min-width: 327px;
+    margin-right: 78px;
+    margin-top: 50px;
 `;
-const PageTitle = styled.div`
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 25px;
-    padding-bottom: 98px;
-`;
+const ProfileWrap = styled.div`
+    display: flex;
+    padding: 73px 0 42px;
+    border-bottom: solid 1px #737373;
+    position: relative;
+`
 const FloatInput = styled.div`
     width: 23px;
     height: 23px;
@@ -173,8 +170,8 @@ const FloatInput = styled.div`
     font-size: 24px;
     font-weight: 800;
     position: absolute;
-    left: 55px;
-    top: 55px;
+    left: 62px;
+    top: 135px;
     text-align: center;
     vertical-align: middle;
     border: none;
@@ -200,12 +197,13 @@ const FileInput = styled.input`
     -moz-opacity: 0;
 `;
 const ProfileCircle = styled.div`
-    width: 80px;
-    height: 80px;
+    width: 87px;
+    height: 87px;
     border-radius: 60px;
-    background-color: #c4c4c4;
+    background-color: #813BF3;
     overflow: hidden;
     flex-shrink: 0;
+    margin-right: 22px;
 `;
 const ProfileImage = styled.div`
     background-image: ${props => props.bgImg};
@@ -214,25 +212,29 @@ const ProfileImage = styled.div`
     height: 100%;
 `;
 const Nickname = styled.p`
-    font-size: 24px;
-    font-weight: 500;
-    font-family: 'NotoSans-Medium';
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 41px;
+    color: #282828;
 `;
 
 const NicknameBold = styled.span`
-    font-size : 26px;
-    font-weight: 900;
-    font-family: 'NotoSans-Bold';
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 41px;
+    color: #282828;
 `;
 const EmailAddres = styled.div`
-    border: 1px solid #ffffff;
+    border: 1px solid #737373;
     box-sizing: border-box;
     border-radius: 13px;
     display: flex;
     font-weight: 500;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 20px;
     justify-content: center;
+    color: #737373;
+    margin-top: 8px;
 `;
 const CountWarp = styled.div`
     padding: 90px 0px 162px 0px;
@@ -241,12 +243,13 @@ const CountWarp = styled.div`
 const Countbox = styled.p`
     font-weight: 700;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 26px;
+    color: #737373;
 `;
 const Counttext = styled.p`
-    font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 17px;
+    color: #737373;
 `;
 export default Profile;

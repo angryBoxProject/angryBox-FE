@@ -22,54 +22,15 @@ const Mypage = props => {
         <MainLayout nav={true}>
             <Contents header={true}>
                 <PageWarp>
-                    <div style={{ width: '50%' }}>
-                        <Profile />
-                    </div>
-                    <div style={{ width: '50%' }}>
-                        <Button
-                            width="104px"
-                            padding="9px"
-                            onClick={() => {
-                                setOpenpw(true);
-                            }}
-                        >
-                            비밀번호
-                        </Button>
-                        <Button
-                            abled
-                            width="104px"
-                            padding="9px"
-                            margin="0 0 0 15px"
-                            onClick={() => {
-                                //클릭이벤트
-                            }}
-                        >
-                            분노 저금통
-                        </Button>
-                        {openpw && (
-                            <div
-                                style={{
-                                    paddingTop: '70px',
-                                    backgroundColor: 'black',
-                                }}
-                            >
-                                <NewPw />
-                            </div>
-                        )}
-                    </div>
+                    <Profile />
+                    <NewPw />
                 </PageWarp>
             </Contents>
         </MainLayout>
     );
 };
 const PageWarp = styled.div`
-    background-color: black;
     display: flex;
-    height: calc(100vh - 80px);
-`;
-const StyledWrap = styled.div`
-    background-color: black;
-    padding: 0px 108px;
 `;
 
 export default Mypage;
