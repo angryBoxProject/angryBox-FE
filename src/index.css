@@ -43,3 +43,36 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
+
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('./static/font/otf/Montserrat-Bold.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-ExtraBold';
+    src: url('./static/font/otf/Montserrat-ExtraBold.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-ExtraLight';
+    src: url('./static/font/otf/Montserrat-ExtraLight.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url('./static/font/otf/Montserrat-Light.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('./static/font/otf/Montserrat-Medium.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('./static/font/otf/Montserrat-Regular.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-SemiBold';
+    src: url('./static/font/otf/Montserrat-SemiBold.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Thin';
+    src: url('./static/font/otf/Montserrat-Thin.otf') format('truetype');
+}

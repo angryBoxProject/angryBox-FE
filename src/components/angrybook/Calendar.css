@@ -1,6 +1,6 @@
 .react-calendar {
     max-width: 100%;
-    background: #2e2e2e;
+    background: #F6F6F6;
     /* border: 1px solid #a0a096; */
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
@@ -43,15 +43,18 @@
     width: 100px;
     background: none;
 
-    font-family: 'Lato';
+    font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
     line-height: 14px;
     align-items: center;
     letter-spacing: 0.1em;
-
-    color: #f6f6f6;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 35px;
+    text-align: center;
+    color: #282828;
 }
 /* .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
@@ -60,6 +63,8 @@
 .react-calendar__navigation button:enabled:focus {
   background-color: #e6e6e6;
 } */
+
+
 .react-calendar__month-view__weekdays {
     text-align: center;
     text-transform: lowercase;
@@ -69,6 +74,10 @@
 .react-calendar__month-view__weekdays__weekday {
     padding: 1.25em;
 }
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+}
+
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
     display: flex;
     align-items: center;
@@ -82,6 +91,7 @@
 .react-calendar__month-view__days__day {
     width: 56px;
     height: 50px;
+    margin: 50px 0px !important; /*달력사이즈*/
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -98,7 +108,6 @@
 }
 .react-calendar__tile {
     max-width: 100%;
-    padding: 50px 6.6667px; /*달력사이즈*/
     background: none;
     text-align: center;
     line-height: 16px;
@@ -145,14 +154,14 @@
 }
 /* 오늘 날짜 */
 .react-calendar__tile--now {
-    background: #2dbeb1;
+    background: #813BF3;
     border-radius: 50px;
     color: white;
 }
 /* 오늘 날짜 선택/호버 */
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-    background: #2dbeb1;
+    background: #813BF3;
     border-radius: 50px;
     color: white;
 }
