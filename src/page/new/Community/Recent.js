@@ -128,6 +128,7 @@ const FilterWrap = styled.div`
     padding: 11px 50px 10px 15px; 
     position: relative;
     cursor: pointer;
+    color: #F6F6F6;
 `
 const OptionWarp = styled.div`
     width: 130px;
