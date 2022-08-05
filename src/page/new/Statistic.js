@@ -19,7 +19,7 @@ const list = [
 ]
 const Statistic = props => {
 
-    const [modal, setModal] = useState(true);
+    const [modal, setModal] = useState(false);
 
     return (
         <MainLayout nav={true}>
