@@ -9,7 +9,7 @@ import { ReactComponent as View } from '../../static/image/View.svg';
 import { ReactComponent as Todack } from '../../static/image/Todack.svg';
 import { useDispatch } from 'react-redux';
 import { getDiary, removelistDiary } from '../../redux/modules/bamboo';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 
 const RealTimeDiary = props => {
     const { Diarylist } = props;

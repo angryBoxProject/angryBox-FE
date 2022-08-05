@@ -7,7 +7,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getDiary, getTopDiary } from '../../redux/modules/bamboo';
 import { ReactComponent as Eyes } from '../../static/image/Eyes.svg';
 import theme from '../../Styles/theme';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 import BambooListCard from './BambooListCard';
 
 const BambooRealTimeDiary = props => {

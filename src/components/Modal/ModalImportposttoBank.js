@@ -10,7 +10,7 @@ import {
     getBankFirstPostList,
     getBankPostList,
 } from '../../redux/modules/bank';
-import ModaPostDetail from './ModaPostDetail';
+
 import ModaPostOneDetail from './ModaPostOneDetail';
 
 const ModalImportposttoBank = props => {

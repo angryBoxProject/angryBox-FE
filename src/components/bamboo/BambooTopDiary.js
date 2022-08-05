@@ -6,7 +6,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getTopDiary } from '../../redux/modules/bamboo';
 import { ReactComponent as Fire } from '../../static/image/Fire.svg';
 import theme from '../../Styles/theme';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 import BambooListCard from './BambooListCard';
 
 const BambooTopDiary = props => {

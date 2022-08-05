@@ -6,7 +6,7 @@ import { ReactComponent as CloseButton } from '../../static/image/CloseButton.sv
 import Button from '../../elements/Button';
 import { useBanks } from '../../hooks/useBanks';
 import ModalImportposttoBank from './ModalImportposttoBank';
-import ModaPostDetail from './ModaPostDetail';
+import ModaPostDetail from './ModalPostDetail';
 
 const ModalImportBook = props => {
     const {

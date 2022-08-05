@@ -7,7 +7,7 @@ import { getBankFirstPostList } from '../../redux/modules/bank';
 import { getBankPostList } from '../../redux/modules/main';
 import theme from '../../Styles/theme';
 import Posts from '../Main/Posts';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+
 
 const BambooGallayList = props => {
     const {} = props;

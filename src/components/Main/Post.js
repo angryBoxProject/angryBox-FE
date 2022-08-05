@@ -5,7 +5,7 @@ import theme from '../../Styles/theme';
 import moment from 'moment';
 import { ReactComponent as Locked } from '../../static/image/Locked.svg';
 import { ReactComponent as UnLocked } from '../../static/image/UnLock.svg';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 
 const Post = props => {
     const { width, height, data, index } = props;

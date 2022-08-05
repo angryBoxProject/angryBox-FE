@@ -5,7 +5,7 @@ import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
 import ModalImportposttoBank from './ModalImportposttoBank';
-import ModaPostDetail from './ModaPostDetail';
+
 import { useLinterims } from '../../hooks/useLinterims';
 
 const ModalLinterimList = props => {
