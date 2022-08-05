@@ -32,6 +32,7 @@ const Blur = styled.div`
     height: 100vh;
     background: #282828;
     opacity: 0.8;
+    z-index: 10;
 `
 const ModalInner = styled.div`
     position: fixed;
@@ -44,6 +45,7 @@ const ModalInner = styled.div`
     max-height: 820px;
     background: #F6F6F6;
     padding: ${props => props.modalType === "list" ? "38px 68px" : "38px 40px"};
+    z-index: 10;
 `
 const ModalTitle = styled.div`
     font-weight: 700;

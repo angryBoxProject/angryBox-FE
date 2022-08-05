@@ -8,8 +8,6 @@ import { ReactComponent as Fire } from '../static/image/Fire.svg';
 import { Button, FlexDiv } from '../elements';
 import { ReactComponent as Paperfiledocument } from '../static/image/Paperfiledocument.svg';
 import styled from 'styled-components';
-import ModalImportBook from '../components/Modal/ModalImportBook';
-import ModalImportposttoBank from '../components/Modal/ModalImportposttoBank';
 
 //Paperfiledocument
 const AngryBook = props => {
@@ -64,19 +62,6 @@ const AngryBook = props => {
                 가장 최근 분노 통장 보러 가기
                 <Paperfiledocument style={{ display: 'inline' }} />
             </Button>
-            <ModalImportBook
-                title="IMPORT BOOK"
-                subtitle="적금 불러오기"
-                width="50%"
-                height="50%"
-                open={modalstateBank}
-                close={() => {
-                    SetmodalBank(false);
-                }}
-                listclick={() => {
-                    SetmodalPost(true);
-                }}
-            />
         </>
     );
 };
