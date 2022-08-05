@@ -31,7 +31,7 @@ const Noti = props => {
     return (
         <>
             <Warp id={notiid}>
-                <FlexDiv justify="space-between">
+                <FlexDiv justify="space-between" align="center">
                     <Subtitle>쓰담받음</Subtitle>
                     <SubtitleDate>{displayCreatedAt(dateTime)}</SubtitleDate>
                 </FlexDiv>
@@ -41,20 +41,30 @@ const Noti = props => {
     );
 };
 const Warp = styled.div`
-    padding: 42px;
 `;
 const Subtitle = styled.div`
-    background-color: ${theme.color.red};
-    border-radius: 4px;
+    background: #F6F6F6;
+    padding: 3px 8px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 17px;
+    color: #813BF3;
 `;
 const SubtitleDate = styled.div`
+    font-weight: 500;
     font-size: 10px;
     line-height: 14px;
+    color: #FFFFFF;
 `;
 const ContentStyle = styled.div`
     font-weight: 500;
     font-size: 12px;
-    line-height: 16px;
-    padding-top: 13px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 13px 0 35px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 `;
 export default Noti;
