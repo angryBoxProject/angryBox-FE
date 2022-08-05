@@ -107,7 +107,7 @@ export const setMakePost = createAsyncThunk(
         formdatas.append('public', data.publiccount);
         try {
             return await tokenURL.post(`/diary`, formdatas).then(res => {
-                navigate('/main');
+                navigate('/new/main');
                 location.reload();
                 console.log(res);
             });

@@ -6,16 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { FlexDiv, MainCard } from '../../elements';
 
 import { useBank } from '../../hooks/useBank';
-import ModalMakeBank from '../../components/Modal/ModalMakeBank';
 import { getBankPostList } from '../../redux/modules/main';
-import PostList from '../../components/Main/PostList';
-import ModalMakePost from '../../components/Modal/ModalMakePost';
 import { expiredBank } from '../../redux/modules/bank';
+
+import ModalClearBank from '../../components/Modal/ModalClearBank';
+import ModalMakeBank from '../../components/Modal/ModalMakeBank';
+import ModalMakePost from '../../components/Modal/ModalMakePost';
 
 import styled from 'styled-components';
 import MainLayout from '../../Layouts/MainLayout';
 import Contents from '../../Layouts/Contents';
-import ModalLayout from '../../Layouts/ModalLayout';
+import PostList from '../../components/Main/PostList';
 
 import { ReactComponent as Fire } from '../../static/image/main/main_fire.svg';
 import { ReactComponent as ClearButtonIcon } from '../../static/image/main/clearbutton_icon.svg';
@@ -23,7 +24,6 @@ import { ReactComponent as ClearButtonIconOn } from '../../static/image/main/cle
 import { ReactComponent as ListIconLeft } from '../../static/image/main/list_icon1.svg';
 import { ReactComponent as ListIconRight } from '../../static/image/main/list_icon2.svg';
 import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.svg';
-import ModalClearBank from '../../components/Modal/ModalClearBank';
 
 const list = ['극대노', '대노', '중노', '소노', '극소노'];
 
@@ -71,39 +71,11 @@ const Main = () => {
                 if (error instanceof Error) {
                     return (
                         <Containers>
-                            <FlexLeft>
-                                <TextBox>
-                                    <div>
-                                        <NonBankSubTitle>
-                                            새 적금을
-                                            <br /> 만들어보세요!
-                                        </NonBankSubTitle>
-                                        <NoneBankText>
-                                            적금 정보가 존재하지 않습니다.
-                                        </NoneBankText>
-                                    </div>
-                                    <FlexDiv column="row" justify="space-between" margin="0 0 28px">
-                                        <CreditStatus>
-                                            <CreaditStatusTxt1>현재 {memberNick}님의</CreaditStatusTxt1>
-                                            <CreaditStatusTxt2>신용상태는</CreaditStatusTxt2>
-                                        </CreditStatus>
-                                        <CreditStatusValue>{banklist.creditStatus}</CreditStatusValue>
-                                    </FlexDiv>
-                                </TextBox>
-                                <Button
-                                    onClick={() => {
-                                        Setmodalmakebank(true);
-                                    }}
-                                >
-                                    새 적금 만들기
-                                </Button>
-                            </FlexLeft>
-                            
                         </Containers>
                     );
                 }
                 break;
-            default:
+            default: 
                 return (
                     <Containers>
                         <FlexLeft>
@@ -190,6 +162,8 @@ const Main = () => {
             <MainLayout nav={true}>
                 <Contents header={true}>
                     <StatusArea>
+                        
+                        {/* 유저 상태에 따라 타이틀 명칭 변경 */}
                         <Title>곧 터지기 직전!</Title>
                         <CreditWrap>
                             <CreditLabel>
@@ -244,30 +218,25 @@ const Main = () => {
                     }
                 </Contents>
 
-                <ModalMakeBank
-                    title="CREATE"
-                    subtitle="분노 적금 만들기"
-                    width="70%"
-                    height="80%"
-                    open={modalmakebank}
-                    close={() => {
-                        Setmodalmakebank(false);
-                    }}
-                />
-                {/* {banklist && (
+                {modalmakebank &&
+                    <ModalMakeBank
+                        title="분노 적금 만들기"
+                        modalType="form"
+                        close={() => {
+                            Setmodalmakebank(false);
+                        }}
+                    />
+                }
+
+                {banklist && modalmakePost && (
                     <ModalMakePost
-                        title="ANGRY SAVING"
-                        subtitle="분노 게시글 작성"
-                        width="70%"
-                        height="80%"
-                        open={modalmakePost}
+                        title="분노 게시글 작성"
+                        modalType="form"
                         close={() => {
                             SetmodalmakePost(false);
                         }}
-                        coinBankId={banklist.id}
-                    ></ModalMakePost>
-                )} */}
-                {modalmakePost && <ModalLayout modalType="list" title="테스트타이틀" close={() => SetmodalmakePost(false)} />}
+                    />
+                )}
                 {modalbreakBank && <ModalClearBank modalType="info" close={() => SetmodalbreakBank(false)} />}
             </MainLayout>
 

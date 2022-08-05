@@ -9,7 +9,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getTopDiary, removelistTopDiary } from '../../redux/modules/bamboo';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 const TopDiary = props => {
     const { TopDiarylist } = props;
 

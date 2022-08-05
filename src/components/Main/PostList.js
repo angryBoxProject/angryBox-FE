@@ -5,7 +5,7 @@ import useIsMount from '../../hooks/useIsMount';
 import { getBankFirstPostList } from '../../redux/modules/bank';
 import { getBankPostList } from '../../redux/modules/main';
 import theme from '../../Styles/theme';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+
 import Posts from './Posts';
 
 const PostList = props => {
