@@ -13,10 +13,10 @@ const ModalLayout = props => {
 
     return (
         <>
-            <Blur></Blur>
-            <ModalInner type={modalType}>
-                {title && <ModalTitle type={modalType}>{title}</ModalTitle>}
-                <ModalClose type={modalType} onClick={close}>
+            <Blur onClick={close}></Blur>
+            <ModalInner modalType={modalType}>
+                {title && <ModalTitle modalType={modalType}>{title}</ModalTitle>}
+                <ModalClose modalType={modalType} onClick={close}>
                     <Close />
                 </ModalClose>
                 {children}

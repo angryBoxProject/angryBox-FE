@@ -15,7 +15,6 @@ import { expiredBank } from '../../redux/modules/bank';
 import styled from 'styled-components';
 import MainLayout from '../../Layouts/MainLayout';
 import Contents from '../../Layouts/Contents';
-import ModalLayout from '../../Layouts/ModalLayout';
 
 import { ReactComponent as Fire } from '../../static/image/main/main_fire.svg';
 import { ReactComponent as ClearButtonIcon } from '../../static/image/main/clearbutton_icon.svg';
@@ -254,20 +253,15 @@ const Main = () => {
                         Setmodalmakebank(false);
                     }}
                 />
-                {/* {banklist && (
+                {banklist && modalmakePost && (
                     <ModalMakePost
-                        title="ANGRY SAVING"
-                        subtitle="분노 게시글 작성"
-                        width="70%"
-                        height="80%"
-                        open={modalmakePost}
+                        title="분노 게시글 작성"
+                        modalType="form"
                         close={() => {
                             SetmodalmakePost(false);
                         }}
-                        coinBankId={banklist.id}
                     ></ModalMakePost>
-                )} */}
-                {modalmakePost && <ModalLayout modalType="list" title="테스트타이틀" close={() => SetmodalmakePost(false)} />}
+                )}
                 {modalbreakBank && <ModalClearBank modalType="info" close={() => SetmodalbreakBank(false)} />}
             </MainLayout>
 

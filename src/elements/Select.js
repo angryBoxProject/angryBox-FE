@@ -29,21 +29,22 @@ const Select = props => {
 
 const ElSelect = styled.select`
     width: auto;
-    padding: 12px 12px;
-    margin: 14px 11px 14px 0px;
-    box-sizing: border-box;
-    border: 1px solid #f6f6f6;
-    border-radius: 4px;
-    background: #2e2e2e;
-    color: #f6f6f6;
-    opacity: 0.5;
+    min-width: 125px;
+    height: 44px;
+    padding: 0 10px;
+    border: 1px solid #282828;
+    background: #F6F6F6;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    color: #737373;
+    margin-left: 20px;
     option {
-        background-color: #2e2e2e;
+        background-color: #F6F6F6;
         border: 1px solid #c4c4c4;
         box-sizing: border-box;
         border-radius: 15px;
-        color: #f6f6f6;
-        opacity: 0.5;
+        color: #282828;
     }
 `;
 
