@@ -72,7 +72,7 @@ const Header = props => {
                 </Nav>
 
                 <Util>
-                    <UtilItem><BellIcon /></UtilItem>
+                    <UtilItem onClick={() => setNotimodal(true)}><BellIcon /></UtilItem>
                     
                     <HeaderIcon>
                         <ProfileCircle>

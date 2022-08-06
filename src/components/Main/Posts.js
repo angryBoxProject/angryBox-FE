@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ModaPostDetail from '../Modal/ModaPostDetail';
 import Post from './Post';
 
 import { ReactComponent as ListIconLock } from '../../static/image/main/list_icon_lock.svg';
 import { ReactComponent as ListIconUnlock } from '../../static/image/main/list_icon_unlock.svg';
+import ModalPostDetail from '../Modal/ModalPostDetail';
 
 const Posts = props => {
     const { postlist } = props;
-
+    const [modalPost, setModalPost] = useState(null);
+    const [status, setStatus] = useState("view");
     return (
         <>
             {postlist?.map((data, index) => {
                 if (!data?.deleted) {
-                    console.log(data)
                     return (
                         <ListItem
                             key={index}
                             onClick={() => {
-                                setModalPost(true);
+                                setModalPost(data.id);
                             }}
                         >
                             <ListIndex>
@@ -41,6 +41,19 @@ const Posts = props => {
                     );
                 }
             })}
+
+            {modalPost &&
+                <ModalPostDetail
+                    id={modalPost}
+                    title="분노 게시글"
+                    modalType="form"
+                    status={status}
+                    setStatus={setStatus}
+                    close={() => {
+                        setModalPost(null);
+                    }}
+                />
+            }
         </>
     );
 };

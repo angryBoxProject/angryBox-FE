@@ -6,7 +6,7 @@ import { useBankDiarylist } from '../../hooks/useBankDiarylist';
 import bank, { getMonthDiaryList } from '../../redux/modules/bank';
 import Moment from 'react-moment';
 import moment from 'moment';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 
 const AngryBookDiarylist = props => {
     const dispatch = useDispatch();

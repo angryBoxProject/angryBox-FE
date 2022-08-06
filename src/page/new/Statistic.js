@@ -6,9 +6,11 @@ import Contents from '../../Layouts/Contents';
 import AngryCalendar from '../../components/angrybook/AngryCalendar';
 import AngryBookProfile from '../../components/angrybook/AngryBookProfile';
 import AngryChart from '../../components/angrybook/AngryChart';
+import ModalLayout from '../../Layouts/ModalLayout';
 
 import { ReactComponent as FireIcon } from '../../static/image/community/fire.svg';
 import { ReactComponent as ButtonIcon } from '../../static/image/statistic/icon.svg';
+import ModalLoad from '../../components/Modal/ModalLoad';
 
 const list = [
     {datetime: "04/08", detail: "오늘 요리했는데 개망함", status: "소노"},
@@ -16,6 +18,9 @@ const list = [
     {datetime: "04/08", detail: "오늘 요리했는데 개망함", status: "소노"}
 ]
 const Statistic = props => {
+
+    const [modal, setModal] = useState(false);
+
     return (
         <MainLayout nav={true}>
             <Contents header={true}>
@@ -57,6 +62,15 @@ const Statistic = props => {
                         <ButtonIcon />
                     </LinkButton>
                 </LinkBUttonWrap>
+
+                {modal &&
+                    <ModalLoad 
+                        title="적금 불러오기"
+                        modalType="list"
+                        contentType="bank"
+                        close={() => setModal(false)}
+                    />
+                }
             </Contents>
         </MainLayout>
     );

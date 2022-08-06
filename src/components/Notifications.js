@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Noti from './Noti';
 import { getnotis } from '../redux/modules/notification';
 import useIsMount from '../hooks/useIsMount';
+import { ReactComponent as BellIcon } from '../static/image/header/nav_bell_icon_on.svg';
 
 const Notifications = props => {
     const { notilist, listloading, hasMorePosts } = useSelector(
@@ -15,6 +16,10 @@ const Notifications = props => {
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
+    
+    const profileList = useSelector(state => state.member.user_info);
+    const isLogin = useSelector(state => state.member.isLogin);
+
     useEffect(() => {
         dispatch(getnotis(props.lastnotiId));
     }, []);
@@ -58,8 +63,43 @@ const Notifications = props => {
     //     }
     // }, [status, isFetching]);
     return (
-        <>
-            <Section
+        <Wrap ref={scrollRef}>
+            <Util>
+                <UtilItem onClick={() => props.setNotimodal(false)}><BellIcon /></UtilItem>
+                
+                <HeaderIcon>
+                    <ProfileCircle>
+                        <ProfileImage
+                            bgImg={
+                                isLogin && profileList.file
+                                    ? `url(${
+                                        process.env.REACT_APP_IP +
+                                        profileList.file
+                                    })`
+                                    : 'none'
+                            }
+                        ></ProfileImage>
+                    </ProfileCircle>
+                </HeaderIcon>
+            </Util>
+            <Container>
+                <Title>알림</Title>
+                <NotiWrap>
+                    {notilist?.map((data, index) => (
+                        <Noti
+                            key={index}
+                            notiid={data.id}
+                            diaryId={data.diaryId}
+                            checked={data.checked}
+                            content={data.content}
+                            dateTime={data.dateTime}
+                            receiveMemberId={data.receiveMemberId}
+                            sendMemberId={data.sendMemberId}
+                        />
+                    ))}
+                </NotiWrap>
+            </Container>
+            {/* <Section
                 onClick={() => {
                     props.setNotimodal(false);
                 }}
@@ -70,7 +110,7 @@ const Notifications = props => {
                         <div>프로필 url</div>
                     </Notiheader>
                     <MainModal>알림</MainModal>
-                    {/* {renderByStatus()} */}
+                    
                     {notilist?.map((data, index) => (
                         <Noti
                             key={index}
@@ -84,41 +124,84 @@ const Notifications = props => {
                         />
                     ))}
                 </Modaltap>
-            </Section>
-        </>
+            </Section> */}
+        </Wrap>
     );
 };
-const Section = styled.div`
-    position: absolute;
-    top: 0;
-    box-sizing: border-box;
-    width: 80%;
+const Wrap = styled.div`
+    width: 421px;
     height: 100%;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #813BF3;
+    z-index: 5;
+    padding: 18px 30px;
+`;
+const Util = styled.div`
+    width: 125px;
     display: flex;
-    justify-content: center;
     align-items: center;
 `;
-const Notiheader = styled.div`
-    //헤더쪽 알림하고 맞출것
-    display: flex;
-    justify-content: flex-end;
+const UtilItem = styled.div`
+    width: 64px;
+    height: 64px;
 `;
-const Modaltap = styled.div`
-    position: absolute;
-    right: 0;
-    width: 20%;
+const HeaderIcon = styled.div`
+width: 64px;
+height: 64px;
+display: flex;
+align-items: center;
+justify-content: center;
+`;
+const ProfileCircle = styled.div`
+    width: 36px;
+    height: 36px;
+    border-radius: 36px;
+    background-color: #c4c4c4;
+    overflow: hidden;
+    flex-shrink: 0;
+`;
+const ProfileImage = styled.div`
+    background-image: ${props => props.bgImg};
+    background-size: cover;
+    width: 100%;
     height: 100%;
-    background-color: ${theme.color.black};
-    overflow-y: scroll;
+`;
+const Container = styled.div`
+    width: 200px;
+    padding-left: 20px;
+`;
+const Title = styled.div`
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    color: #FFFFFF;
+    padding-top: 40px;
+    padding-bottom: 55px;
+`;
+const NotiWrap = styled.div`
+    width: 100%;
+    height: 70vh;
+    overflow: auto;
+    padding-right: 10px;
+
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    
     ::-webkit-scrollbar {
-        display: none; /* Chrome , Safari , Opera */
+        //display: none; /* Chrome , Safari , Opera */
+        width: 5px;
+        background-color: #F6F6F6;
+        border-radius: 5px;
     }
-`;
-const MainModal = styled.div`
-    padding: 45px;
+    ::-webkit-scrollbar-thumb {
+        background-color: #F6F6F6;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #813BF3;
+        border-radius: 5px;
+    }
 `;
 export default Notifications;
