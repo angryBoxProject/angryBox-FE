@@ -69,22 +69,17 @@ const Main = () => {
                 return <div>loading</div>;
             case 'error':
                 if (error instanceof Error) {
-                    return (
-                        <Containers>
-                        </Containers>
-                    );
+                    return <Containers></Containers>;
                 }
                 break;
-            default: 
+            default:
                 return (
                     <Containers>
                         <FlexLeft>
                             <TextBox>
                                 {isbreakbank ? (
                                     <div>
-                                        <BreakBank>
-                                            분노 적금 만땅!
-                                        </BreakBank>
+                                        <BreakBank>분노 적금 만땅!</BreakBank>
                                         <BreakBankSubtitle>
                                             {banklist.reward}
                                         </BreakBankSubtitle>
@@ -94,24 +89,97 @@ const Main = () => {
                                         <Subtitle>곧 터지기 직전!</Subtitle>
                                         <AngryState>
                                             <div>
-                                                <p>극대노 <span style={{color: "#DA463C"}}>{banklist.remainingDiaryNum[4]}번</span></p>
-                                                <p>대노 <span style={{color: "#EA675E"}}>{banklist.remainingDiaryNum[3]}번</span></p>
-                                                <p>중대노 <span style={{color: "#E2766F"}}>{banklist.remainingDiaryNum[2]}번</span></p>
-                                                <p>소대노 <span style={{color: "#E38E88"}}>{banklist.remainingDiaryNum[1]}번</span></p>
-                                                <p>극소노 <span style={{color: "#E8AEAA"}}>{banklist.remainingDiaryNum[0]}번</span></p>
+                                                <p>
+                                                    극대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#DA463C',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[4]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#EA675E',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[3]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    중대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#E2766F',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[2]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    소대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#E38E88',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[1]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
+                                                <p>
+                                                    극소노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#E8AEAA',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[0]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
                                             </div>
-                                            <div>
-                                                남았어요!
-                                            </div>
+                                            <div>남았어요!</div>
                                         </AngryState>
                                     </div>
                                 )}
-                                <FlexDiv column="row" justify="space-between" margin="0 0 28px">
+                                <FlexDiv
+                                    column="row"
+                                    justify="space-between"
+                                    margin="0 0 28px"
+                                >
                                     <CreditStatus>
-                                        <CreaditStatusTxt1>현재 {memberNick}님의</CreaditStatusTxt1>
-                                        <CreaditStatusTxt2>신용상태는</CreaditStatusTxt2>
+                                        <CreaditStatusTxt1>
+                                            현재 {memberNick}님의
+                                        </CreaditStatusTxt1>
+                                        <CreaditStatusTxt2>
+                                            신용상태는
+                                        </CreaditStatusTxt2>
                                     </CreditStatus>
-                                    <CreditStatusValue>{banklist.creditStatus}</CreditStatusValue>
+                                    <CreditStatusValue>
+                                        {banklist.creditStatus}
+                                    </CreditStatusValue>
                                 </FlexDiv>
                             </TextBox>
                             <Button
@@ -120,9 +188,7 @@ const Main = () => {
                                     console.log('test');
                                     // dispatch(CreateDiary({ dispatch, "test" }));
                                     const data = { id: banklist.id };
-                                    dispatch(
-                                        expiredBank({ data, navigate }),
-                                    );
+                                    dispatch(expiredBank({ data, navigate }));
                                 }}
                             >
                                 {isbreakbank
@@ -133,12 +199,12 @@ const Main = () => {
                         <FlexRight>
                             <PostList bankId={banklist.id} />
                             <Button
-                                    onClick={() => {
-                                        // dispatch(CreateDiary({ dispatch, "test" }));
-                                        SetmodalmakePost(true);
-                                    }}
-                                >
-                                    분노 저금하기
+                                onClick={() => {
+                                    // dispatch(CreateDiary({ dispatch, "test" }));
+                                    SetmodalmakePost(true);
+                                }}
+                            >
+                                분노 저금하기
                             </Button>
                         </FlexRight>
                     </Containers>
@@ -149,97 +215,128 @@ const Main = () => {
     useEffect(() => {
         if (status === 'success') {
             const data = {
-                coinBankId: banklist.id, 
+                coinBankId: banklist.id,
                 lastDiaryId: mainlastDiaryId,
             };
             dispatch(getBankPostList(data));
         }
     }, []);
-    
-    const {diaryCount, todackCount} = banklist || '0'
-    
+
+    const { diaryCount, todackCount } = banklist || '0';
+    console.log('banklist', banklist);
     return (
-            <MainLayout nav={true}>
-                <Contents header={true}>
-                    <StatusArea>
-                        
-                        {/* 유저 상태에 따라 타이틀 명칭 변경 */}
-                        <Title>곧 터지기 직전!</Title>
-                        <CreditWrap>
-                            <CreditLabel>
-                                    <p style={{fontSize: "20px", lineHeight: "29px"}}>현재 <b>{memberNick}</b> 님의</p>
-                                    <p style={{fontSize: "42px", lineHeight: "61px"}}><b>신용상태</b>는</p>
-                            </CreditLabel>
-                            <CreditStatus>
-                                <CreditStatusValue>{list[0]}</CreditStatusValue>
-                                <div style={{width: "66px"}}><Fire /></div>
-                            </CreditStatus>
-                        </CreditWrap>
-                        <ClearButton
-                            onClick={() => {SetmodalbreakBank(true)}}
-                            style={{border: isbreakbank ? "solid 3px #813BF3" : "solid 3px #ECECEC"}}
+        <MainLayout nav={true}>
+            <Contents header={true}>
+                <StatusArea>
+                    {/* 유저 상태에 따라 타이틀 명칭 변경 */}
+                    <Title>곧 터지기 직전!</Title>
+                    <CreditWrap>
+                        <CreditLabel>
+                            <p style={{ fontSize: '20px', lineHeight: '29px' }}>
+                                현재 <b>{memberNick}</b> 님의
+                            </p>
+                            <p style={{ fontSize: '42px', lineHeight: '61px' }}>
+                                <b>신용상태</b>는
+                            </p>
+                        </CreditLabel>
+                        <CreditStatus>
+                            <CreditStatusValue>{list[0]}</CreditStatusValue>
+                            <div style={{ width: '66px' }}>
+                                <Fire />
+                            </div>
+                        </CreditStatus>
+                    </CreditWrap>
+                    <ClearButton
+                        onClick={() => {
+                            SetmodalbreakBank(true);
+                        }}
+                        style={{
+                            border: isbreakbank
+                                ? 'solid 3px #813BF3'
+                                : 'solid 3px #ECECEC',
+                        }}
+                    >
+                        <ClearButtonValue
+                            style={{
+                                color: isbreakbank ? '#813BF3' : '#737373',
+                            }}
                         >
-                            <ClearButtonValue style={{color: isbreakbank ? "#813BF3" : "#737373"}}>
-                                {isbreakbank ? "버튼을 눌러 적금을 깨보세요!!" : "아직 적금을 깰 수 없습니다."}
-                            </ClearButtonValue>
-                            {isbreakbank ? <ClearButtonIconOn /> : <ClearButtonIcon />}
-                        </ClearButton>
-                    </StatusArea>
-                    {banklist &&
-                        <ListArea>
-                            <ListDesc>
-                                <>
-                                    <UtilLink>
-                                        <ListIconLeft />
-                                        <UtilLinkText>이번달은 진짜로!</UtilLinkText>
-                                        <ListIconRight />
-                                    </UtilLink>
-                                    <TotalWrap>
-                                        <Total>총 게시글 수 <TotalCount>{diaryCount}</TotalCount></Total>
-                                        <Total>총 쓰담 수 <TotalCount>{todackCount}</TotalCount></Total>
-                                    </TotalWrap>
-                                </>
-                            </ListDesc>
-                            <PostList bankId={banklist.id} />
-                            
-                            <SaveButtonWrap>
-                                
-                            </SaveButtonWrap>
-                            <SaveButton
-                                    onClick={() => {
-                                        // dispatch(CreateDiary({ dispatch, "test" }));
-                                        SetmodalmakePost(true);
-                                    }}
-                                >
-                                    <SaveButtonText>분노 저금하기</SaveButtonText>
-                                    <SaveIcon />
-                            </SaveButton>
-                        </ListArea>
-                    }
-                </Contents>
+                            {isbreakbank
+                                ? '버튼을 눌러 적금을 깨보세요!!'
+                                : '아직 적금을 깰 수 없습니다.'}
+                        </ClearButtonValue>
+                        {isbreakbank ? (
+                            <ClearButtonIconOn />
+                        ) : (
+                            <ClearButtonIcon />
+                        )}
+                    </ClearButton>
+                </StatusArea>
+                {banklist && (
+                    <ListArea>
+                        <ListDesc>
+                            <>
+                                <UtilLink>
+                                    <ListIconLeft />
+                                    <UtilLinkText>
+                                        이번달은 진짜로!
+                                    </UtilLinkText>
+                                    <ListIconRight />
+                                </UtilLink>
+                                <TotalWrap>
+                                    <Total>
+                                        총 게시글 수{' '}
+                                        <TotalCount>{diaryCount}</TotalCount>
+                                    </Total>
+                                    <Total>
+                                        총 쓰담 수{' '}
+                                        <TotalCount>{todackCount}</TotalCount>
+                                    </Total>
+                                </TotalWrap>
+                            </>
+                        </ListDesc>
+                        <PostList bankId={banklist.id} />
 
-                {modalmakebank &&
-                    <ModalMakeBank
-                        title="분노 적금 만들기"
-                        modalType="form"
-                        close={() => {
-                            Setmodalmakebank(false);
-                        }}
-                    />
-                }
-
-                {banklist && modalmakePost && (
-                    <ModalMakePost
-                        title="분노 게시글 작성"
-                        modalType="form"
-                        close={() => {
-                            SetmodalmakePost(false);
-                        }}
-                    />
+                        <SaveButtonWrap></SaveButtonWrap>
+                        <SaveButton
+                            onClick={() => {
+                                // dispatch(CreateDiary({ dispatch, "test" }));
+                                SetmodalmakePost(true);
+                            }}
+                        >
+                            <SaveButtonText>분노 저금하기</SaveButtonText>
+                            <SaveIcon />
+                        </SaveButton>
+                    </ListArea>
                 )}
-                {modalbreakBank && <ModalClearBank modalType="info" close={() => SetmodalbreakBank(false)} />}
-            </MainLayout>
+            </Contents>
 
+            {modalmakebank && (
+                <ModalMakeBank
+                    title="분노 적금 만들기"
+                    modalType="form"
+                    close={() => {
+                        Setmodalmakebank(false);
+                    }}
+                />
+            )}
+
+            {banklist && modalmakePost && (
+                <ModalMakePost
+                    title="분노 게시글 작성"
+                    modalType="form"
+                    close={() => {
+                        SetmodalmakePost(false);
+                    }}
+                />
+            )}
+            {modalbreakBank && (
+                <ModalClearBank
+                    modalType="info"
+                    close={() => SetmodalbreakBank(false)}
+                />
+            )}
+        </MainLayout>
     );
 };
 
@@ -275,14 +372,14 @@ const CreditStatusValue = styled.div`
     font-weight: 700;
     font-size: 76.3988px;
     line-height: 111px;
-    color: #813BF3;
+    color: #813bf3;
     margin-right: 20px;
 `;
 const ClearButton = styled.button`
     width: 100%;
     max-width: 427px;
     height: 46px;
-    border: solid 3px #ECECEC;
+    border: solid 3px #ececec;
     border-radius: 23px;
     display: flex;
     justify-content: center;
@@ -307,7 +404,7 @@ const ListDesc = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 31px;
-`
+`;
 const UtilLink = styled.div`
     display: flex;
     align-items: center;
@@ -321,7 +418,7 @@ const UtilLinkText = styled.div`
 const TotalWrap = styled.div`
     display: flex;
     align-items: center;
-`
+`;
 const Total = styled.div`
     font-weight: 500;
     font-size: 18px;
@@ -333,14 +430,18 @@ const TotalCount = styled.span`
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
-    color: #813BF3;
+    color: #813bf3;
     margin-left: 15px;
 `;
 const SaveButtonWrap = styled.div`
     width: 100%;
     height: 250px;
-    background: rgb(246,246,246);
-    background: linear-gradient(0deg, rgba(246,246,246,1) 30%, rgba(0,212,255,0) 100%);
+    background: rgb(246, 246, 246);
+    background: linear-gradient(
+        0deg,
+        rgba(246, 246, 246, 1) 30%,
+        rgba(0, 212, 255, 0) 100%
+    );
     position: absolute;
     bottom: 90px;
     left: 0;
@@ -349,7 +450,7 @@ const SaveButton = styled.button`
     width: 100%;
     max-width: 436px;
     height: 46px;
-    border: solid 3px #813BF3;
+    border: solid 3px #813bf3;
     border-radius: 23px;
     display: flex;
     align-items: center;
@@ -364,7 +465,7 @@ const SaveButtonText = styled.span`
     font-weight: 700;
     font-size: 16px;
     line-height: 23px;
-    color: #813BF3;
+    color: #813bf3;
     margin-right: 10px;
 `;
 
