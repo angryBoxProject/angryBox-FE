@@ -52,7 +52,7 @@ function App() {
         <>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    <Route path="/" element={<Splash />} />
+                    {/* <Route path="/" element={<Splash />} />
                     <Route path="/main" element={<Main />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/mypage" element={<Mypage />} />
@@ -65,7 +65,7 @@ function App() {
                     <Route
                         path="/bamboo/topdiary"
                         element={<BambooTopDiary />}
-                    />
+                    /> */}
                     <Route
                         path="/oauth2/kakao/callback"
                         element={<Kakaocallback />}
@@ -76,23 +76,16 @@ function App() {
                     />
                     <Route path="/signup" element={<SignUp />} />
 
-
-                    <Route path="/new/" element={<SplashN />} />
+                    <Route path="/" element={<SplashN />} />
                     <Route path="/new/login" element={<LoginN />} />
                     <Route path="/new/signup" element={<SignUpN />} />
                     <Route path="/new/main" element={<MainN />} />
                     <Route path="/new/mypage" element={<MypageN />} />
                     <Route path="/new/community" element={<Community />} />
                     <Route path="/new/statistic" element={<Statistic />} />
-                    
-                    <Route
-                        path="/new/community/best"
-                        element={<Best />}
-                    />
-                    <Route
-                        path="/new/community/recent"
-                        element={<Recent />}
-                    />
+
+                    <Route path="/new/community/best" element={<Best />} />
+                    <Route path="/new/community/recent" element={<Recent />} />
                     <Route
                         path="/new/community/gallery"
                         element={<Gallery />}
