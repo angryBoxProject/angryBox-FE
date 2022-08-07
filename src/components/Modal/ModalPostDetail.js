@@ -25,7 +25,6 @@ const ModalPostDetail = props => {
     const [ispublic, setIspublic] = useState('비공개');
     const isMount = useIsMount();
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
-
     const navigate = useNavigate();
 
     const mymemberID =
@@ -89,11 +88,14 @@ const ModalPostDetail = props => {
                 </FireStatus>
             </TitleArea>
             <ContentsArea>
-                {image && (
+                {image ? (
                     <UploadImage>
                         <SwipeableTextMobileStepper images={showimage} />
                     </UploadImage>
+                ) : (
+                    <></>
                 )}
+
                 <Contents
                     placeholder={
                         '본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다.'
