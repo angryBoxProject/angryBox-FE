@@ -73,13 +73,13 @@ const ModalPostDetail = props => {
 
                 {/* 조건에 맞게 토닥 수 노출여부 변경 v*/}
                 {mymemberID ? 
-                    <TodacCountButton>
-                        토닥 수 {`${detailList?.diary?.todackCount}`}
-                    </TodacCountButton>
-                    :
                     <TodacCount>
                         토닥 수 {`${detailList?.diary?.todackCount}`}
                     </TodacCount>
+                    :
+                    <TodacCountButton>
+                        토닥 수 {`${detailList?.diary?.todackCount}`}
+                    </TodacCountButton>
                 }
                 <OpenStatus>
                     {handlePublic(detailList?.diary?.public)}
