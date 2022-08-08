@@ -69,17 +69,18 @@ const ModalPostDetail = props => {
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>
-                <InputTitle
-                    type="text'"
-                    placeholder="제목을 입력하세요."
-                    value={name || ''}
-                    onChange={e => {}}
-                />
+                <InputTitle>{name}</InputTitle>
 
                 {/* 조건에 맞게 토닥 수 노출여부 변경 v*/}
-                <TodacCount>
-                    토닥 수 {`${detailList?.diary?.todackCount}`}
-                </TodacCount>
+                {mymemberID ? 
+                    <TodacCountButton>
+                        토닥 수 {`${detailList?.diary?.todackCount}`}
+                    </TodacCountButton>
+                    :
+                    <TodacCount>
+                        토닥 수 {`${detailList?.diary?.todackCount}`}
+                    </TodacCount>
+                }
                 <OpenStatus>
                     {handlePublic(detailList?.diary?.public)}
                 </OpenStatus>
@@ -96,13 +97,8 @@ const ModalPostDetail = props => {
                     <></>
                 )}
 
-                <Contents
-                    placeholder={
-                        '본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다.'
-                    }
-                    value={memo || ''}
-                    onChange={e => {}}
-                />
+                
+                <Contents>{memo}</Contents>
             </ContentsArea>
 
             {/* 조건에 맞게 버튼 노출여부 변경 v*/}
@@ -134,7 +130,7 @@ const TitleArea = styled.div`
     justify-content: space-between;
     margin-bottom: 25px;
 `;
-const InputTitle = styled.input`
+const InputTitle = styled.div`
     width: 100%;
     font-weight: 700;
     font-size: 18px;
@@ -151,6 +147,17 @@ const InputTitle = styled.input`
     &:focus {
         background: #fff;
     }
+`;
+const TodacCountButton = styled.button`
+    min-width: 140px;
+    height: 44px;
+    border: solid 3px #813BF3;
+    margin-left: 26px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #813bf3;
+    border-radius: 22px;
 `;
 const TodacCount = styled.div`
     min-width: 140px;
@@ -204,7 +211,7 @@ const UploadImage = styled.div`
     border-right: solid 1px #282828;
     margin-right: 10px;
 `;
-const Contents = styled.textarea`
+const Contents = styled.div`
     width: 100%;
     padding: 10px;
     background: #f6f6f6;
