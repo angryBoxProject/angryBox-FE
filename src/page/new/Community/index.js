@@ -14,6 +14,7 @@ import { ReactComponent as MoreIconRight } from '../../../static/image/main/list
 import { ReactComponent as SaveIcon } from '../../../static/image/main/save_icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    allreset,
     getDiary,
     getGallery,
     getTopDiary,
@@ -248,6 +249,10 @@ const Community = props => {
                     setStatus={setStatus}
                     close={() => {
                         setModalPost(null);
+                        dispatch(allreset());
+                        dispatch(getDiary(0));
+                        dispatch(getTopDiary(0));
+                        dispatch(getGallery(0));
                     }}
                 />
             )}

@@ -65,6 +65,14 @@ const ModalPostDetail = props => {
         }
     };
 
+    const tokackhandle = async () => {
+        try {
+            await tokenURL.post(`/todack/${detailList?.diary?.id}`, null);
+        } catch (error) {
+            await tokenURL.delete(`/todack/${detailList?.diary?.id}`);
+        }
+        refetch();
+    };
     console.log('abababab', detailList);
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
@@ -72,15 +80,15 @@ const ModalPostDetail = props => {
                 <InputTitle>{name}</InputTitle>
 
                 {/* 조건에 맞게 토닥 수 노출여부 변경 v*/}
-                {mymemberID ? 
+                {mymemberID ? (
                     <TodacCount>
                         토닥 수 {`${detailList?.diary?.todackCount}`}
                     </TodacCount>
-                    :
-                    <TodacCountButton>
+                ) : (
+                    <TodacCountButton onClick={tokackhandle}>
                         토닥 수 {`${detailList?.diary?.todackCount}`}
                     </TodacCountButton>
-                }
+                )}
                 <OpenStatus>
                     {handlePublic(detailList?.diary?.public)}
                 </OpenStatus>
@@ -97,7 +105,6 @@ const ModalPostDetail = props => {
                     <></>
                 )}
 
-                
                 <Contents>{memo}</Contents>
             </ContentsArea>
 
@@ -151,7 +158,7 @@ const InputTitle = styled.div`
 const TodacCountButton = styled.button`
     min-width: 140px;
     height: 44px;
-    border: solid 3px #813BF3;
+    border: solid 3px #813bf3;
     margin-left: 26px;
     font-weight: 700;
     font-size: 18px;
