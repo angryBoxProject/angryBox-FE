@@ -14,6 +14,7 @@ import { ReactComponent as MoreIconRight } from '../../../static/image/main/list
 import { ReactComponent as SaveIcon } from '../../../static/image/main/save_icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    allreset,
     getDiary,
     getGallery,
     getTopDiary,
@@ -201,6 +202,14 @@ const Community = props => {
                                     onClick={() => {
                                         setModalPost(item?.id);
                                     }}
+                                    bgImg={
+                                        item
+                                            ? `url(${
+                                                  process.env.REACT_APP_IP +
+                                                  item.file
+                                              })`
+                                            : 'none'
+                                    }
                                 >
                                     <ImageItemContent>
                                         <ImageItemTitle>
@@ -248,6 +257,10 @@ const Community = props => {
                     setStatus={setStatus}
                     close={() => {
                         setModalPost(null);
+                        dispatch(allreset());
+                        dispatch(getDiary(0));
+                        dispatch(getTopDiary(0));
+                        dispatch(getGallery(0));
                     }}
                 />
             )}
@@ -361,6 +374,8 @@ const ImageItem = styled.div`
     background: #ececec;
     margin-right: 30px;
     margin-bottom: 30px;
+    background-image: ${props => props.bgImg};
+    background-size: cover;
     cursor: pointer;
 
     &:nth-child(3n) {
@@ -383,6 +398,8 @@ const ImageItemContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-image: ${props => props.bgImg};
+    background-size: cover;
 `;
 const ImageItemTitle = styled.div`
     font-weight: 700;

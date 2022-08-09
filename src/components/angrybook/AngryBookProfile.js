@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -14,7 +15,9 @@ const AngryBookProfile = props => {
         isFetching,
         refetch,
     } = useMonthprofile();
-
+    const monthdate = date => {
+        return moment(date, 'YYYY-MM-DD').month() + 1;
+    };
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
@@ -33,14 +36,19 @@ const AngryBookProfile = props => {
                                 padding="0 20px 8px"
                             >
                                 <Underline>분노 계좌번호</Underline>
-                                <BankAccount>{profilelist.bankAccount}</BankAccount>
+                                <BankAccount>
+                                    {profilelist.bankAccount}
+                                </BankAccount>
                             </FlexDiv>
                             <FlexDiv
                                 justify="space-between"
                                 padding="8px 20px 0"
                             >
                                 <Underline>총 쓰담 수</Underline>
-                                <RecieveTodackCount>{profilelist.recieveTodackCount} <Text>회</Text></RecieveTodackCount>
+                                <RecieveTodackCount>
+                                    {profilelist.recieveTodackCount}{' '}
+                                    <Text>회</Text>
+                                </RecieveTodackCount>
                             </FlexDiv>
                         </FlexDiv>
                     </>
@@ -52,7 +60,9 @@ const AngryBookProfile = props => {
             <Wrap>
                 <TitleWrap>
                     <Nickname>{nickname} </Nickname>
-                    <Title>님의 4월 분노 적금 통계입니다.</Title>
+                    <Title>
+                        님의 {monthdate(moment())}월 분노 적금 통계입니다.
+                    </Title>
                 </TitleWrap>
                 <div>{renderByStatus()}</div>
             </Wrap>
@@ -66,7 +76,7 @@ const Wrap = styled.div`
 `;
 const TitleWrap = styled.div`
     padding-bottom: 52px;
-`
+`;
 const Nickname = styled.span`
     font-weight: 700;
     font-size: 24px;
@@ -106,6 +116,6 @@ const Text = styled.span`
     line-height: 26px;
     text-align: right;
     color: #282828;
-`
+`;
 
 export default AngryBookProfile;

@@ -3,6 +3,7 @@ import { RadialChart } from 'react-vis';
 import { FlexDiv } from '../../elements';
 import { useMonthchart } from '../../hooks/useMonthchart';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const AngryChart = props => {
     const {
@@ -11,8 +12,8 @@ const AngryChart = props => {
         error,
         isFetching,
         refetch,
-    } = useMonthchart('2022-05-01');
-
+    } = useMonthchart(moment().format('YYYY-MM'));
+    console.log(chartlist);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
@@ -66,7 +67,9 @@ const AngryChart = props => {
                                             justify="space-between"
                                             padding="3%"
                                         >
-                                            <ListTitle list="#813BF3">극대노</ListTitle>
+                                            <ListTitle list="#813BF3">
+                                                극대노
+                                            </ListTitle>
                                             <Underline>
                                                 {chartlist.apList[4]}회 (
                                                 {chartlist.apPerList[4]}%)
@@ -76,7 +79,9 @@ const AngryChart = props => {
                                             justify="space-between"
                                             padding="3%"
                                         >
-                                            <ListTitle list="#8E52F0">대노</ListTitle>
+                                            <ListTitle list="#8E52F0">
+                                                대노
+                                            </ListTitle>
                                             <Underline>
                                                 {chartlist.apList[3]}회 (
                                                 {chartlist.apPerList[3]}%)
@@ -86,7 +91,9 @@ const AngryChart = props => {
                                             justify="space-between"
                                             padding="3%"
                                         >
-                                            <ListTitle list="#A172EE">중노</ListTitle>
+                                            <ListTitle list="#A172EE">
+                                                중노
+                                            </ListTitle>
                                             <Underline>
                                                 {chartlist.apList[2]}회 (
                                                 {chartlist.apPerList[2]}%)
@@ -96,7 +103,9 @@ const AngryChart = props => {
                                             justify="space-between"
                                             padding="3%"
                                         >
-                                            <ListTitle list="#B694EC">소노</ListTitle>
+                                            <ListTitle list="#B694EC">
+                                                소노
+                                            </ListTitle>
                                             <Underline>
                                                 {chartlist.apList[1]}회 (
                                                 {chartlist.apPerList[1]}%)
@@ -106,7 +115,9 @@ const AngryChart = props => {
                                             justify="space-between"
                                             padding="3%"
                                         >
-                                            <ListTitle list="#CAB6EA">극소노</ListTitle>
+                                            <ListTitle list="#CAB6EA">
+                                                극소노
+                                            </ListTitle>
                                             <Underline>
                                                 {chartlist.apList[0]}회 (
                                                 {chartlist.apPerList[0]}%)
@@ -132,7 +143,7 @@ const Chart = styled.div`
     justify-content: space-between;
     padding: 44px 100px 44px;
     border-bottom: solid 1px #737373;
-`
+`;
 const Angrylist = styled.div`
     width: 100%;
     align-items: center;
@@ -160,9 +171,9 @@ const ListTitle = styled.div`
     font-size: 18px;
     line-height: 26px;
     color: #282828;
-    
+
     &:before {
-        content: "";
+        content: '';
         background: ${props => props.list};
         width: 10px;
         height: 10px;
@@ -170,5 +181,5 @@ const ListTitle = styled.div`
         border-radius: 5px;
         margin-right: 20px;
     }
-`
+`;
 export default AngryChart;
