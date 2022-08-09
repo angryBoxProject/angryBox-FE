@@ -72,7 +72,8 @@ const BambooSocket = props => {
         let payloadData = JSON.parse(payload.body);
         console.log('payloadData=', payloadData);
         // setPublicChats(prevPublicChats => [...prevPublicChats, payloadData]);
-        dispatch(pushrealDiary(payloadData));
+        // dispatch(pushrealDiary(payloadData));
+        props.setRecentList(prev => [...payloadData, ...props.itemlist]);
     };
 
     const onError = err => {

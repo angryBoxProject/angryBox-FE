@@ -11,6 +11,7 @@ import { ReactComponent as HandIcon } from '../../../static/image/community/hand
 import { ReactComponent as ViewIcon } from '../../../static/image/community/view.svg';
 import { ReactComponent as FilterArrow } from '../../../static/image/community/filter_arrow.svg';
 import { tokenURL } from '../../../Apis/API';
+import BambooSocket from '../../../components/bamboo/BambooSocket';
 
 const recentList = [
     {
@@ -201,6 +202,7 @@ const Recent = props => {
                     </TablelistRecent>
                 </TablelistWrap>
             </Contents>
+            <BambooSocket itemlist={recentList} setitem={setRecentList} />
             {modalPost && (
                 <ModalPostDetail
                     id={modalPost}

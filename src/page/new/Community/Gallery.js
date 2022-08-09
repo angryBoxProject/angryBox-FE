@@ -176,6 +176,15 @@ const Gallery = props => {
                                             onClick={() => {
                                                 setModalPost(item?.id);
                                             }}
+                                            bgImg={
+                                                item
+                                                    ? `url(${
+                                                          process.env
+                                                              .REACT_APP_IP +
+                                                          item.file
+                                                      })`
+                                                    : 'none'
+                                            }
                                         >
                                             <ImageItemContent>
                                                 <ImageItemTitle>
@@ -188,21 +197,30 @@ const Gallery = props => {
                                                             {item.todack_count}
                                                         </HandValue>
                                                     </HandWrap>
-                                                    <ViewWrap>
+                                                    {/* <ViewWrap>
                                                         <ViewIcon />
                                                         <ViewValue>
                                                             {item.hand}
                                                         </ViewValue>
-                                                    </ViewWrap>
+                                                    </ViewWrap> */}
                                                 </ImageItemInfoWrap>
                                             </ImageItemContent>
-                                            <Detail>{item.content}</Detail>
+                                            {/* <Detail>{item.content}</Detail> */}
                                         </ImageItem>
                                     ) : (
                                         <ImageItem
                                             onClick={() => {
                                                 setModalPost(item?.id);
                                             }}
+                                            bgImg={
+                                                item
+                                                    ? `url(${
+                                                          process.env
+                                                              .REACT_APP_IP +
+                                                          item.file
+                                                      })`
+                                                    : 'none'
+                                            }
                                         >
                                             <ImageItemContent>
                                                 <ImageItemTitle>
@@ -215,15 +233,15 @@ const Gallery = props => {
                                                             {item.todack_count}
                                                         </HandValue>
                                                     </HandWrap>
-                                                    <ViewWrap>
+                                                    {/* <ViewWrap>
                                                         <ViewIcon />
                                                         <ViewValue>
                                                             {item.hand}
                                                         </ViewValue>
-                                                    </ViewWrap>
+                                                    </ViewWrap> */}
                                                 </ImageItemInfoWrap>
                                             </ImageItemContent>
-                                            <Detail>{item.content}</Detail>
+                                            {/* <Detail>{item.content}</Detail> */}
                                         </ImageItem>
                                     )}
                                 </React.Fragment>
@@ -331,6 +349,8 @@ const ImageItem = styled.div`
     background: #ececec;
     margin-right: 29px;
     margin-bottom: 30px;
+    background-image: ${props => props.bgImg};
+    background-size: cover;
     cursor: pointer;
 
     &:nth-child(3n) {
@@ -353,6 +373,8 @@ const ImageItemContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-image: ${props => props.bgImg};
+    background-size: cover;
 `;
 const ImageItemTitle = styled.div`
     font-weight: 700;

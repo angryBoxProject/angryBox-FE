@@ -11,6 +11,9 @@ import ModalLayout from '../../Layouts/ModalLayout';
 import { ReactComponent as FireIcon } from '../../static/image/community/fire.svg';
 import { ReactComponent as ButtonIcon } from '../../static/image/statistic/icon.svg';
 import ModalLoad from '../../components/Modal/ModalLoad';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { useBankDiarylist } from '../../hooks/useBankDiarylist';
 
 const list = [
     { datetime: '04/08', detail: '오늘 요리했는데 개망함', status: '소노' },
@@ -19,6 +22,33 @@ const list = [
 ];
 const Statistic = props => {
     const [modal, setModal] = useState(false);
+
+    const selectDay =
+        useSelector(state => state.main.calendarDay) ?? moment().format();
+
+    const data = {
+        date: selectDay,
+        lastDiaryId: 0,
+        size: 5,
+    };
+    const {
+        status,
+        data: bankdiarylist,
+        error,
+        isFetching,
+        refetch,
+    } = useBankDiarylist(selectDay);
+
+    const angryPhase = id => {
+        const list = ['극대노', '대노', '중노', '소노', '극소노'];
+        return list[id];
+    };
+    const monthdate = date => {
+        return moment(date, 'YYYY-MM-DD').month() + 1;
+    };
+    const daydate = date => {
+        return moment(date, 'YYYY-MM-DD').day();
+    };
 
     return (
         <MainLayout nav={true}>
@@ -38,14 +68,20 @@ const Statistic = props => {
                 </StatisticWrap>
 
                 <RecentList>
-                    {list.map((item, key) => {
+                    {bankdiarylist.map((item, key) => {
                         return (
                             <Item key={key}>
                                 <ItemLeft>
-                                    <Date>{item.datetime}</Date>
-                                    <Detail>{item.detail}</Detail>
+                                    <Date>
+                                        {monthdate(item.dateTime) +
+                                            '/' +
+                                            daydate(item.dateTime)}
+                                    </Date>
+                                    <Detail>{item.title}</Detail>
                                 </ItemLeft>
-                                <ItemRight>{item.status}</ItemRight>
+                                <ItemRight>
+                                    {angryPhase(item.angryPhaseId)}
+                                </ItemRight>
                             </Item>
                         );
                     })}
