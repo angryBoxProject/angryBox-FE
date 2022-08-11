@@ -68,7 +68,7 @@ const Statistic = props => {
                 </StatisticWrap>
 
                 <RecentList>
-                    {bankdiarylist.map((item, key) => {
+                    {bankdiarylist?.map((item, key) => {
                         return (
                             <Item key={key}>
                                 <ItemLeft>
