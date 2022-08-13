@@ -14,6 +14,7 @@ import ModalLoad from '../../components/Modal/ModalLoad';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useBankDiarylist } from '../../hooks/useBankDiarylist';
+import ModalPostDetail from '../../components/Modal/ModalPostDetail';
 
 const list = [
     { datetime: '04/08', detail: '오늘 요리했는데 개망함', status: '소노' },
@@ -22,6 +23,9 @@ const list = [
 ];
 const Statistic = props => {
     const [modal, setModal] = useState(false);
+    const [statuss, setStatus] = useState('view');
+
+    const [modalPost, setModalPost] = useState();
 
     const selectDay =
         useSelector(state => state.main.calendarDay) ?? moment().format();
@@ -68,9 +72,14 @@ const Statistic = props => {
                 </StatisticWrap>
 
                 <RecentList>
-                    {bankdiarylist.map((item, key) => {
+                    {bankdiarylist?.map((item, key) => {
                         return (
-                            <Item key={key}>
+                            <Item
+                                key={key}
+                                onClick={() => {
+                                    setModalPost(item?.id);
+                                }}
+                            >
                                 <ItemLeft>
                                     <Date>
                                         {monthdate(item.dateTime) +
@@ -105,6 +114,18 @@ const Statistic = props => {
                         modalType="list"
                         contentType="bank"
                         close={() => setModal(false)}
+                    />
+                )}
+                {modalPost && (
+                    <ModalPostDetail
+                        id={modalPost}
+                        title="분노 게시글"
+                        modalType="form"
+                        status={statuss}
+                        setStatus={setStatus}
+                        close={() => {
+                            setModalPost(null);
+                        }}
                     />
                 )}
             </Contents>
@@ -143,6 +164,7 @@ const Item = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    cursor: pointer;
 `;
 const ItemLeft = styled.div`
     display: flex;
