@@ -1,47 +1,65 @@
-import styled from "styled-components";
-import ModalLayout from "../../Layouts/ModalLayout";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { tokenURL } from '../../Apis/API';
+import ModalLayout from '../../Layouts/ModalLayout';
 
 import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.svg';
+import ModalMakeBank from './ModalMakeBank';
 
 const ModalClearBank = props => {
-    const {
-        modalType,
-        close,
-    } = props;
+    const { modalType, close } = props;
+    const [modalmakebank, Setmodalmakebank] = useState(false);
+    const [reward, setReward] = useState();
 
+    const getbankreward = async () => {
+        await tokenURL.get(`/bank`).then(res => {
+            setReward(res.data.data.reward);
+        });
+    };
+    useEffect(() => {
+        getbankreward();
+    }, []);
     return (
         <ModalLayout modalType="info" close={close}>
             <TitleArea>
-                <Logo onClick={() => {}}>
-                    RAGE BANK
-                </Logo>
+                <Logo onClick={() => {}}>RAGE BANK</Logo>
                 <Title>분노 적금 깨기 완료!</Title>
             </TitleArea>
             <Content>
-                <Item1>오늘 저녁은 치킨이닭!</Item1>
+                <Item1>{reward}</Item1>
+
                 <Item2>나 지금 완전히 새됐어</Item2>
             </Content>
             <NewBankButton
                 onClick={() => {
                     // dispatch(CreateDiary({ dispatch, "test" }));
-                    SetmodalmakePost(true);
+                    Setmodalmakebank(true);
                 }}
             >
                 <NewBankButtonText>새 적금 만들기</NewBankButtonText>
                 <SaveIcon />
             </NewBankButton>
+            {modalmakebank && (
+                <ModalMakeBank
+                    title="분노 적금 만들기"
+                    modalType="form"
+                    close={() => {
+                        Setmodalmakebank(false);
+                    }}
+                />
+            )}
         </ModalLayout>
-    )
-}
+    );
+};
 const TitleArea = styled.div`
     text-align: center;
     padding-top: 41px;
     padding-bottom: 82px;
-`
+`;
 const Logo = styled.div`
     font-size: 24px;
     line-height: 29px;
-    color: #813BF3;
+    color: #813bf3;
     font-family: 'Montserrat-ExtraBold';
     font-style: normal;
 `;
@@ -72,7 +90,7 @@ const NewBankButton = styled.button`
     width: 100%;
     max-width: 436px;
     height: 46px;
-    border: solid 3px #813BF3;
+    border: solid 3px #813bf3;
     border-radius: 23px;
     display: flex;
     align-items: center;
@@ -83,7 +101,7 @@ const NewBankButtonText = styled.span`
     font-weight: 700;
     font-size: 16px;
     line-height: 23px;
-    color: #813BF3;
+    color: #813bf3;
     margin-right: 10px;
 `;
 

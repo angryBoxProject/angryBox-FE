@@ -59,7 +59,7 @@ export const setMakeBank = createAsyncThunk(
         console.log('setMakeBank', data);
         try {
             return await tokenURL.post(`/bank`, data).then(res => {
-                navigate('/main', { replace: true });
+                navigate('/new/main', { replace: true });
                 location.reload();
                 console.log(res);
             });

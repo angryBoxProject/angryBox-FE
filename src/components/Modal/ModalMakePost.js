@@ -13,11 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import ModalLayout from '../../Layouts/ModalLayout';
 
 const ModalMakePost = props => {
-    const {
-        close,
-        title,
-        modalType,
-    } = props;
+    const { close, title, modalType } = props;
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -121,38 +117,32 @@ const ModalMakePost = props => {
                         onChange={handleFileInput}
                     />
                 </ImageButton>
-                    <Select
-                        ispublic
-                        onChange={e => {
-                            setIspublic(e.target.value);
-                        }}
-                    ></Select>
-                    <Select
-                        onChange={e => {
-                            setAngryPhase(e.target.value);
-                        }}
-                    />
+                <Select
+                    ispublic
+                    onChange={e => {
+                        setIspublic(e.target.value);
+                    }}
+                ></Select>
+                <Select
+                    onChange={e => {
+                        setAngryPhase(e.target.value);
+                    }}
+                />
             </TitleArea>
             <ContentsArea>
-                {image && 
-                    <UploadImage>
-                        이미지 노출 영역
-                    </UploadImage>
-                }
+                {image && <UploadImage>이미지 노출 영역</UploadImage>}
                 <Contents
-                    placeholder={"본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다."}
+                    placeholder={
+                        '본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다.'
+                    }
                     onChange={e => {
                         setMemo(e.target.value);
                     }}
                 />
             </ContentsArea>
-            <ModalButton
-                onClick={handleMakePost}
-                disabled={!name}
-            >
+            <ModalButton onClick={handleMakePost} disabled={!name}>
                 완료
             </ModalButton>
-            
         </ModalLayout>
     );
 };
@@ -173,7 +163,7 @@ const InputTitle = styled.input`
     margin-right: 13px;
     padding: 6px 20px 8px;
     border: 1px solid #282828;
-    background: #F6F6F6;
+    background: #f6f6f6;
 
     &::placeholder {
         color: #737373;
@@ -205,11 +195,11 @@ const UploadImage = styled.div`
     height: 100%;
     border-right: solid 1px #282828;
     margin-right: 10px;
-`
+`;
 const Contents = styled.textarea`
     width: 100%;
     padding: 10px;
-    background: #F6F6F6;
+    background: #f6f6f6;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
@@ -226,13 +216,13 @@ const ModalButton = styled.button`
     width: 100%;
     max-width: 440px;
     height: 44px;
-    border: solid 3px #813BF3;
+    border: solid 3px #813bf3;
     border-radius: 22px;
     margin: 0 auto;
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
-    color: #813BF3;
+    color: #813bf3;
     display: block;
 
     &:disabled {

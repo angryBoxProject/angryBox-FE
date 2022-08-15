@@ -58,14 +58,16 @@ export const googleLogin = createAsyncThunk(
 
 export const signup = createAsyncThunk(
     'member/signup',
-    async (data, navigate) => {
+    async ({ data, navigate }) => {
         console.log(data);
+        console.log(data.email);
         try {
             return await URL.post(
                 `/users?email=${data.email}&nickname=${data.nickname}&password=${data.password}`,
                 data,
             ).then(response => {
-                navigate('/login');
+                console.log('test');
+                navigate('/new/login');
                 // window.location.assign('/login');
                 // console.log(response);
 

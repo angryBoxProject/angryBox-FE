@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 import ModalLayout from '../../Layouts/ModalLayout';
 import { useBanks } from '../../hooks/useBanks';
+import { useInView } from 'react-intersection-observer';
+import { tokenURL } from '../../Apis/API';
+import moment from 'moment';
+import ModalPostDetail from './ModalPostDetail';
 
 const bankTableHead = ['No', '적금명', '세부 설명', '설계일'];
 const writingTableHead = ['No', '게시글명', '본문', '작성일'];
@@ -29,7 +33,7 @@ const writingTableList = [
 ];
 
 const ModalLoad = props => {
-    const { title, modalType, contentType, close } = props;
+    const { title, modalType, contentType, close, bankId } = props;
 
     const { status, data: bankList, error, isFetching, refetch } = useBanks();
     const [modal, setModal] = useState(false);
@@ -37,7 +41,39 @@ const ModalLoad = props => {
     const [select, setSelect] = useState(false);
     const [selectbankId, setSelectbankId] = useState();
 
-    console.log(bankList, select, selectbankId);
+    const [ref, inView] = useInView();
+    const [postlist, setPostlist] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [lastId, setLastId] = useState(0);
+    const [modalPost, setModalPost] = useState();
+    const [statuss, setStatus] = useState('view');
+
+    const getList = useCallback(async () => {
+        setLoading(true);
+        await tokenURL
+            .get(`/diaries/coinBank/${bankId}/${lastId}/15`)
+            .then(res => {
+                setPostlist(prevState => [
+                    ...prevState,
+                    ...res.data.data.diaryListInCoinBank,
+                ]);
+            });
+        setLoading(false);
+    }, [lastId]);
+    useEffect(() => {
+        if (contentType !== 'bank') getList();
+    }, [getList]);
+    useEffect(() => {
+        if (contentType !== 'bank' && inView && !loading)
+            setLastId(prev => prev + 15);
+    }, [inView, loading]);
+    const monthdate = date => {
+        return moment(date, 'YYYY-MM-DD').month() + 1;
+    };
+    const daydate = date => {
+        return moment(date, 'YYYY-MM-DD').day();
+    };
+    // console.log(bankList, select, selectbankId);
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
@@ -63,6 +99,7 @@ const ModalLoad = props => {
                                         setSelect(true);
                                     }
                                 }}
+                                style={{ cursor: 'pointer' }}
                             >
                                 <No>{item.coinBankId}</No>
                                 <Name>{item.coinBankName}</Name>
@@ -110,16 +147,47 @@ const ModalLoad = props => {
                     ) : (
                         <>
                             {/* 게시글 목록 */}
-                            {writingTableList.map((item, key) => {
-                                return (
-                                    <BodyItem select={true}>
-                                        <No>{item.id}</No>
-                                        <Name>{item.name}</Name>
-                                        <Content>{item.content}</Content>
-                                        <Date>{item.date}</Date>
-                                    </BodyItem>
-                                );
-                            })}
+                            <PostlistWrap>
+                                {postlist.map((item, key) => (
+                                    <div
+                                        key={key}
+                                        onClick={() => {
+                                            setModalPost(item?.id);
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        {postlist.length - 1 == key ? (
+                                            <BodyItem select={true} ref={ref}>
+                                                <No>{item.diaryNo}</No>
+                                                <Name>{item.title}</Name>
+                                                <Content>
+                                                    {item.content}
+                                                </Content>
+                                                <Date>
+                                                    {' '}
+                                                    {monthdate(item.dateTime) +
+                                                        '/' +
+                                                        daydate(item.dateTime)}
+                                                </Date>
+                                            </BodyItem>
+                                        ) : (
+                                            <BodyItem select={true}>
+                                                <No>{item.diaryNo}</No>
+                                                <Name>{item.title}</Name>
+                                                <Content>
+                                                    {item.content}
+                                                </Content>
+                                                <Date>
+                                                    {' '}
+                                                    {monthdate(item.dateTime) +
+                                                        '/' +
+                                                        daydate(item.dateTime)}
+                                                </Date>
+                                            </BodyItem>
+                                        )}
+                                    </div>
+                                ))}
+                            </PostlistWrap>
                         </>
                     )}
                 </TableBody>
@@ -137,7 +205,20 @@ const ModalLoad = props => {
                     title="게시글 목록"
                     modalType="list"
                     contentType="notbank"
+                    bankId={selectbankId}
                     close={() => setModal(false)}
+                />
+            )}
+            {modalPost && (
+                <ModalPostDetail
+                    id={modalPost}
+                    title="분노 게시글"
+                    modalType="form"
+                    status={statuss}
+                    setStatus={setStatus}
+                    close={() => {
+                        setModalPost(null);
+                    }}
                 />
             )}
         </ModalLayout>
@@ -261,5 +342,30 @@ const ActionButton = styled.button`
     line-height: 26px;
     color: #813bf3;
     margin-top: 50px;
+`;
+
+const PostlistWrap = styled.div`
+    width: 100%;
+    height: 50vh;
+    overflow: auto;
+    padding-right: 10px;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    ::-webkit-scrollbar {
+        //display: none; /* Chrome , Safari , Opera */
+        width: 5px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #f6f6f6;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #813bf3;
+        border-radius: 5px;
+    }
 `;
 export default ModalLoad;
