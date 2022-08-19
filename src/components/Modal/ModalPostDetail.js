@@ -11,6 +11,7 @@ import useIsMount from '../../hooks/useIsMount';
 
 import { ReactComponent as ImageIcon } from '../../static/image/modal/image.svg';
 import { tokenURL } from '../../Apis/API';
+import ModalMakePost from './ModalMakePost';
 
 const ModalPostDetail = props => {
     const { id, close, title, modalType, status, setStatus } = props;
@@ -23,6 +24,7 @@ const ModalPostDetail = props => {
     const [showimage, setShowImage] = useState();
     const [angryPhase, setAngryPhase] = useState('극소노');
     const [ispublic, setIspublic] = useState('비공개');
+    const [editModal, setEditModal] = useState(false);
     const isMount = useIsMount();
     const list = ['', '극소노', '소노', '중노', '대노', '극대노'];
     const navigate = useNavigate();
@@ -118,7 +120,12 @@ const ModalPostDetail = props => {
                         >
                             삭제
                         </ModalButtonBlack>
-                        <ModalButtonBlack onClick={close} disabled={!name}>
+                        <ModalButtonBlack
+                            onClick={() => {
+                                setEditModal(true);
+                            }}
+                            disabled={!name}
+                        >
                             수정
                         </ModalButtonBlack>
                     </>
@@ -127,6 +134,20 @@ const ModalPostDetail = props => {
                     닫기
                 </ModalButton>
             </ButtonArea>
+            {editModal && (
+                <ModalMakePost
+                    title="ANGRY SAVING"
+                    subtitle="분노 게시글 수정"
+                    width="70%"
+                    height="80%"
+                    editPostlist={detailList}
+                    open={editModal}
+                    close={() => {
+                        setEditModal(false);
+                    }}
+                    coinBankId={detailList?.diary?.coinBankId}
+                ></ModalMakePost>
+            )}
         </ModalLayout>
     );
 };

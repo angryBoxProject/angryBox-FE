@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import ModalLayout from '../../Layouts/ModalLayout';
 
 const ModalMakePost = props => {
-    const { close, title, modalType } = props;
+    const { close, title, modalType, editPostlist } = props;
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -96,6 +96,20 @@ const ModalMakePost = props => {
         // dispatch(getImage(planId));
         // dispatch(getOnePlan(planId));
     };
+    useEffect(() => {
+        if (editPostlist) {
+            const angrystate = ['', '극소노', '소노', '중노', '대노', '극대노'];
+            const publicstate = ['비공개', '공개글'];
+            const publiccount = editPostlist?.diary?.public === true ? 1 : 0;
+            setAngryPhase(angrystate[editPostlist?.diary?.angryPhaseId]);
+            setIspublic(publicstate[publiccount]);
+            setName(editPostlist?.diary?.title);
+            setMemo(editPostlist?.diary?.content);
+            setImage(editPostlist?.fileList);
+            console.log('test');
+        }
+    }, [editPostlist]);
+    console.log(angryPhase, image);
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>

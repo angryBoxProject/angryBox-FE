@@ -38,7 +38,6 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const SwipeableTextMobileStepper = props => {
     const { images } = props;
-    console.log(images);
     const utheme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = images.length;
