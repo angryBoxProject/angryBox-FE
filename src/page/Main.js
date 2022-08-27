@@ -291,7 +291,7 @@ const Main = () => {
                             </Button>
                         </FlexLeft>
                         <FlexRight>
-                            <PostList bankId={banklist.id} />
+                            <Posts bankId={banklist.id} />
                             <Button
                                 onClick={() => {
                                     // dispatch(CreateDiary({ dispatch, "test" }));

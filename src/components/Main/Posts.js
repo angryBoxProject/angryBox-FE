@@ -1,46 +1,111 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
-import Post from './Post';
 
 import { ReactComponent as ListIconLock } from '../../static/image/main/list_icon_lock.svg';
 import { ReactComponent as ListIconUnlock } from '../../static/image/main/list_icon_unlock.svg';
 import ModalPostDetail from '../Modal/ModalPostDetail';
+import { useInView } from 'react-intersection-observer';
+import { tokenURL } from '../../Apis/API';
 
 const Posts = props => {
-    const { postlist } = props;
+    const { bankId } = props;
 
     const [modalPost, setModalPost] = useState(null);
     const [status, setStatus] = useState('view');
+    const [ref, inView] = useInView();
+    const [loading, setLoading] = useState(false);
+    const [bankpostlist, setBankpostlist] = useState([]);
+    const [lastId, setLastId] = useState(0);
+
+    const getList = useCallback(async () => {
+        setLoading(true);
+        const data = {
+            coinBankId: bankId,
+            lastDiaryId: lastId,
+        };
+
+        await tokenURL
+            .get(`/diaries/coinBank/${data.coinBankId}/${data.lastDiaryId}/15`)
+            .then(res => {
+                console.log(res);
+                const list = res.data.data.diaryListInCoinBank;
+                setBankpostlist(prevState => [...prevState, ...list]);
+            });
+        setLoading(false);
+    }, [lastId]);
+
+    useEffect(() => {
+        getList();
+    }, [getList]);
+
+    useEffect(() => {
+        if (inView && !loading) {
+            setLastId(bankpostlist[bankpostlist.length - 1]?.id);
+        }
+    }, [inView, loading]);
+
     return (
         <>
-            {postlist?.map((data, index) => {
+            {bankpostlist?.map((data, key) => {
                 if (!data?.deleted) {
                     return (
                         <ListItem
-                            key={index}
+                            key={key}
                             onClick={() => {
                                 setModalPost(data.id);
                             }}
                         >
-                            <ListIndex>NO. {data.id}</ListIndex>
-                            <ListDetail>
-                                <ListTitle>
-                                    <span style={{ marginRight: '11px' }}>
-                                        {data.dateTime
-                                            .substr(5)
-                                            .replace('-', '.')}
-                                    </span>
-                                    {data.title}
-                                </ListTitle>
-                                <ListDesc>{data.content}</ListDesc>
-                            </ListDetail>
-                            <LockIcon>
-                                {data.public ? (
-                                    <ListIconUnlock />
-                                ) : (
-                                    <ListIconLock />
-                                )}
-                            </LockIcon>
+                            {bankpostlist.length - 1 == key ? (
+                                <div ref={ref}>
+                                    <ListIndex ref={ref}>
+                                        NO. {data.id}
+                                    </ListIndex>
+                                    <ListDetail>
+                                        <ListTitle>
+                                            <span
+                                                style={{ marginRight: '11px' }}
+                                            >
+                                                {data.dateTime
+                                                    .substr(5)
+                                                    .replace('-', '.')}
+                                            </span>
+                                            {data.title}
+                                        </ListTitle>
+                                        <ListDesc>{data.content}</ListDesc>
+                                    </ListDetail>
+                                    <LockIcon>
+                                        {data.public ? (
+                                            <ListIconUnlock />
+                                        ) : (
+                                            <ListIconLock />
+                                        )}
+                                    </LockIcon>
+                                </div>
+                            ) : (
+                                <div>
+                                    <ListIndex>NO. {data.id}</ListIndex>
+                                    <ListDetail>
+                                        <ListTitle>
+                                            <span
+                                                style={{ marginRight: '11px' }}
+                                            >
+                                                {data.dateTime
+                                                    .substr(5)
+                                                    .replace('-', '.')}
+                                            </span>
+                                            {data.title}
+                                        </ListTitle>
+                                        <ListDesc>{data.content}</ListDesc>
+                                    </ListDetail>
+                                    <LockIcon>
+                                        {data.public ? (
+                                            <ListIconUnlock />
+                                        ) : (
+                                            <ListIconLock />
+                                        )}
+                                    </LockIcon>
+                                </div>
+                            )}
                         </ListItem>
                     );
                 }
@@ -66,23 +131,27 @@ const ListItem = styled.div`
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 308px;
+    width: 298px;
+    /* width: 308px; */
     height: 266px;
     background: #ececec;
     margin-right: 30px;
     margin-bottom: 30px;
     cursor: pointer;
-
-    &:nth-child(3n) {
+    /* &:nth-child(3n) {
         margin-right: 0;
-    }
-
+    } */
     &:hover {
         background: #813bf3;
 
         div {
             color: #f6f6f6;
         }
+    }
+`;
+const Nth3 = styled.div`
+    &:nth-child(3n) {
+        margin-right: 0;
     }
 `;
 const ListIndex = styled.div`

@@ -24,6 +24,7 @@ import { ReactComponent as ClearButtonIconOn } from '../../static/image/main/cle
 import { ReactComponent as ListIconLeft } from '../../static/image/main/list_icon1.svg';
 import { ReactComponent as ListIconRight } from '../../static/image/main/list_icon2.svg';
 import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.svg';
+import Posts from '../../components/Main/Posts';
 
 const list = ['극대노', '대노', '중노', '소노', '극소노'];
 
@@ -201,7 +202,7 @@ const Main = () => {
                             </Button>
                         </FlexLeft>
                         <FlexRight>
-                            <PostList bankId={banklist.id} />
+                            <Posts bankId={banklist.id} />
                             <Button
                                 onClick={() => {
                                     // dispatch(CreateDiary({ dispatch, "test" }));
@@ -310,7 +311,7 @@ const Main = () => {
                                 </TotalWrap>
                             </>
                         </ListDesc>
-                        <PostList bankId={banklist.id} />
+                        <Posts bankId={banklist.id} />
 
                         <SaveButtonWrap></SaveButtonWrap>
                         <SaveButton
