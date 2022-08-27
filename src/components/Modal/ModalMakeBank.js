@@ -45,7 +45,11 @@ const ModalMakeBank = props => {
             memo: memo,
         };
         console.log(data);
-        dispatch(setMakeBank({ data, navigate }));
+        console.log(bankId, 'bankId');
+
+        //    dispatch(expiredBank(bankId)).then(dis)
+        // dispatch(setMakeBank({ data, navigate }));
+        //    )
     };
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>

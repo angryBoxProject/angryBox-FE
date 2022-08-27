@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../Styles/theme';
 const Select = props => {
-    const { placeholder, onChange, ispublic, israge } = props;
+    const { placeholder, onChange, ispublic, israge, value } = props;
 
     const ispublics = ['비공개', '공개글'];
     const angryPhase = ['극소노', '소노', '중노', '대노', '극대노'];
@@ -10,7 +10,11 @@ const Select = props => {
     if (ispublic)
         return (
             <>
-                <ElSelect placeholder={placeholder} onChange={onChange}>
+                <ElSelect
+                    placeholder={placeholder}
+                    onChange={onChange}
+                    value={value}
+                >
                     {ispublics.map((v, i) => {
                         return <option key={i}>{v}</option>;
                     })}
@@ -29,7 +33,11 @@ const Select = props => {
         );
     return (
         <>
-            <ElSelect placeholder={placeholder} onChange={onChange}>
+            <ElSelect
+                placeholder={placeholder}
+                onChange={onChange}
+                value={value}
+            >
                 {angryPhase.map((v, i) => {
                     return <option key={i}>{v}</option>;
                 })}

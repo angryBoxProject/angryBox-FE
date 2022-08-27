@@ -7,7 +7,7 @@ import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.sv
 import ModalMakeBank from './ModalMakeBank';
 
 const ModalClearBank = props => {
-    const { modalType, close } = props;
+    const { modalType, close, bankId } = props;
     const [modalmakebank, Setmodalmakebank] = useState(false);
     const [reward, setReward] = useState();
 
@@ -23,12 +23,12 @@ const ModalClearBank = props => {
         <ModalLayout modalType="info" close={close}>
             <TitleArea>
                 <Logo onClick={() => {}}>RAGE BANK</Logo>
-                <Title>분노 적금 깨기 완료!</Title>
+                <Title>분노 적금 깨기</Title>
             </TitleArea>
             <Content>
                 <Item1>{reward}</Item1>
 
-                <Item2>나 지금 완전히 새됐어</Item2>
+                {/* <Item2>나 지금 완전히 새됐어</Item2> */}
             </Content>
             <NewBankButton
                 onClick={() => {
@@ -46,6 +46,7 @@ const ModalClearBank = props => {
                     close={() => {
                         Setmodalmakebank(false);
                     }}
+                    bankId={bankId}
                 />
             )}
         </ModalLayout>

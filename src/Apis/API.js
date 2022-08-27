@@ -8,6 +8,15 @@ const tokenURL = axios.create({
     baseURL: process.env.REACT_APP_IP,
     // withCredentials: true,
 });
+URL.interceptors.request.use(
+    config => {
+        config.withCredentials = true;
+        return config;
+    },
+    error => {
+        return;
+    },
+);
 tokenURL.interceptors.request.use(
     config => {
         const token = getCookie('token');

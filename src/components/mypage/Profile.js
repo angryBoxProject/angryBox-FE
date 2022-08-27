@@ -6,9 +6,11 @@ import { tokenURL } from '../../Apis/API';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import { FlexDiv } from '../../elements';
+import moment from 'moment';
 
 const Profile = props => {
-    const isLogin = useSelector(state => state.member.isLogin);
+    // const isLogin = useSelector(state => state.member.isLogin);
+    const isLogin = localStorage.getItem('nickname') ? true : false;
 
     const {
         status,
@@ -17,6 +19,7 @@ const Profile = props => {
         isFetching,
         refetch,
     } = useProfile();
+    console.log(profileList);
 
     const ProfileImageMutation = useMutation(Data => {
         tokenURL.put(`/profile/image`, Data).then(res => {
@@ -52,9 +55,9 @@ const Profile = props => {
                                     bgImg={
                                         isLogin
                                             ? `url(${
-                                                    process.env.REACT_APP_IP +
-                                                    profileList.file
-                                                })`
+                                                  process.env.REACT_APP_IP +
+                                                  profileList.file
+                                              })`
                                             : 'none'
                                     }
                                 >
@@ -82,13 +85,16 @@ const Profile = props => {
                                 padding="0 0 0 0;"
                             >
                                 <Nickname>
-                                    <NicknameBold>{profileList.nickname}</NicknameBold>님
+                                    <NicknameBold>
+                                        {profileList.nickname}
+                                    </NicknameBold>
+                                    님
                                 </Nickname>
                                 <Nickname>좋은하루 되세요!</Nickname>
-                                <EmailAddres>이메일@네이버점컴</EmailAddres>
+                                <EmailAddres>{profileList?.email}</EmailAddres>
                             </FlexDiv>
                         </ProfileWrap>
-                        
+
                         <FlexDiv
                             padding="42px 0px 0px 0px"
                             column={true}
@@ -127,9 +133,14 @@ const Profile = props => {
                             >
                                 <Countbox>마지막 로그인 시간</Countbox>
                                 <Counttext>
-                                    2022/04/10
+                                    {moment(profileList?.lastLogin).format(
+                                        'YYYY/MM/DD',
+                                    )}
                                     <br />
-                                    01:57PM
+
+                                    {moment(profileList?.lastLogin).format(
+                                        'h:mm a',
+                                    )}
                                 </Counttext>
                             </FlexDiv>
                         </FlexDiv>
@@ -139,7 +150,6 @@ const Profile = props => {
     }, [status, isFetching]);
     return (
         <>
-
             <StyledWrap>
                 {isLogin ? (
                     renderByStatus()
@@ -160,7 +170,7 @@ const ProfileWrap = styled.div`
     padding: 73px 0 42px;
     border-bottom: solid 1px #737373;
     position: relative;
-`
+`;
 const FloatInput = styled.div`
     width: 23px;
     height: 23px;
@@ -200,7 +210,7 @@ const ProfileCircle = styled.div`
     width: 87px;
     height: 87px;
     border-radius: 60px;
-    background-color: #813BF3;
+    background-color: #813bf3;
     overflow: hidden;
     flex-shrink: 0;
     margin-right: 22px;

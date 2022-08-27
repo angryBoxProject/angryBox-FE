@@ -88,14 +88,14 @@ const Best = props => {
             imageFilter: 2,
             angry: [],
         };
-        // await tokenURL.get(`/diaries/todayTop/${lastId}/5`).then(res => {
-        await tokenURL
-            .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
-            .then(res => {
-                const list = res.data.data.diaries;
-                // const list = res.data.data.todayTopDiary;
-                setBestList(prevState => [...prevState, ...list]);
-            });
+        await tokenURL.get(`/diaries/todayTop/${lastId}/5`).then(res => {
+            // await tokenURL
+            //     .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
+            //     .then(res => {
+            // const list = res.data.data.diaries;
+            const list = res.data.data.todayTopDiary;
+            setBestList(prevState => [...prevState, ...list]);
+        });
         setLoading(false);
     }, [lastId]);
 

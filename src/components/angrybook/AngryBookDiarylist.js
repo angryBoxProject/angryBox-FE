@@ -30,13 +30,13 @@ const AngryBookDiarylist = props => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
     const monthdate = date => {
         return moment(date, 'YYYY-MM-DD').month() + 1;
     };
     const daydate = date => {
-        return moment(date, 'YYYY-MM-DD').day();
+        return moment(date).format('D');
     };
     console.log(bankdiarylist);
 

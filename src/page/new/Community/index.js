@@ -79,9 +79,9 @@ const Community = props => {
                                 <MoreIconRight />
                             </More>
                         </TableHead>
-                        {Diarylist ? (
+                        {TopDiarylist ? (
                             <TableBody>
-                                {Diarylist?.map((item, key) => {
+                                {TopDiarylist?.map((item, key) => {
                                     return (
                                         <BodyItem
                                             key={item?.id}
@@ -134,9 +134,9 @@ const Community = props => {
                                 <MoreIconRight />
                             </More>
                         </TableHead>
-                        {TopDiarylist ? (
+                        {Diarylist ? (
                             <TableBody>
-                                {TopDiarylist?.map((item, key) => {
+                                {Diarylist?.map((item, key) => {
                                     return (
                                         <BodyItem
                                             key={item?.id}
@@ -234,7 +234,7 @@ const Community = props => {
                             SetmodalmakePost(true);
                         }}
                     >
-                        <SaveButtonText>공개 게시글 작성</SaveButtonText>
+                        <SaveButtonText>대나무숲 게시글 작성</SaveButtonText>
                         <SaveIcon />
                     </SaveButton>
                 </TablelistImage>

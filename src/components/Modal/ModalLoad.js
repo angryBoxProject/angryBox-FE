@@ -71,7 +71,7 @@ const ModalLoad = props => {
         return moment(date, 'YYYY-MM-DD').month() + 1;
     };
     const daydate = date => {
-        return moment(date, 'YYYY-MM-DD').day();
+        return moment(date).format('D');
     };
     // console.log(bankList, select, selectbankId);
     const renderByStatus = useCallback(() => {
@@ -148,45 +148,65 @@ const ModalLoad = props => {
                         <>
                             {/* 게시글 목록 */}
                             <PostlistWrap>
-                                {postlist.map((item, key) => (
-                                    <div
-                                        key={key}
-                                        onClick={() => {
-                                            setModalPost(item?.id);
-                                        }}
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        {postlist.length - 1 == key ? (
-                                            <BodyItem select={true} ref={ref}>
-                                                <No>{item.diaryNo}</No>
-                                                <Name>{item.title}</Name>
-                                                <Content>
-                                                    {item.content}
-                                                </Content>
-                                                <Date>
-                                                    {' '}
-                                                    {monthdate(item.dateTime) +
-                                                        '/' +
-                                                        daydate(item.dateTime)}
-                                                </Date>
-                                            </BodyItem>
-                                        ) : (
-                                            <BodyItem select={true}>
-                                                <No>{item.diaryNo}</No>
-                                                <Name>{item.title}</Name>
-                                                <Content>
-                                                    {item.content}
-                                                </Content>
-                                                <Date>
-                                                    {' '}
-                                                    {monthdate(item.dateTime) +
-                                                        '/' +
-                                                        daydate(item.dateTime)}
-                                                </Date>
-                                            </BodyItem>
-                                        )}
-                                    </div>
-                                ))}
+                                {postlist.map(
+                                    (item, key) => (
+                                        console.log(item),
+                                        (
+                                            <div
+                                                key={key}
+                                                onClick={() => {
+                                                    setModalPost(item?.id);
+                                                }}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                {postlist.length - 1 == key ? (
+                                                    <BodyItem
+                                                        select={true}
+                                                        ref={ref}
+                                                    >
+                                                        <No>{item.diaryNo}</No>
+                                                        <Name>
+                                                            {item.title}
+                                                        </Name>
+                                                        <Content>
+                                                            {item.content}
+                                                        </Content>
+                                                        <Date>
+                                                            {' '}
+                                                            {monthdate(
+                                                                item.dateTime,
+                                                            ) +
+                                                                '/' +
+                                                                daydate(
+                                                                    item.dateTime,
+                                                                )}
+                                                        </Date>
+                                                    </BodyItem>
+                                                ) : (
+                                                    <BodyItem select={true}>
+                                                        <No>{item.diaryNo}</No>
+                                                        <Name>
+                                                            {item.title}
+                                                        </Name>
+                                                        <Content>
+                                                            {item.content}
+                                                        </Content>
+                                                        <Date>
+                                                            {' '}
+                                                            {monthdate(
+                                                                item.dateTime,
+                                                            ) +
+                                                                '/' +
+                                                                daydate(
+                                                                    item.dateTime,
+                                                                )}
+                                                        </Date>
+                                                    </BodyItem>
+                                                )}
+                                            </div>
+                                        )
+                                    ),
+                                )}
                             </PostlistWrap>
                         </>
                     )}

@@ -101,7 +101,10 @@ const ModalPostDetail = props => {
             <ContentsArea>
                 {image ? (
                     <UploadImage>
-                        <SwipeableTextMobileStepper images={showimage} />
+                        <SwipeableTextMobileStepper
+                            images={showimage}
+                            ismake={false}
+                        />
                     </UploadImage>
                 ) : (
                     <></>
@@ -136,7 +139,7 @@ const ModalPostDetail = props => {
             </ButtonArea>
             {editModal && (
                 <ModalMakePost
-                    title="ANGRY SAVING"
+                    title="분노 게시글 수정"
                     subtitle="분노 게시글 수정"
                     width="70%"
                     height="80%"

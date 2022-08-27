@@ -45,7 +45,7 @@ const Main = () => {
         : false;
     const memberNick = localStorage.getItem('nickname');
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
-
+    console.log(banklist, 'isbreakbank');
     const openModal = () => {
         setOpen(true);
     };
@@ -64,7 +64,7 @@ const Main = () => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
 
     const renderByStatus = useCallback(() => {
@@ -349,6 +349,7 @@ const Main = () => {
                 <ModalClearBank
                     modalType="info"
                     close={() => SetmodalbreakBank(false)}
+                    bankId={banklist?.id}
                 />
             )}
         </MainLayout>

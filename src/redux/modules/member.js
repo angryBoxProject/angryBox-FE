@@ -28,15 +28,21 @@ export const login = createAsyncThunk(
 export const kakaoLogin = createAsyncThunk(
     'member/kakaoLogin',
     async ({ code, navigate }, thunkAPI) => {
-        await URL.post(`oauth2/kakao?code=${code}`)
-            .then(res => {
+        const _ = null;
+        try {
+            await URL.post(`oauth2/kakao?code=${code}`).then(res => {
                 console.log(res);
+                // setCookie('token', response.headers.authorization);
+
                 // sessionStorage.setItem('userInfo', JSON.stringify(res.data));
-                navigate('/main', { replace: true });
-            })
-            .catch(err => {
-                console.error(err);
+                // navigate('/main', { replace: true });
             });
+        } catch (error) {
+            console.log(error);
+            window.alert(error.response.data.message);
+
+            return rejectWithValue(error.response);
+        }
     },
 );
 //google
@@ -123,10 +129,11 @@ export const memberSlice = createSlice({
                 state.user_info = action.payload;
             })
             .addCase(kakaoLogin.fulfilled, (state, action) => {
-                state.user_info = action.payload;
-                state.isLogin = true;
-                localStorage.setItem('nickname', state.user_info.nickname);
-                localStorage.setItem('memberId', state.user_info.memberId);
+                console.log(action);
+                // state.user_info = action.payload;
+                // state.isLogin = true;
+                // localStorage.setItem('nickname', state.user_info.nickname);
+                // localStorage.setItem('memberId', state.user_info.memberId);
             })
             .addCase(googleLogin.fulfilled, (state, action) => {
                 state.user_info = action.payload;

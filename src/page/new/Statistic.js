@@ -42,16 +42,17 @@ const Statistic = props => {
         isFetching,
         refetch,
     } = useBankDiarylist(selectDay);
+    console.log(bankdiarylist);
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
     const monthdate = date => {
         return moment(date, 'YYYY-MM-DD').month() + 1;
     };
     const daydate = date => {
-        return moment(date, 'YYYY-MM-DD').day();
+        return moment(date).format('D');
     };
 
     return (
@@ -68,30 +69,33 @@ const Statistic = props => {
 
                 <StatisticWrap>
                     <AngryBookProfile />
-                    <AngryChart />
+                    <AngryChart selectDay={selectDay} />
                 </StatisticWrap>
 
                 <RecentList>
                     {bankdiarylist?.map((item, key) => {
                         return (
-                            <Item
-                                key={key}
-                                onClick={() => {
-                                    setModalPost(item?.id);
-                                }}
-                            >
-                                <ItemLeft>
-                                    <Date>
-                                        {monthdate(item.dateTime) +
-                                            '/' +
-                                            daydate(item.dateTime)}
-                                    </Date>
-                                    <Detail>{item.title}</Detail>
-                                </ItemLeft>
-                                <ItemRight>
-                                    {angryPhase(item.angryPhaseId)}
-                                </ItemRight>
-                            </Item>
+                            console.log(item.dateTime),
+                            (
+                                <Item
+                                    key={key}
+                                    onClick={() => {
+                                        setModalPost(item?.id);
+                                    }}
+                                >
+                                    <ItemLeft>
+                                        <Date>
+                                            {monthdate(item.dateTime) +
+                                                '/' +
+                                                daydate(item.dateTime)}
+                                        </Date>
+                                        <Detail>{item.title}</Detail>
+                                    </ItemLeft>
+                                    <ItemRight>
+                                        {angryPhase(item.angryPhaseId)}
+                                    </ItemRight>
+                                </Item>
+                            )
                         );
                     })}
                 </RecentList>

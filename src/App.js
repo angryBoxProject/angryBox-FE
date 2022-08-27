@@ -68,6 +68,7 @@ function App() {
                     /> */}
                     <Route
                         path="/oauth2/kakao/callback"
+                        // path="/login/oauth2/code/kakao"
                         element={<Kakaocallback />}
                     />
                     <Route
