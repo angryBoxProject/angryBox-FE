@@ -5,7 +5,7 @@ import theme from '../../Styles/theme';
 import moment from 'moment';
 import { ReactComponent as Locked } from '../../static/image/Locked.svg';
 import { ReactComponent as UnLocked } from '../../static/image/UnLock.svg';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 
 const Post = props => {
     const { width, height, data, index } = props;
@@ -69,9 +69,9 @@ const Warp = styled.div`
         rgba(218, 70, 60, 1)
     );
     width: ${props => props.width};
-    min-width: 306px;
+    min-width: 12vw;
     height: ${props => props.height};
-    min-height: 266px;
+    min-height: 13vw;
     color: #222222;
     font-weight: 700;
     font-size: 16px;

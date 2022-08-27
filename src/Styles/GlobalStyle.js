@@ -13,8 +13,9 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
   
-    color:white;
+    color:#282828;
     box-sizing: border-box;
+    background: #F6F6F6;
     
   }
 

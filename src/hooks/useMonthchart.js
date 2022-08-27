@@ -4,10 +4,12 @@ import { useQuery } from 'react-query';
 const fetchDiaryList = async date => {
     if (!date) return;
     const { data } = await tokenURL.get(`bank/month/${date}`);
+    console.log(data);
     if (
         data.message === '월별 통계 조회 성공(해당 월에 작성한 다이어리 없음)'
     ) {
         //해당월 데이터가 없을경우
+        console.log(date);
         let notdata = {
             apList: [0, 0, 0, 0, 0],
             apPerList: [1, 1, 1, 1, 1],

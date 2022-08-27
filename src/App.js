@@ -17,12 +17,22 @@ import Mypage from './page/Mypage';
 import { useDispatch } from 'react-redux';
 import { getCookie } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
-import Header from './components/Header';
 import Bamboo from './page/Bamboo';
 import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
 import BambooTopDiary from './components/bamboo/BambooTopDiary';
 import AngryBook from './page/AngryBook';
 import Splash from './page/Splash';
+
+import SplashN from './page/new/Splash';
+import LoginN from './page/new/Login';
+import SignUpN from './page/new/SignUp';
+import MainN from './page/new/Main';
+import Community from './page/new/Community';
+import Best from './page/new/Community/Best';
+import Recent from './page/new/Community/Recent';
+import Gallery from './page/new/Community/Gallery';
+import Statistic from './page/new/Statistic';
+import MypageN from './page/new/Mypage';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -41,51 +51,50 @@ function App() {
     return (
         <>
             <Suspense fallback={<div>Loading...</div>}>
-                <StyledWrap>
-                    <Nav />
-                    <Warp>
-                        <Header title="헤더 "></Header>
-                        <Routes>
-                            <Route path="/" element={<Splash />} />
-                            <Route path="/main" element={<Main />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/mypage" element={<Mypage />} />
-                            <Route path="/bamboo" element={<Bamboo />} />
-                            <Route path="/angrybook" element={<AngryBook />} />
-                            <Route
-                                path="/bamboo/realtimediary"
-                                element={<BambooRealTimeDiary />}
-                            />
-                            <Route
-                                path="/bamboo/topdiary"
-                                element={<BambooTopDiary />}
-                            />
-                            <Route
-                                path="/oauth2/kakao/callback"
-                                element={<Kakaocallback />}
-                            />
-                            <Route
-                                path="/oauth2/google/callback"
-                                element={<Googlecallback />}
-                            />
-                            <Route path="/signup" element={<SignUp />} />
-                        </Routes>
-                    </Warp>
-                </StyledWrap>
+                <Routes>
+                    {/* <Route path="/" element={<Splash />} />
+                    <Route path="/main" element={<Main />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/mypage" element={<Mypage />} />
+                    <Route path="/bamboo" element={<Bamboo />} />
+                    <Route path="/angrybook" element={<AngryBook />} />
+                    <Route
+                        path="/bamboo/realtimediary"
+                        element={<BambooRealTimeDiary />}
+                    />
+                    <Route
+                        path="/bamboo/topdiary"
+                        element={<BambooTopDiary />}
+                    /> */}
+                    <Route
+                        path="/oauth2/kakao/callback"
+                        // path="/login/oauth2/code/kakao"
+                        element={<Kakaocallback />}
+                    />
+                    <Route
+                        path="/oauth2/google/callback"
+                        element={<Googlecallback />}
+                    />
+                    <Route path="/signup" element={<SignUp />} />
+
+                    <Route path="/" element={<SplashN />} />
+                    <Route path="/new/login" element={<LoginN />} />
+                    <Route path="/new/signup" element={<SignUpN />} />
+                    <Route path="/new/main" element={<MainN />} />
+                    <Route path="/new/mypage" element={<MypageN />} />
+                    <Route path="/new/community" element={<Community />} />
+                    <Route path="/new/statistic" element={<Statistic />} />
+
+                    <Route path="/new/community/best" element={<Best />} />
+                    <Route path="/new/community/recent" element={<Recent />} />
+                    <Route
+                        path="/new/community/gallery"
+                        element={<Gallery />}
+                    />
+                </Routes>
             </Suspense>
         </>
     );
 }
 
-const StyledWrap = styled.div`
-    background-color: ${theme.color.black};
-    width: 100%;
-    height: 100vh;
-    display: flex;
-`;
-const Warp = styled.div`
-    width: 100%;
-    padding-left: 20%;
-    height: calc(100vh - 5rem);
-`;
 export default App;

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Button, Input, InputNoTitle } from '../elements';
 import { login } from '../redux/modules/member';
 import SocialLogin from '../components/Login/SocialLogin';
+import Contents from '../Layouts/Contents';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -47,11 +48,11 @@ const Login = () => {
         dispatch(login({ data, navigate }));
     };
     return (
-        <>
+        <Contents header={false}>
             <LoginBox>
                 <LogoBox>ANGRY BANK</LogoBox>
                 <WrapBox>
-                    <div className="flex flex-col mt-10">
+                    <div className="flex flex-col mt-11">
                         <InputNoTitle
                             cardSize="2"
                             onChange={e => {
@@ -73,29 +74,61 @@ const Login = () => {
                         <Button size="3" onClick={loginhandle}>
                             로그인하기
                         </Button>
-                        <SocialLogin />
-                        {/* <button className="bg-yellow-400">카카오로그인</button> */}
-                        {/* <button className="bg-yellow-100">구글로그인</button> */}
+                        <UtilWrap>
+                            <SocialLogin />
+                            <Auth>
+                                <GoSignup onClick={() => {}}>회원가입</GoSignup>
+                                <FindPwd onClick={() => {}}>비밀번호 찾기</FindPwd>
+                            </Auth>
+                        </UtilWrap>
                     </div>
                 </WrapBox>
             </LoginBox>
-        </>
+        </Contents>
     );
 };
 
 const LoginBox = tw.div`
-flex flex-col p-3 justify-center items-center
+flex flex-col p-3 justify-center items-center h-screen
 `;
 
 const LogoBox = styled.div`
-    font-weight: 900; 
-    font-size: 40px;
-    color: red;
+    font-weight: 700;
+    font-size: 45px;
+    line-height: 47px;
+    text-align: center;
+    color: #DA463C;
     font-family: 'Hanson';
 `;
 
 const WrapBox = styled.div`
     width: 632px;
 `;
+
+const UtilWrap = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 27px;
+`;
+
+const Auth = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #F6F6F6;
+`;
+
+const GoSignup = styled.div`
+    padding: 0 20px;
+    border-right: solid 1px #505050;
+`
+const FindPwd = styled.div`
+    padding: 0 20px;
+`
 
 export default Login;

@@ -37,8 +37,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 // ];
 
 const SwipeableTextMobileStepper = props => {
-    const { images } = props;
-    console.log(images);
+    const { images, ismake } = props;
     const utheme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = images.length;
@@ -71,31 +70,62 @@ const SwipeableTextMobileStepper = props => {
             >
                 {/* <Typography>{images[activeStep].label}</Typography> */}
             </Paper>
-            <AutoPlaySwipeableViews
-                axis={utheme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-            >
-                {images?.map((step, index) => (
-                    <div key={step.fileId}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                            <Box
-                                component="img"
-                                sx={{
-                                    height: 255,
-                                    display: 'block',
-                                    maxWidth: 400,
-                                    overflow: 'hidden',
-                                    width: '100%',
-                                }}
-                                src={process.env.REACT_APP_IP + step.fileLink}
-                                alt={step.fileId}
-                            />
-                        ) : null}
-                    </div>
-                ))}
-            </AutoPlaySwipeableViews>
+            {!ismake ? (
+                <AutoPlaySwipeableViews
+                    axis={utheme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={activeStep}
+                    onChangeIndex={handleStepChange}
+                    enableMouseEvents
+                >
+                    {images?.map((step, index) => (
+                        <div key={step.fileId}>
+                            {Math.abs(activeStep - index) <= 2 ? (
+                                <Box
+                                    component="img"
+                                    sx={{
+                                        height: 320,
+                                        display: 'block',
+                                        maxWidth: 400,
+                                        overflow: 'hidden',
+                                        width: '100%',
+                                    }}
+                                    src={
+                                        process.env.REACT_APP_IP +
+                                        step?.fileLink
+                                    }
+                                    alt={step?.fileId}
+                                />
+                            ) : null}
+                        </div>
+                    ))}
+                </AutoPlaySwipeableViews>
+            ) : (
+                <AutoPlaySwipeableViews
+                    axis={utheme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={activeStep}
+                    onChangeIndex={handleStepChange}
+                    enableMouseEvents
+                >
+                    {images?.map((step, index) => (
+                        <div key={step.fileId}>
+                            {Math.abs(activeStep - index) <= 2 ? (
+                                <Box
+                                    component="img"
+                                    sx={{
+                                        height: 320,
+                                        display: 'block',
+                                        maxWidth: 400,
+                                        overflow: 'hidden',
+                                        width: '100%',
+                                    }}
+                                    src={step.fileLink}
+                                    alt={step.fileId}
+                                />
+                            ) : null}
+                        </div>
+                    ))}
+                </AutoPlaySwipeableViews>
+            )}
             <MobileStepper
                 steps={maxSteps}
                 position="static"

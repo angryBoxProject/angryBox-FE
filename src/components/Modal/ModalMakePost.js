@@ -1,30 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { FlexDiv, ModalInput, Select } from '../../elements';
+import {
+    FlexDiv,
+    ModalInput,
+    Select,
+    SwipeableTextMobileStepper,
+} from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
-import { ReactComponent as UploadImage } from '../../static/image/UploadImage.svg';
+import { ReactComponent as ImageIcon } from '../../static/image/modal/image.svg';
 import Button from '../../elements/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import useIsMount from '../../hooks/useIsMount';
-import { setMakePost } from '../../redux/modules/bank';
+import { setEditPost, setMakePost } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
-import ModalLinterimList from './ModalLinterimList';
+
+import ModalLayout from '../../Layouts/ModalLayout';
 
 const ModalMakePost = props => {
-    const {
-        open,
-        close,
-        width,
-        height,
-        title,
-        subtitle,
-        bankId,
-        contents,
-        _onChange,
-        listclick,
-        coinBankId,
-    } = props;
+    const { close, title, modalType, editPostlist } = props;
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -35,7 +29,10 @@ const ModalMakePost = props => {
     const [angryPhase, setAngryPhase] = useState('극소노');
     const [ispublic, setIspublic] = useState('비공개');
     const [memo, setMemo] = useState();
-    const [image, setImage] = useState();
+    const [image, setImage] = useState([]);
+    const [imageUrl, setImageUrl] = useState([]);
+    const [isflag, setFlag] = useState(false);
+    const [removedFileId, setRemovedFileId] = useState([]);
 
     const ismember = useSelector(state => state.member.user_info).memberId;
     let memberId = 0;
@@ -62,9 +59,12 @@ const ModalMakePost = props => {
             interimId: 0,
             publiccount: publiccount,
             files: image,
+            removedFileId: removedFileId,
+            id: editPostlist?.diary?.id,
         };
 
-        dispatch(setMakePost({ data, navigate }));
+        if (editPostlist) dispatch(setEditPost({ data, navigate }));
+        else dispatch(setMakePost({ data, navigate }));
     };
     const handleMakelinterim = () => {
         let publiccount = false;
@@ -93,220 +93,230 @@ const ModalMakePost = props => {
 
     const handleFileInput = e => {
         const files = e.target.files;
+
+        const readAndPreview = file => {
+            const reader = new FileReader();
+            console.log(file, 'file');
+            reader.onload = () => {
+                const data = {
+                    fileLink: reader.result,
+                    fileId: file.lastModified,
+                };
+                setImageUrl(prev => [...prev, data]);
+            };
+            reader.readAsDataURL(file);
+        };
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+
         setImage(e.target.files);
-        console.log(files);
+        setFlag(true);
+
         const formData = new FormData();
 
         for (let i = 0; i < files.length; i++) {
             formData.append('files', files[i]);
         }
-
-        console.log(formData);
-        // const data = { files, planId };
-        // dispatch(setUploadImage(data));
-        // dispatch(getImage(planId));
-        // dispatch(getOnePlan(planId));
     };
-    return (
-        <>
-            <div className={open ? 'openModal modal' : 'modal'}>
-                {open ? (
-                    <Section>
-                        <MainModal width={width} height={height}>
-                            <ModalPopup>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <FlexDiv>
-                                        <ModalTitle>{title}</ModalTitle>
-                                        <ModalSubTitle>
-                                            {subtitle}
-                                        </ModalSubTitle>
-                                    </FlexDiv>
-                                    <CloseButton onClick={close} />
-                                </FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                >
-                                    <FlexDiv width="100%">
-                                        <ModalInput
-                                            width="100%"
-                                            placeholder="제목을 입력하세요."
-                                            _onChange={e => {
-                                                setName(e.target.value);
-                                            }}
-                                        />
-                                        <UploadImageButton>
-                                            <UploadImage
-                                                style={{
-                                                    width: '100%',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                            <FileInput
-                                                type="file"
-                                                accept="image/*"
-                                                multiple
-                                                onChange={handleFileInput}
-                                            />
-                                        </UploadImageButton>
-                                        <Select
-                                            ispublic
-                                            onChange={e => {
-                                                setIspublic(e.target.value);
-                                            }}
-                                        ></Select>
-                                        <Select
-                                            onChange={e => {
-                                                setAngryPhase(e.target.value);
-                                            }}
-                                        />
-                                    </FlexDiv>
-                                </FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                ></FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                >
-                                    <FlexDiv width="100%">
-                                        <ModalInput
-                                            row={18}
-                                            multiLine={true}
-                                            width="100%"
-                                            placeholder="본문 내용을 입력하세요.."
-                                            _onChange={e => {
-                                                setMemo(e.target.value);
-                                            }}
-                                        />
-                                    </FlexDiv>
-                                </FlexDiv>
 
-                                <ModalButton>
-                                    {/* <Button
-                                        is_white
-                                        margin="10px"
-                                        onClick={() => {
-                                            console.log('임시저장');
-                                        }}
-                                    >
-                                        임시저장하기
-                                    </Button>
-                                    <Button
-                                        is_white
-                                        margin="10px"
-                                        onClick={() => {
-                                            console.log('임시저장불러오기');
-                                            Setmodallinterim(true);
-                                        }}
-                                    >
-                                        임시저장불러오기
-                                    </Button> */}
-                                    <Button
-                                        margin="10px"
-                                        onClick={handleMakePost}
-                                    >
-                                        완료
-                                    </Button>
-                                </ModalButton>
-                            </ModalPopup>
-                        </MainModal>
-                        <ModalLinterimList
-                            title="IMPORT FILE"
-                            subtitle="게시글 불러오기"
-                            width="50%"
-                            height="50%"
-                            open={modalstatelinterim}
-                            close={() => {
-                                Setmodallinterim(false);
-                            }}
-                            listclick={() => {
-                                SetmodalPost(true);
-                            }}
-                        />
-                    </Section>
-                ) : null}
-            </div>
-        </>
+    console.log(editPostlist, 'editPostlist');
+    console.log(
+        'name::',
+        editPostlist?.diary?.title,
+        ' Memo::',
+        editPostlist?.diary?.content,
+        ' Image::',
+        editPostlist?.fileList,
+        ' 분노수치::',
+        editPostlist?.diary?.angryPhaseId,
+        ' ::공개 여부',
+        editPostlist?.diary?.public,
+    );
+    useEffect(() => {
+        if (editPostlist) {
+            const angrystate = ['', '극소노', '소노', '중노', '대노', '극대노'];
+            const publicstate = ['비공개', '공개글'];
+            const publiccount = editPostlist?.diary?.public === true ? 1 : 0;
+            setAngryPhase(angrystate[editPostlist?.diary?.angryPhaseId]);
+            setIspublic(publicstate[publiccount]);
+            setName(editPostlist?.diary?.title);
+            setMemo(editPostlist?.diary?.content);
+            setImage(editPostlist?.fileList);
+            editPostlist?.fileList.map(item => {
+                setRemovedFileId(prev => [...prev, item?.fileId]);
+            });
+
+            console.log('test');
+        }
+    }, [editPostlist]);
+    console.log(angryPhase, image, 'angryPhase,image');
+    return (
+        <ModalLayout modalType={modalType} title={title} close={close}>
+            <TitleArea>
+                <InputTitle
+                    type="text'"
+                    placeholder="제목을 입력하세요."
+                    onChange={e => {
+                        setName(e.target.value);
+                    }}
+                    value={name}
+                />
+                <ImageButton>
+                    <Pointer>
+                        <ImageIcon />
+                    </Pointer>
+                    <FileInput
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleFileInput}
+                    />
+                </ImageButton>
+                <Select
+                    ispublic
+                    onChange={e => {
+                        setIspublic(e.target.value);
+                    }}
+                    value={ispublic}
+                ></Select>
+                <Select
+                    onChange={e => {
+                        setAngryPhase(e.target.value);
+                    }}
+                    value={angryPhase}
+                />
+            </TitleArea>
+            <ContentsArea>
+                {image &&
+                    image?.length !== 0 &&
+                    (console.log('asdf', image),
+                    (
+                        <UploadImage>
+                            {editPostlist ? (
+                                <div>
+                                    {isflag ? (
+                                        <SwipeableTextMobileStepper
+                                            images={imageUrl}
+                                            ismake={true}
+                                        />
+                                    ) : (
+                                        <SwipeableTextMobileStepper
+                                            images={image}
+                                            ismake={false}
+                                        />
+                                    )}
+                                </div>
+                            ) : (
+                                <SwipeableTextMobileStepper
+                                    images={imageUrl}
+                                    ismake={true}
+                                />
+                            )}
+                        </UploadImage>
+                    ))}
+                <Contents
+                    placeholder={
+                        '본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다.'
+                    }
+                    onChange={e => {
+                        setMemo(e.target.value);
+                    }}
+                    value={memo}
+                />
+            </ContentsArea>
+            <ModalButton onClick={handleMakePost} disabled={!name}>
+                완료
+            </ModalButton>
+        </ModalLayout>
     );
 };
 
-// 스타일 컴포넌트 작성 위치
-const Section = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
+const TitleArea = styled.div`
     width: 100%;
-    height: 100%;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
 `;
-
-const MainModal = styled.div`
-    position: absolute;
-    width: ${props => props.width};
-    height: ${props => props.height};
-    background-color: ${theme.color.black};
-    border-radius: 20px;
-`;
-const ModalPopup = styled.div`
-    height: 100%;
-    padding: 20px;
-`;
-const ModalTitle = styled.div`
-    font-family: 'Hanson';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 25px;
-    padding-right: 16px;
-
-    color: #f6f6f6;
-`;
-const ModalSubTitle = styled.div`
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
-
-    color: #f6f6f6;
-`;
-const ModalTextTitle = styled.div`
-    font-family: 'Noto Sans';
-    font-style: normal;
+const InputTitle = styled.input`
+    width: 100%;
     font-weight: 700;
     font-size: 18px;
-    line-height: 25px;
-    color: ${theme.color.white};
-    padding-right: 9px;
-    display: flex;
-    justify-content: center;
+    line-height: 26px;
+    color: #282828;
+    margin-right: 13px;
+    padding: 6px 20px 8px;
+    border: 1px solid #282828;
+    background: #f6f6f6;
 
-    align-items: center;
-    ${props => (props.width ? `width:${props.width};` : '')}
+    &::placeholder {
+        color: #737373;
+    }
+
+    &:focus {
+        background: #fff;
+    }
 `;
-const ModalTypeingArea = styled.div`
-    background-color: orange;
-`;
-const UploadImageButton = styled.div`
-    margin: 10px;
-    padding: 10px;
-    display: flex;
+const ImageButton = styled.div`
+    width: 262px;
     position: relative;
 `;
+const Pointer = styled.div`
+    cursor: pointer;
+`;
+const ContentsArea = styled.div`
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    border: solid 1px #282828;
+    padding: 10px;
+    margin-bottom: 28px;
+`;
+const UploadImage = styled.div`
+    width: 673px;
+    min-width: 273px;
+    padding: 10px;
+    height: 100%;
+    border-right: solid 1px #282828;
+    margin-right: 10px;
+`;
+const Contents = styled.textarea`
+    width: 100%;
+    padding: 10px;
+    background: #f6f6f6;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    color: #737373;
 
+    &:focus {
+        background: #fff;
+    }
+`;
+const ModalButton = styled.button`
+    cursor: pointer;
+    width: 100%;
+    max-width: 440px;
+    height: 44px;
+    border: solid 3px #813bf3;
+    border-radius: 22px;
+    margin: 0 auto;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #813bf3;
+    display: block;
+
+    &:disabled {
+        opacity: 0.5;
+    }
+`;
 const FileInput = styled.input`
-    width: 54px;
-    height: 54px;
+    width: 48px;
+    height: 48px;
     box-sizing: border-box;
     text-align: center;
     vertical-align: middle;
@@ -323,59 +333,8 @@ const FileInput = styled.input`
     -khtml-opacity: 0;
     -moz-opacity: 0;
 `;
-const ModalButton = styled.div`
-    display: flex;
-    position: absolute;
-    bottom: 20px;
-    width: 97.5%;
-`;
-const ModalButtonConfirm = styled.div`
-    height: 40px;
-    width: 50%;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #9e9e9e;
-`;
-const ModalButtonCancel = styled.div`
-    height: 40px;
-    width: 50%;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #9e9e9e;
-`;
 
-const ListScroll = styled.div`
-    min-height: 40%;
-    height: calc(100% - 10rem);
-    padding-right: 20px;
-    overflow-y: auto;
-    overflow-x: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    ::-webkit-scrollbar {
-        //display: none; /* Chrome , Safari , Opera */
-        background-color: ${theme.color.black2};
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: ${theme.color.red};
-        border-radius: 40px;
-    }
-    ::-webkit-scrollbar-track {
-        background-color: ${theme.color.black2};
-        border-radius: 40px;
-    }
+const TestImage = styled.div`
+    background-image: url('${props => props.src}');
 `;
-
-// default props 작성 위치
-ModalMakePost.defaultProps = {
-    open: false,
-    close: false,
-    title: '',
-    subtitle: '',
-    contents: '',
-    _onChange: () => {},
-    width: '80%',
-    height: '80%',
-};
-
 export default ModalMakePost;

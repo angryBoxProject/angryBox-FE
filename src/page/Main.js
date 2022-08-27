@@ -20,9 +20,15 @@ import PostList from '../components/Main/PostList';
 import ModalMakePost from '../components/Modal/ModalMakePost';
 import { expiredBank } from '../redux/modules/bank';
 
+import TitleWrap from '../Layouts/TitleWrap';
+import Contents from '../Layouts/Contents';
+import MainLayout from '../Layouts/MainLayout';
+import { style } from '@mui/system';
+
 const Main = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    console.log('asdf');
     // const { openModal } = props;
     const [isOpen, setOpen] = useState(false);
     const [isViewOpen, setViewOpen] = useState(false);
@@ -51,7 +57,7 @@ const Main = () => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
 
     useEffect(() => {
@@ -65,10 +71,51 @@ const Main = () => {
             case 'error':
                 if (error instanceof Error) {
                     return (
-                        <>
+                        <Containers>
+                            <FlexLeft>
+                                <TextBox>
+                                    <div>
+                                        <NonBankSubTitle>
+                                            새 적금을
+                                            <br /> 만들어보세요!
+                                        </NonBankSubTitle>
+                                        <NoneBankText>
+                                            적금 정보가 존재하지 않습니다.
+                                        </NoneBankText>
+                                    </div>
+                                    <FlexDiv
+                                        column="row"
+                                        justify="space-between"
+                                        margin="0 0 28px"
+                                    >
+                                        <CreditStatus>
+                                            <CreaditStatusTxt1>
+                                                현재 {memberNick}님의
+                                            </CreaditStatusTxt1>
+                                            <CreaditStatusTxt2>
+                                                신용상태는
+                                            </CreaditStatusTxt2>
+                                        </CreditStatus>
+                                        <CreditStatusValue>
+                                            {banklist.creditStatus}
+                                        </CreditStatusValue>
+                                    </FlexDiv>
+                                </TextBox>
+                                <Button
+                                    onClick={() => {
+                                        Setmodalmakebank(true);
+                                    }}
+                                >
+                                    새 적금 만들기
+                                </Button>
+                            </FlexLeft>
+                            {/* <TitleWrap title="Home">
+                                <div>{banklist.name}</div>
+                                <Total>총 게시글 수 <TotalCount>{banklist.diaryCount}</TotalCount></Total>
+                                <Total>총 쓰담 수 <TotalCount>{banklist.todackCount}</TotalCount></Total>
+                            </TitleWrap>
                             <div style={{ width: '40%', height: '90%' }}>
                                 <FlexDiv column="column" height="98%">
-                                    <Title>HOME</Title>
                                     <NonBankSubTitle>
                                         새 적금을
                                         <br /> 만들어보세요!
@@ -114,125 +161,147 @@ const Main = () => {
                                 width="94%"
                             >
                                 새 적금 만들기
-                            </Button>
-                        </>
+                            </Button> */}
+                        </Containers>
                     );
                 }
                 break;
             default:
                 return (
-                    <>
-                        <FlexDiv>
-                            <FlexDiv column="column" padding="2px">
-                                <Title>HOME</Title>
+                    <Containers>
+                        <FlexLeft>
+                            <TextBox>
                                 {isbreakbank ? (
-                                    <div
-                                        style={{ width: '100%', height: '90%' }}
-                                    >
-                                        <FlexDiv column="column" height="98%">
-                                            <BreakBank>
-                                                분노 적금 만땅!
-                                            </BreakBank>
-                                            <Subtitle>
-                                                {banklist.reward}
-                                            </Subtitle>
-                                        </FlexDiv>
+                                    <div>
+                                        <BreakBank>분노 적금 만땅!</BreakBank>
+                                        <BreakBankSubtitle>
+                                            {banklist.reward}
+                                        </BreakBankSubtitle>
                                     </div>
                                 ) : (
-                                    <>
+                                    <div>
                                         <Subtitle>곧 터지기 직전!</Subtitle>
                                         <AngryState>
-                                            <FlexDiv column="column">
+                                            <div>
                                                 <p>
                                                     극대노{' '}
-                                                    {
-                                                        banklist
-                                                            .remainingDiaryNum[4]
-                                                    }
-                                                    번
+                                                    <span
+                                                        style={{
+                                                            color: '#DA463C',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[4]
+                                                        }
+                                                        번
+                                                    </span>
                                                 </p>
                                                 <p>
                                                     대노{' '}
-                                                    {
-                                                        banklist
-                                                            .remainingDiaryNum[3]
-                                                    }
-                                                    번
+                                                    <span
+                                                        style={{
+                                                            color: '#EA675E',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[3]
+                                                        }
+                                                        번
+                                                    </span>
                                                 </p>
                                                 <p>
-                                                    중노{' '}
-                                                    {
-                                                        banklist
-                                                            .remainingDiaryNum[2]
-                                                    }
-                                                    번
+                                                    중대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#E2766F',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[2]
+                                                        }
+                                                        번
+                                                    </span>
                                                 </p>
                                                 <p>
-                                                    소노{' '}
-                                                    {
-                                                        banklist
-                                                            .remainingDiaryNum[1]
-                                                    }
-                                                    번
+                                                    소대노{' '}
+                                                    <span
+                                                        style={{
+                                                            color: '#E38E88',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[1]
+                                                        }
+                                                        번
+                                                    </span>
                                                 </p>
                                                 <p>
                                                     극소노{' '}
-                                                    {
-                                                        banklist
-                                                            .remainingDiaryNum[0]
-                                                    }
-                                                    번
-                                                </p>{' '}
-                                                남았어요!
-                                            </FlexDiv>
+                                                    <span
+                                                        style={{
+                                                            color: '#E8AEAA',
+                                                        }}
+                                                    >
+                                                        {
+                                                            banklist
+                                                                .remainingDiaryNum[0]
+                                                        }
+                                                        번
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div>남았어요!</div>
                                         </AngryState>
-                                    </>
-                                )}
-                                <FlexDiv>
-                                    <div>
-                                        <p>현재 {memberNick}님의</p>
-                                        <p>신용상태는</p>
                                     </div>
-                                    <p>{banklist.creditStatus}</p>
-                                </FlexDiv>
-                                <Button
-                                    is_disabled={!isbreakbank}
-                                    onClick={() => {
-                                        console.log('test');
-                                        // dispatch(CreateDiary({ dispatch, "test" }));
-                                        const data = { id: banklist.id };
-                                        dispatch(
-                                            expiredBank({ data, navigate }),
-                                        );
-                                    }}
+                                )}
+                                <FlexDiv
+                                    column="row"
+                                    justify="space-between"
+                                    margin="0 0 28px"
                                 >
-                                    {isbreakbank
-                                        ? '버튼을 눌러 적금을 깨보세요!!'
-                                        : '아직 적금을 깰 수 없습니다.'}
-                                </Button>
-                            </FlexDiv>
-                            <FlexDiv column="column" width="50%" padding="2px">
-                                <FlexDiv justify="space-between">
-                                    <div>{banklist.name}</div>
-                                    <div>총 게시글 {banklist.diaryCount}</div>
-                                    <div>총 쓰담 수 {banklist.todackCount}</div>
+                                    <CreditStatus>
+                                        <CreaditStatusTxt1>
+                                            현재 {memberNick}님의
+                                        </CreaditStatusTxt1>
+                                        <CreaditStatusTxt2>
+                                            신용상태는
+                                        </CreaditStatusTxt2>
+                                    </CreditStatus>
+                                    <CreditStatusValue>
+                                        {banklist.creditStatus}
+                                    </CreditStatusValue>
                                 </FlexDiv>
-                                <FlexDiv column="column">
-                                    <PostList bankId={banklist.id} />
-                                </FlexDiv>
-                                <FlexDiv>
-                                    <Button
-                                        onClick={() => {
-                                            // dispatch(CreateDiary({ dispatch, "test" }));
-                                            SetmodalmakePost(true);
-                                        }}
-                                    >
-                                        분노 저금하기
-                                    </Button>
-                                </FlexDiv>
-                            </FlexDiv>
-                        </FlexDiv>
-                    </>
+                            </TextBox>
+                            <Button
+                                is_disabled={!isbreakbank}
+                                onClick={() => {
+                                    console.log('test');
+                                    // dispatch(CreateDiary({ dispatch, "test" }));
+                                    const data = { id: banklist.id };
+                                    dispatch(expiredBank({ data, navigate }));
+                                }}
+                            >
+                                {isbreakbank
+                                    ? '버튼을 눌러 적금을 깨보세요!!'
+                                    : '아직 적금을 깰 수 없습니다.'}
+                            </Button>
+                        </FlexLeft>
+                        <FlexRight>
+                            <PostList bankId={banklist.id} />
+                            <Button
+                                onClick={() => {
+                                    // dispatch(CreateDiary({ dispatch, "test" }));
+                                    SetmodalmakePost(true);
+                                }}
+                            >
+                                분노 저금하기
+                            </Button>
+                        </FlexRight>
+                    </Containers>
                 );
         }
     }, [status, isFetching]);
@@ -246,95 +315,59 @@ const Main = () => {
             dispatch(getBankPostList(data));
         }
     }, []);
+
+    const { diaryCount, todackCount } = banklist || '0';
+
     return (
         <>
-            <Warp>
-                {renderByStatus()}
+            <MainLayout nav={true}>
+                <Contents header={true}>
+                    <TitleWrap title="Home">
+                        {banklist && (
+                            <>
+                                <UtilLink>이번달은 진짜로!</UtilLink>
+                                <Total>
+                                    총 게시글 수{' '}
+                                    <TotalCount>{diaryCount}</TotalCount>
+                                </Total>
+                                <Total>
+                                    총 쓰담 수{' '}
+                                    <TotalCount>{todackCount}</TotalCount>
+                                </Total>
+                            </>
+                        )}
+                    </TitleWrap>
 
-                {/* <div className="grid grid-cols-2 gap-4">
-                <div className="grid col-start-1">
-                    <div>HOME</div>
-                    <button className="bg-slate-500" onClick={testServer}>
-                        testButton
-                    </button>
-                    <button
-                        className="bg-slate-500"
-                        onClick={() => {
-                            navigate('/login');
-                        }}
-                    >
-                        testButton2
-                    </button>
-                </div>
-                <div className="grid w-2/3 col-start-2 ">
-                    <div>
-                        <button>이번 달은 진짜로</button>
-                        <span>총 게시글 수 </span>
-                        <span>총 쓰담 수 </span>
-                    </div>
-                    <div className="grid grid-flow-row grid-cols-2 gap-1 place-items-center">
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                        <MainCard clickCard={openViewDetail}></MainCard>
-                    </div>
-                    <button onClick={openModal} className="bg-blue-300">
-                        분노 저금하기
-                    </button>
-                </div>
-            </div>
-            <WriteAngryModal open={isOpen} close={closeModal} />
-            <ViewDetailModal
-                open={isViewOpen}
-                temp="zzzzz"
-                close={closeViewDetail}
-            /> */}
-                <ModalMakeBank
-                    title="CREATE"
-                    subtitle="분노 적금 만들기"
+                    {renderByStatus()}
+                </Contents>
+            </MainLayout>
+
+            <ModalMakeBank
+                title="CREATE"
+                subtitle="분노 적금 만들기"
+                width="70%"
+                height="80%"
+                open={modalmakebank}
+                close={() => {
+                    Setmodalmakebank(false);
+                }}
+            />
+            {banklist && (
+                <ModalMakePost
+                    title="ANGRY SAVING"
+                    subtitle="분노 게시글 작성"
                     width="70%"
                     height="80%"
-                    open={modalmakebank}
+                    open={modalmakePost}
                     close={() => {
-                        Setmodalmakebank(false);
+                        SetmodalmakePost(false);
                     }}
-                />
-                {banklist && (
-                    <ModalMakePost
-                        title="ANGRY SAVING"
-                        subtitle="분노 게시글 작성"
-                        width="70%"
-                        height="80%"
-                        open={modalmakePost}
-                        close={() => {
-                            SetmodalmakePost(false);
-                        }}
-                        coinBankId={banklist.id}
-                    ></ModalMakePost>
-                )}
-            </Warp>
+                    coinBankId={banklist.id}
+                ></ModalMakePost>
+            )}
         </>
     );
 };
-
-const Warp = styled.div`
-    width: 100%;
-    //height: calc(100vh - 10rem);
-    /* padding: 20px 100px 50px 50px; */
-    background-color: ${theme.color.black};
-`;
-const Title = styled.div`
-    font-family: 'Hanson';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 25px;
-    /* identical to box height */
-
-    color: #f6f6f6;
-`;
 
 const NonBankSubTitle = styled.div`
     font-family: 'Noto Sans';
@@ -342,15 +375,17 @@ const NonBankSubTitle = styled.div`
     font-weight: 700;
     font-size: 90px;
     line-height: 123px;
+    color: #f6f6f6;
 `;
 
 const NoneBankText = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 48px;
     line-height: 65px;
-    padding: 82px 0px;
+    color: #f6f6f6;
+    padding: 82px 0px 0;
 `;
 
 const CreditStatus = styled.div`
@@ -362,35 +397,135 @@ const CreditStatus = styled.div`
     width: 100%;
 `;
 
+const TextBox = styled.div`
+    width: 100%;
+    height: calc(100vh - 290px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    overflow-y: auto;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    ::-webkit-scrollbar {
+        //display: none; /* Chrome , Safari , Opera */
+        width: 8px;
+        background-color: ${theme.color.black2};
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: ${theme.color.red};
+        border-radius: 40px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: ${theme.color.black2};
+        border-radius: 40px;
+    }
+`;
+
+const CreaditStatusTxt1 = styled.p`
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #f6f6f6;
+`;
+
+const CreaditStatusTxt2 = styled.p`
+    font-weight: 700;
+    font-size: 42.0723px;
+    line-height: 57px;
+    color: #f6f6f6;
+`;
+
+const CreditStatusValue = styled.p`
+    font-weight: 700;
+    font-size: 76.3988px;
+    line-height: 104px;
+    text-align: right;
+    color: #da463c;
+`;
+
 const Subtitle = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 80px;
+    font-size: 90px;
     line-height: 123px;
-    /* identical to box height */
-
     color: #f6f6f6;
+    margin-bottom: 22px;
+    letter-spacing: -0.04em;
 `;
 const BreakBank = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 80px;
+    font-size: 90px;
     line-height: 123px;
-    /* identical to box height */
-
-    color: ${theme.color.red};
+    color: #c4433b;
+    margin-bottom: 22px;
+`;
+const BreakBankSubtitle = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 68px;
+    line-height: 93px;
+    color: #f6f6f6;
 `;
 const AngryState = styled.div`
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 66px;
+    font-size: 68px;
     line-height: 93px;
-
     color: #f6f6f6;
-
-    padding-bottom: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 `;
+const UtilLink = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #f6f6f6;
+    margin-right: 5vw;
+`;
+const Total = styled.div`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: #f6f6f6;
+    margin-left: 1.5vw;
+`;
+const TotalCount = styled.span`
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #da463c;
+    margin-left: 0.5vw;
+`;
+const Containers = styled.div`
+    width: 100%;
+    height: calc(100vh - 190px);
+    padding: 0 5vw 0 0;
+    display: flex;
+`;
+const FlexLeft = styled.div`
+    width: 100%;
+    min-width: 633px;
+    height: calc(100vh - 290px);
+    margin-right: 2.5vw;
+`;
+const FlexRight = styled.div`
+    width: 100%;
+    height: calc(100vh - 290px);
+`;
+
 export default Main;

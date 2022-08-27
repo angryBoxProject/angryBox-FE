@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, FlexDiv } from '../elements';
+import Contents from '../Layouts/Contents';
 // import { ReactComponent as Fire } from '../../static/image/Fire.svg';
 import { ReactComponent as Fire } from '../static/image/Fire.svg';
 import theme from '../Styles/theme';
@@ -11,20 +12,22 @@ const Splash = () => {
     const navigate = useNavigate();
 
     return (
-        <Warp>
-            <SplashImage>
-                <Fire style={{ width: '100%', height: '100%' }} />
-            </SplashImage>
-            <Title>분노 저금통</Title>
-            <Button
-                width="50%"
-                onClick={() => {
-                    navigate('/login');
-                }}
-            >
-                로그인
-            </Button>
-        </Warp>
+        <Contents header={false}>
+            <Warp>
+                <SplashImage>
+                    <Fire style={{ width: '100%', height: '100%' }} />
+                </SplashImage>
+                <Title>분노 저금통</Title>
+                <Button
+                    width="50%"
+                    onClick={() => {
+                        navigate('/login');
+                    }}
+                >
+                    로그인
+                </Button>
+            </Warp>
+        </Contents>
     );
 };
 const Warp = styled.div`

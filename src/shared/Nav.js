@@ -87,13 +87,11 @@ const Nav = props => {
 };
 
 const StyledWrap = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
     background-color: #2e2e2e;
     height: 100vh;
-    width: 20%;
-    padding: 20px 0 20px 5%;
+    width: 100%;
+    max-width: 22vw;
+    padding: 34px 8px 50px 5vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -111,10 +109,12 @@ const FlexDiv = styled.div`
 `;
 
 const NavLogoBox = styled.div`
-    font-weight: 600;
-    font-size: 20px;
-    color: red;
     font-family: 'Hanson';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 25px;
+    color: #DA463C;
 `;
 
 const IconWrapBox = styled.div`

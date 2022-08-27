@@ -3,12 +3,10 @@ import GoogleLogin from 'react-google-login';
 import styled from 'styled-components';
 import { ReactComponent as Kakaologo } from '../../static/image/KakaoTalk_logo.svg';
 
-
-
-
 const SocialLogin = props => {
     //kakao
     const REDIRECT_URI = `${process.env.REACT_APP_URL}oauth2/kakao/callback`;
+    // const REDIRECT_URI = `${process.env.REACT_APP_URL}login/oauth2/code/kakao`;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
     //Google
@@ -25,7 +23,9 @@ const SocialLogin = props => {
     };
     return (
         <div>
-            <KaKaoBtn href={KAKAO_AUTH_URL}><Kakaologo/></KaKaoBtn>
+            <KaKaoBtn href={KAKAO_AUTH_URL}>
+                <Kakaologo />
+            </KaKaoBtn>
             {/* <KaKaoBtn href={GOOGLE_AUTH_URL}>구글</KaKaoBtn>
             <GoogleLogin
                 buttonText="Login with Google"
@@ -45,8 +45,7 @@ const KaKaoBtn = styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 56px;
-    background: white;
+    background: #ececec;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 400;

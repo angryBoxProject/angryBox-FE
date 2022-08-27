@@ -6,7 +6,7 @@ import { useBankDiarylist } from '../../hooks/useBankDiarylist';
 import bank, { getMonthDiaryList } from '../../redux/modules/bank';
 import Moment from 'react-moment';
 import moment from 'moment';
-import ModaPostDetail from '../Modal/ModaPostDetail';
+import ModaPostDetail from '../Modal/ModalPostDetail';
 
 const AngryBookDiarylist = props => {
     const dispatch = useDispatch();
@@ -30,13 +30,13 @@ const AngryBookDiarylist = props => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
     const monthdate = date => {
         return moment(date, 'YYYY-MM-DD').month() + 1;
     };
     const daydate = date => {
-        return moment(date, 'YYYY-MM-DD').day();
+        return moment(date).format('D');
     };
     console.log(bankdiarylist);
 

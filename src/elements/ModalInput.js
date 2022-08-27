@@ -59,20 +59,18 @@ ModalInput.defaultProps = {
 };
 
 const ElInput = styled.input`
-    border-bottom: 1px solid #f6f6f6;
+    border: 1px solid #282828;
     width: 100%;
-    padding: 12px 12px;
-    box-sizing: border-box;
-    background: #2e2e2e;
+    height: 40px;
+    padding: 6px 20px 8px;
+    background: #F6F6F6;
     ${props => (props.width ? `width:${props.width};` : '')}
 `;
 const ElTextarea = styled.textarea`
     ${props => (props.width ? `width:${props.width};` : '')}
-    background: #2e2e2e;
-    padding: 12px 4px;
+    background: #F6F6F6;
     box-sizing: border-box;
-    border: 1px solid #f6f6f6;
-    border-radius: 4px;
+    border: 1px solid #282828;
     ::placeholder {
         display: flex;
         align-items: center;

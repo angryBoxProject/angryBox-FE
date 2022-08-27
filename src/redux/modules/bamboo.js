@@ -61,7 +61,7 @@ export const getTopDiary = createAsyncThunk(
             return await tokenURL
                 .get(`/diaries/todayTop/${lastTopDiaryId}/5`)
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     return res.data.data.todayTopDiary;
                 });
         } catch (error) {
@@ -134,6 +134,14 @@ export const bambooSlice = createSlice({
             state.Diarylist = [];
             state.lastDiaryId = -1;
         },
+        allreset: state => {
+            state.Diarylist = [];
+            state.TopDiarylist = [];
+            state.Gallerylist = [];
+            state.lastDiaryId = 0;
+            state.lastTopDiaryId = 0;
+            state.lastGalleryId = 0;
+        },
     },
     extraReducers: builder => {
         builder
@@ -205,6 +213,7 @@ export const {
     removelistTopDiary,
     removelistDiary,
     pushrealDiary,
+    allreset,
 } = bambooSlice.actions;
 
 export default bambooSlice.reducer;

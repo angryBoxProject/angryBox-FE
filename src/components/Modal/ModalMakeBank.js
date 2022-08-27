@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { FlexDiv, ModalInput } from '../../elements';
+import { FlexDiv, ModalInput, Select } from '../../elements';
 import theme from '../../Styles/theme';
 import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
 import Button from '../../elements/Button';
@@ -9,10 +9,13 @@ import useIsMount from '../../hooks/useIsMount';
 import { setMakeBank } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
 
+import ModalLayout from '../../Layouts/ModalLayout';
+
 const ModalMakeBank = props => {
     const {
         open,
         close,
+        modalType,
         width,
         height,
         title,
@@ -30,7 +33,7 @@ const ModalMakeBank = props => {
     const scrollRef = useRef();
     const isMount = useIsMount();
     const [name, setName] = useState();
-    const [angrylimit, setAngrylimit] = useState();
+    const [angrylimit, setAngrylimit] = useState(100);
     const [reward, setReward] = useState();
     const [memo, setMemo] = useState();
 
@@ -41,11 +44,57 @@ const ModalMakeBank = props => {
             reward: reward,
             memo: memo,
         };
-        dispatch(setMakeBank({ data, navigate }));
+        console.log(data);
+        console.log(bankId, 'bankId');
+
+        //    dispatch(expiredBank(bankId)).then(dis)
+        // dispatch(setMakeBank({ data, navigate }));
+        //    )
     };
     return (
-        <>
-            <div className={open ? 'openModal modal' : 'modal'}>
+        <ModalLayout modalType={modalType} title={title} close={close}>
+            <TitleArea>
+                <LabelTitle>적금명</LabelTitle>
+                <InputTitle
+                    type="text'"
+                    placeholder="제목을 입력하세요."
+                    onChange={e => {
+                        setName(e.target.value);
+                    }}
+                />
+                <LabelTitle>한계치</LabelTitle>
+                <Select
+                    israge
+                    onChange={e => {
+                        setAngrylimit(e.target.value);
+                    }}
+                ></Select>
+            </TitleArea>
+            <Compensation>
+                <LabelTitle>보상</LabelTitle>
+                <InputTitle
+                    marginRight="0px"
+                    type="text'"
+                    placeholder="적금을 깰 때의 보상을 입력하세요. ex) 치킨데이"
+                    onChange={e => {
+                        setReward(e.target.value);
+                    }}
+                />
+            </Compensation>
+            <ContentsArea>
+                <LabelTitle>메모</LabelTitle>
+                <Contents
+                    placeholder={'메모 내용을 입력하세요.'}
+                    onChange={e => {
+                        setMemo(e.target.value);
+                    }}
+                />
+            </ContentsArea>
+            <ButtonArea>
+                <ModalButtonBlack onClick={close}>취소</ModalButtonBlack>
+                <ModalButton onClick={handleMakeBank}>만들기</ModalButton>
+            </ButtonArea>
+            {/* <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
                     <Section>
                         <MainModal width={width} height={height}>
@@ -158,126 +207,108 @@ const ModalMakeBank = props => {
                         </MainModal>
                     </Section>
                 ) : null}
-            </div>
-        </>
+            </div> */}
+        </ModalLayout>
     );
 };
-
-// 스타일 컴포넌트 작성 위치
-const Section = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
+const TitleArea = styled.div`
     width: 100%;
-    height: 100%;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 `;
+const LabelTitle = styled.label`
+    margin-right: 26px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #282828;
+    min-width: 50px;
+`;
+const InputTitle = styled.input`
+    width: 100%;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #282828;
+    margin-right: ${props => (props.marginRight ? props.marginRight : '27px')};
+    padding: 6px 20px 8px;
+    border: 1px solid #282828;
+    background: #f6f6f6;
 
-const MainModal = styled.div`
-    position: absolute;
-    width: ${props => props.width};
-    height: ${props => props.height};
-    background-color: ${theme.color.black};
-    border-radius: 20px;
+    &::placeholder {
+        color: #737373;
+    }
+
+    &:focus {
+        background: #fff;
+    }
 `;
-const ModalPopup = styled.div`
-    height: 100%;
+const Compensation = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 47px;
+`;
+const ContentsArea = styled.div`
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    margin-bottom: 28px;
+`;
+const Contents = styled.textarea`
+    width: 100%;
+    padding: 10px;
+    background: #f6f6f6;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    color: #737373;
+    border: solid 1px #282828;
     padding: 20px;
-`;
-const ModalTitle = styled.div`
-    font-family: 'Hanson';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 25px;
-    padding-right: 16px;
 
-    color: #f6f6f6;
+    &:focus {
+        background: #fff;
+    }
 `;
-const ModalSubTitle = styled.div`
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
-
-    color: #f6f6f6;
-`;
-const ModalTextTitle = styled.div`
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 25px;
-    color: ${theme.color.white};
-    padding-right: 9px;
+const ButtonArea = styled.div`
     display: flex;
-    justify-content: center;
-
     align-items: center;
-    ${props => (props.width ? `width:${props.width};` : '')}
+    justify-content: center;
 `;
-const ModalTypeingArea = styled.div`
-    background-color: orange;
-`;
-const ModalButton = styled.div`
-    display: flex;
-    position: absolute;
-    bottom: 20px;
-    width: 97.5%;
-`;
-const ModalButtonConfirm = styled.div`
-    height: 40px;
-    width: 50%;
-    text-align: center;
+const ModalButtonBlack = styled.button`
     cursor: pointer;
-    border: 1px solid #9e9e9e;
+    width: 100%;
+    max-width: 440px;
+    height: 44px;
+    background: #282828;
+    border-radius: 22px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #f6f6f6;
+    margin-right: 26px;
 `;
-const ModalButtonCancel = styled.div`
-    height: 40px;
-    width: 50%;
-    text-align: center;
+const ModalButton = styled.button`
     cursor: pointer;
-    border: 1px solid #9e9e9e;
-`;
+    width: 100%;
+    max-width: 440px;
+    height: 44px;
+    border: solid 3px #813bf3;
+    border-radius: 22px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #813bf3;
+    display: block;
 
-const ListScroll = styled.div`
-    min-height: 40%;
-    height: calc(100% - 10rem);
-    padding-right: 20px;
-    overflow-y: auto;
-    overflow-x: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    ::-webkit-scrollbar {
-        //display: none; /* Chrome , Safari , Opera */
-        background-color: ${theme.color.black2};
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: ${theme.color.red};
-        border-radius: 40px;
-    }
-    ::-webkit-scrollbar-track {
-        background-color: ${theme.color.black2};
-        border-radius: 40px;
+    &:disabled {
+        opacity: 0.5;
     }
 `;
-
-// default props 작성 위치
-ModalMakeBank.defaultProps = {
-    open: false,
-    close: false,
-    title: '',
-    subtitle: '',
-    contents: '',
-    _onChange: () => {},
-    width: '80%',
-    height: '80%',
-};
 
 export default ModalMakeBank;
