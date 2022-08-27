@@ -8,8 +8,9 @@ import ModalPostDetail from '../Modal/ModalPostDetail';
 
 const Posts = props => {
     const { postlist } = props;
+
     const [modalPost, setModalPost] = useState(null);
-    const [status, setStatus] = useState("view");
+    const [status, setStatus] = useState('view');
     return (
         <>
             {postlist?.map((data, index) => {
@@ -21,28 +22,31 @@ const Posts = props => {
                                 setModalPost(data.id);
                             }}
                         >
-                            <ListIndex>
-                                NO. {data.id}
-                            </ListIndex>
+                            <ListIndex>NO. {data.id}</ListIndex>
                             <ListDetail>
                                 <ListTitle>
-                                    <span style={{marginRight: "11px"}}>{data.dateTime.substr(5).replace('-', '.')}</span>
+                                    <span style={{ marginRight: '11px' }}>
+                                        {data.dateTime
+                                            .substr(5)
+                                            .replace('-', '.')}
+                                    </span>
                                     {data.title}
                                 </ListTitle>
-                                <ListDesc>
-                                    {data.content}
-                                </ListDesc>
+                                <ListDesc>{data.content}</ListDesc>
                             </ListDetail>
                             <LockIcon>
-                                <ListIconLock />
-                                {/* <ListIconUnlock /> */}
+                                {data.public ? (
+                                    <ListIconUnlock />
+                                ) : (
+                                    <ListIconLock />
+                                )}
                             </LockIcon>
                         </ListItem>
                     );
                 }
             })}
 
-            {modalPost &&
+            {modalPost && (
                 <ModalPostDetail
                     id={modalPost}
                     title="분노 게시글"
@@ -53,7 +57,7 @@ const Posts = props => {
                         setModalPost(null);
                     }}
                 />
-            }
+            )}
         </>
     );
 };
@@ -64,7 +68,7 @@ const ListItem = styled.div`
     justify-content: space-between;
     width: 308px;
     height: 266px;
-    background: #ECECEC;
+    background: #ececec;
     margin-right: 30px;
     margin-bottom: 30px;
     cursor: pointer;
@@ -74,10 +78,10 @@ const ListItem = styled.div`
     }
 
     &:hover {
-        background: #813BF3;
+        background: #813bf3;
 
         div {
-            color: #F6F6F6;
+            color: #f6f6f6;
         }
     }
 `;
@@ -110,6 +114,6 @@ const LockIcon = styled.span`
     right: 0;
     width: 48px;
     height: 48px;
-    background:url(../../static/image/main/list_icon_lock.svg) no-repeat;
-`
+    background: url(../../static/image/main/list_icon_lock.svg) no-repeat;
+`;
 export default Posts;

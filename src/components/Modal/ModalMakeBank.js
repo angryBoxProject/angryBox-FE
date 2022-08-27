@@ -33,7 +33,7 @@ const ModalMakeBank = props => {
     const scrollRef = useRef();
     const isMount = useIsMount();
     const [name, setName] = useState();
-    const [angrylimit, setAngrylimit] = useState();
+    const [angrylimit, setAngrylimit] = useState(100);
     const [reward, setReward] = useState();
     const [memo, setMemo] = useState();
 
@@ -44,7 +44,12 @@ const ModalMakeBank = props => {
             reward: reward,
             memo: memo,
         };
-        dispatch(setMakeBank({ data, navigate }));
+        console.log(data);
+        console.log(bankId, 'bankId');
+
+        //    dispatch(expiredBank(bankId)).then(dis)
+        // dispatch(setMakeBank({ data, navigate }));
+        //    )
     };
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
@@ -59,9 +64,9 @@ const ModalMakeBank = props => {
                 />
                 <LabelTitle>한계치</LabelTitle>
                 <Select
-                    ispublic
+                    israge
                     onChange={e => {
-                        setIspublic(e.target.value);
+                        setAngrylimit(e.target.value);
                     }}
                 ></Select>
             </TitleArea>
@@ -72,30 +77,22 @@ const ModalMakeBank = props => {
                     type="text'"
                     placeholder="적금을 깰 때의 보상을 입력하세요. ex) 치킨데이"
                     onChange={e => {
-                        setName(e.target.value);
+                        setReward(e.target.value);
                     }}
                 />
             </Compensation>
             <ContentsArea>
                 <LabelTitle>메모</LabelTitle>
                 <Contents
-                    placeholder={"메모 내용을 입력하세요."}
+                    placeholder={'메모 내용을 입력하세요.'}
                     onChange={e => {
                         setMemo(e.target.value);
                     }}
                 />
             </ContentsArea>
             <ButtonArea>
-                <ModalButtonBlack
-                    onClick={close}
-                >
-                    취소
-                </ModalButtonBlack>
-                <ModalButton
-                    onClick={close}
-                >
-                    만들기
-                </ModalButton>
+                <ModalButtonBlack onClick={close}>취소</ModalButtonBlack>
+                <ModalButton onClick={handleMakeBank}>만들기</ModalButton>
             </ButtonArea>
             {/* <div className={open ? 'openModal modal' : 'modal'}>
                 {open ? (
@@ -228,17 +225,17 @@ const LabelTitle = styled.label`
     line-height: 26px;
     color: #282828;
     min-width: 50px;
-`
+`;
 const InputTitle = styled.input`
     width: 100%;
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
     color: #282828;
-    margin-right: ${props => props.marginRight ? props.marginRight : "27px"};
+    margin-right: ${props => (props.marginRight ? props.marginRight : '27px')};
     padding: 6px 20px 8px;
     border: 1px solid #282828;
-    background: #F6F6F6;
+    background: #f6f6f6;
 
     &::placeholder {
         color: #737373;
@@ -264,7 +261,7 @@ const ContentsArea = styled.div`
 const Contents = styled.textarea`
     width: 100%;
     padding: 10px;
-    background: #F6F6F6;
+    background: #f6f6f6;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
@@ -293,7 +290,7 @@ const ModalButtonBlack = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
-    color: #F6F6F6;
+    color: #f6f6f6;
     margin-right: 26px;
 `;
 const ModalButton = styled.button`
@@ -301,12 +298,12 @@ const ModalButton = styled.button`
     width: 100%;
     max-width: 440px;
     height: 44px;
-    border: solid 3px #813BF3;
+    border: solid 3px #813bf3;
     border-radius: 22px;
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
-    color: #813BF3;
+    color: #813bf3;
     display: block;
 
     &:disabled {

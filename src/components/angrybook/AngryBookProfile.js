@@ -7,7 +7,8 @@ import { useMonthprofile } from '../../hooks/useMonthprofile';
 
 const AngryBookProfile = props => {
     const nickname = useSelector(state => state.member.user_info).nickname;
-
+    const selectDay =
+        useSelector(state => state.main.calendarDay) ?? moment().format();
     const {
         status,
         data: profilelist,
@@ -61,7 +62,7 @@ const AngryBookProfile = props => {
                 <TitleWrap>
                     <Nickname>{nickname} </Nickname>
                     <Title>
-                        님의 {monthdate(moment())}월 분노 적금 통계입니다.
+                        님의 {monthdate(selectDay)}월 분노 적금 통계입니다.
                     </Title>
                 </TitleWrap>
                 <div>{renderByStatus()}</div>

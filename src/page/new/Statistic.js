@@ -14,6 +14,7 @@ import ModalLoad from '../../components/Modal/ModalLoad';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useBankDiarylist } from '../../hooks/useBankDiarylist';
+import ModalPostDetail from '../../components/Modal/ModalPostDetail';
 
 const list = [
     { datetime: '04/08', detail: '오늘 요리했는데 개망함', status: '소노' },
@@ -22,6 +23,9 @@ const list = [
 ];
 const Statistic = props => {
     const [modal, setModal] = useState(false);
+    const [statuss, setStatus] = useState('view');
+
+    const [modalPost, setModalPost] = useState();
 
     const selectDay =
         useSelector(state => state.main.calendarDay) ?? moment().format();
@@ -38,16 +42,17 @@ const Statistic = props => {
         isFetching,
         refetch,
     } = useBankDiarylist(selectDay);
+    console.log(bankdiarylist);
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
     const monthdate = date => {
         return moment(date, 'YYYY-MM-DD').month() + 1;
     };
     const daydate = date => {
-        return moment(date, 'YYYY-MM-DD').day();
+        return moment(date).format('D');
     };
 
     return (
@@ -64,25 +69,33 @@ const Statistic = props => {
 
                 <StatisticWrap>
                     <AngryBookProfile />
-                    <AngryChart />
+                    <AngryChart selectDay={selectDay} />
                 </StatisticWrap>
 
                 <RecentList>
                     {bankdiarylist?.map((item, key) => {
                         return (
-                            <Item key={key}>
-                                <ItemLeft>
-                                    <Date>
-                                        {monthdate(item.dateTime) +
-                                            '/' +
-                                            daydate(item.dateTime)}
-                                    </Date>
-                                    <Detail>{item.title}</Detail>
-                                </ItemLeft>
-                                <ItemRight>
-                                    {angryPhase(item.angryPhaseId)}
-                                </ItemRight>
-                            </Item>
+                            console.log(item.dateTime),
+                            (
+                                <Item
+                                    key={key}
+                                    onClick={() => {
+                                        setModalPost(item?.id);
+                                    }}
+                                >
+                                    <ItemLeft>
+                                        <Date>
+                                            {monthdate(item.dateTime) +
+                                                '/' +
+                                                daydate(item.dateTime)}
+                                        </Date>
+                                        <Detail>{item.title}</Detail>
+                                    </ItemLeft>
+                                    <ItemRight>
+                                        {angryPhase(item.angryPhaseId)}
+                                    </ItemRight>
+                                </Item>
+                            )
                         );
                     })}
                 </RecentList>
@@ -105,6 +118,18 @@ const Statistic = props => {
                         modalType="list"
                         contentType="bank"
                         close={() => setModal(false)}
+                    />
+                )}
+                {modalPost && (
+                    <ModalPostDetail
+                        id={modalPost}
+                        title="분노 게시글"
+                        modalType="form"
+                        status={statuss}
+                        setStatus={setStatus}
+                        close={() => {
+                            setModalPost(null);
+                        }}
                     />
                 )}
             </Contents>
@@ -143,6 +168,7 @@ const Item = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    cursor: pointer;
 `;
 const ItemLeft = styled.div`
     display: flex;

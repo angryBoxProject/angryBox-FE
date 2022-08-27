@@ -59,7 +59,7 @@ export const setMakeBank = createAsyncThunk(
         console.log('setMakeBank', data);
         try {
             return await tokenURL.post(`/bank`, data).then(res => {
-                navigate('/main', { replace: true });
+                navigate('/new/main', { replace: true });
                 location.reload();
                 console.log(res);
             });
@@ -71,7 +71,7 @@ export const setMakeBank = createAsyncThunk(
 );
 export const expiredBank = createAsyncThunk(
     'bank/delete',
-    async ({ data, navigate }, { rejectWithValue }) => {
+    async (data, { rejectWithValue }) => {
         try {
             return await tokenURL
                 .put(`/expired-bank?id=${data.id}`, data)
@@ -133,24 +133,28 @@ export const getPost = createAsyncThunk(
 );
 export const setEditPost = createAsyncThunk(
     'setEditPost',
-    async (data, { rejectWithValue }) => {
-        console.log(data.newdata);
+    async ({ data, navigate }, { rejectWithValue }) => {
+        console.log(data);
         const formdatas = new FormData();
-        formdatas.append('file', null);
-        formdatas.append('file', null);
+
+        try {
+            for (let i = 0; i < data?.files.length; i++)
+                formdatas.append('file', data?.files[i]);
+        } catch (error) {
+            formdatas.append('file', null);
+            console.log('undefined');
+        }
+
         formdatas.append(
             'diary',
-            new Blob([JSON.stringify(data.newdata)], {
-                type: 'application/json',
-            }),
+            new Blob([JSON.stringify(data)], { type: 'application/json' }),
         );
-        formdatas.append('public', data.newdata.publiccount);
-        console.log(formdatas);
+        formdatas.append('public', data.publiccount);
         try {
             return await tokenURL
-                .put(`/diaries/${data.newdata.id}`, formdatas)
+                .put(`/diaries/${data.id}`, formdatas)
                 .then(res => {
-                    data.navigate('/main');
+                    navigate('/new/main');
                     location.reload();
                     console.log(res);
                 });

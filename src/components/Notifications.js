@@ -16,7 +16,7 @@ const Notifications = props => {
     const dispatch = useDispatch();
     const scrollRef = useRef();
     const isMount = useIsMount();
-    
+
     const profileList = useSelector(state => state.member.user_info);
     const isLogin = useSelector(state => state.member.isLogin);
 
@@ -63,78 +63,91 @@ const Notifications = props => {
     //     }
     // }, [status, isFetching]);
     return (
-        <Wrap ref={scrollRef}>
-            <Util>
-                <UtilItem onClick={() => props.setNotimodal(false)}><BellIcon /></UtilItem>
-                
-                <HeaderIcon>
-                    <ProfileCircle>
-                        <ProfileImage
-                            bgImg={
-                                isLogin && profileList.file
-                                    ? `url(${
-                                        process.env.REACT_APP_IP +
-                                        profileList.file
-                                    })`
-                                    : 'none'
-                            }
-                        ></ProfileImage>
-                    </ProfileCircle>
-                </HeaderIcon>
-            </Util>
-            <Container>
-                <Title>알림</Title>
-                <NotiWrap>
-                    {notilist?.map((data, index) => (
-                        <Noti
-                            key={index}
-                            notiid={data.id}
-                            diaryId={data.diaryId}
-                            checked={data.checked}
-                            content={data.content}
-                            dateTime={data.dateTime}
-                            receiveMemberId={data.receiveMemberId}
-                            sendMemberId={data.sendMemberId}
-                        />
-                    ))}
-                </NotiWrap>
-            </Container>
-            {/* <Section
-                onClick={() => {
-                    props.setNotimodal(false);
-                }}
-            >
-                <Modaltap ref={scrollRef}>
-                    <Notiheader>
-                        <BsFillBellFill size="20px" />
-                        <div>프로필 url</div>
-                    </Notiheader>
-                    <MainModal>알림</MainModal>
-                    
-                    {notilist?.map((data, index) => (
-                        <Noti
-                            key={index}
-                            notiid={data.id}
-                            diaryId={data.diaryId}
-                            checked={data.checked}
-                            content={data.content}
-                            dateTime={data.dateTime}
-                            receiveMemberId={data.receiveMemberId}
-                            sendMemberId={data.sendMemberId}
-                        />
-                    ))}
-                </Modaltap>
-            </Section> */}
-        </Wrap>
+        <div>
+            <WrapOut onClick={() => props.setNotimodal(false)}></WrapOut>
+            <Wrap ref={scrollRef} onClick={() => props.setNotimodal(false)}>
+                <Util>
+                    <UtilItem>
+                        <BellIcon />
+                    </UtilItem>
+
+                    <HeaderIcon>
+                        <ProfileCircle>
+                            <ProfileImage
+                                bgImg={
+                                    isLogin && profileList.file
+                                        ? `url(${
+                                              process.env.REACT_APP_IP +
+                                              profileList.file
+                                          })`
+                                        : 'none'
+                                }
+                            ></ProfileImage>
+                        </ProfileCircle>
+                    </HeaderIcon>
+                </Util>
+                <Container>
+                    <Title>알림</Title>
+                    <NotiWrap>
+                        {notilist?.map((data, index) => (
+                            <Noti
+                                key={index}
+                                notiid={data.id}
+                                diaryId={data.diaryId}
+                                checked={data.checked}
+                                content={data.content}
+                                dateTime={data.dateTime}
+                                receiveMemberId={data.receiveMemberId}
+                                sendMemberId={data.sendMemberId}
+                            />
+                        ))}
+                    </NotiWrap>
+                </Container>
+                {/* <Section
+    onClick={() => {
+        props.setNotimodal(false);
+    }}
+>
+    <Modaltap ref={scrollRef}>
+        <Notiheader>
+            <BsFillBellFill size="20px" />
+            <div>프로필 url</div>
+        </Notiheader>
+        <MainModal>알림</MainModal>
+        
+        {notilist?.map((data, index) => (
+            <Noti
+                key={index}
+                notiid={data.id}
+                diaryId={data.diaryId}
+                checked={data.checked}
+                content={data.content}
+                dateTime={data.dateTime}
+                receiveMemberId={data.receiveMemberId}
+                sendMemberId={data.sendMemberId}
+            />
+        ))}
+    </Modaltap>
+</Section> */}
+            </Wrap>
+        </div>
     );
 };
+const WrapOut = styled.div`
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 4;
+`;
 const Wrap = styled.div`
     width: 421px;
     height: 100%;
     position: fixed;
     top: 0;
     right: 0;
-    background: #813BF3;
+    background: #813bf3;
     z-index: 5;
     padding: 18px 30px;
 `;
@@ -148,11 +161,11 @@ const UtilItem = styled.div`
     height: 64px;
 `;
 const HeaderIcon = styled.div`
-width: 64px;
-height: 64px;
-display: flex;
-align-items: center;
-justify-content: center;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 const ProfileCircle = styled.div`
     width: 36px;
@@ -169,14 +182,14 @@ const ProfileImage = styled.div`
     height: 100%;
 `;
 const Container = styled.div`
-    width: 200px;
+    width: 100%;
     padding-left: 20px;
 `;
 const Title = styled.div`
     font-weight: 700;
     font-size: 20px;
     line-height: 29px;
-    color: #FFFFFF;
+    color: #ffffff;
     padding-top: 40px;
     padding-bottom: 55px;
 `;
@@ -188,19 +201,19 @@ const NotiWrap = styled.div`
 
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-    
+
     ::-webkit-scrollbar {
         //display: none; /* Chrome , Safari , Opera */
         width: 5px;
-        background-color: #F6F6F6;
+        background-color: #f6f6f6;
         border-radius: 5px;
     }
     ::-webkit-scrollbar-thumb {
-        background-color: #F6F6F6;
+        background-color: #f6f6f6;
         border-radius: 5px;
     }
     ::-webkit-scrollbar-track {
-        background-color: #813BF3;
+        background-color: #813bf3;
         border-radius: 5px;
     }
 `;

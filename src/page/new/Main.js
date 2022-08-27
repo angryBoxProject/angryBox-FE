@@ -38,10 +38,14 @@ const Main = () => {
     const [modalbreakBank, SetmodalbreakBank] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
-    const isbreakbank = banklist?.remainingDiaryNum.length === 0 ? true : false;
+    const isbreakbank = banklist?.canCrush
+        ? true
+        : status !== 'success'
+        ? true
+        : false;
     const memberNick = localStorage.getItem('nickname');
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
-
+    console.log(banklist, 'isbreakbank');
     const openModal = () => {
         setOpen(true);
     };
@@ -60,7 +64,7 @@ const Main = () => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
 
     const renderByStatus = useCallback(() => {
@@ -212,6 +216,7 @@ const Main = () => {
         }
     }, [status, isFetching]);
 
+    console.log('isbreakbank', isbreakbank, status, banklist);
     useEffect(() => {
         if (status === 'success') {
             const data = {
@@ -229,7 +234,11 @@ const Main = () => {
             <Contents header={true}>
                 <StatusArea>
                     {/* 유저 상태에 따라 타이틀 명칭 변경 */}
-                    <Title>곧 터지기 직전!</Title>
+                    {status !== 'success' ? (
+                        <Title>새 적금을 만들어보세요!</Title>
+                    ) : (
+                        <Title>곧 터지기 직전!</Title>
+                    )}
                     <CreditWrap>
                         <CreditLabel>
                             <p style={{ fontSize: '20px', lineHeight: '29px' }}>
@@ -240,7 +249,13 @@ const Main = () => {
                             </p>
                         </CreditLabel>
                         <CreditStatus>
-                            <CreditStatusValue>{list[0]}</CreditStatusValue>
+                            {status !== 'success' ? (
+                                <CreditStatusValue>-</CreditStatusValue>
+                            ) : (
+                                <CreditStatusValue>
+                                    {banklist?.creditStatus}
+                                </CreditStatusValue>
+                            )}
                             <div style={{ width: '66px' }}>
                                 <Fire />
                             </div>
@@ -334,6 +349,7 @@ const Main = () => {
                 <ModalClearBank
                     modalType="info"
                     close={() => SetmodalbreakBank(false)}
+                    bankId={banklist?.id}
                 />
             )}
         </MainLayout>

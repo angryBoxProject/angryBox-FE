@@ -78,29 +78,6 @@ const Best = props => {
     const [modalPost, setModalPost] = useState();
 
     const isMount = useIsMount();
-    // useEffect(() => {
-    //     console.log(ref);
-    // }, [ref, inView]);
-    // useEffect(() => {
-    //     // function onScroll() {
-    //     //     const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
-    //     //     console.log(clientHeight, scrollTop, scrollHeight);
-    //     //     if (clientHeight + scrollTop > scrollHeight - 300) {
-    //     //         if (
-    //     //             hasMoreToplist &&
-    //     //             TopDiarylist &&
-    //     //             !Toplistloading &&
-    //     //             isMount.current
-    //     //         ) {
-    //     //             dispatch(getTopDiary(lastTopDiaryId));
-    //     //         }
-    //     //     }
-    //     // }
-    //     // scrollRef.current.addEventListener('scroll', onScroll);
-    //     // return () => {
-    //     //     scrollRef.current.removeEventListener('scroll', onScroll);
-    //     // };
-    // }, [hasMoreToplist, TopDiarylist, Toplistloading, isMount]);
 
     const getList = useCallback(async () => {
         console.log(bestList);
@@ -111,15 +88,14 @@ const Best = props => {
             imageFilter: 2,
             angry: [],
         };
-        // await tokenURL.get(`/diaries/todayTop/${lastId}/5`).then(res => {
-        await tokenURL
-            .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
-            .then(res => {
-                console.log(res);
-                const list = res.data.data.diaries;
-                // const list = res.data.data.todayTopDiary;
-                setBestList(prevState => [...prevState, ...list]);
-            });
+        await tokenURL.get(`/diaries/todayTop/${lastId}/5`).then(res => {
+            // await tokenURL
+            //     .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
+            //     .then(res => {
+            // const list = res.data.data.diaries;
+            const list = res.data.data.todayTopDiary;
+            setBestList(prevState => [...prevState, ...list]);
+        });
         setLoading(false);
     }, [lastId]);
 

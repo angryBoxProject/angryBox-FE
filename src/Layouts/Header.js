@@ -21,7 +21,8 @@ const Header = props => {
     const navigator = useNavigate();
     const lastnotiId = useSelector(state => state.noti.lastnotiId);
     const profileList = useSelector(state => state.member.user_info);
-    const isLogin = useSelector(state => state.member.isLogin);
+    const isLogin = localStorage.getItem('nickname') ? true : false;
+
     // console.log(profileList);
     // console.log(process.env.REACT_APP_IP + profileList.file);
     const pathName = window.location.pathname;
@@ -79,8 +80,8 @@ const Header = props => {
                     </NavLink>
                 </Nav>
 
-                <Util>
-                    <UtilItem onClick={() => setNotimodal(true)}>
+                <Util onClick={() => setNotimodal(true)}>
+                    <UtilItem>
                         <BellIcon />
                     </UtilItem>
 

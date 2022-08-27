@@ -57,7 +57,7 @@ const Main = () => {
 
     const angryPhase = id => {
         const list = ['극대노', '대노', '중노', '소노', '극소노'];
-        return list[id];
+        return list[id - 1];
     };
 
     useEffect(() => {
