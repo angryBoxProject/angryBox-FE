@@ -45,10 +45,10 @@ const ModalMakeBank = props => {
             memo: memo,
         };
         console.log(data);
-        console.log(bankId, 'bankId');
+        // console.log(bankId, 'bankId');
 
         //    dispatch(expiredBank(bankId)).then(dis)
-        // dispatch(setMakeBank({ data, navigate }));
+        dispatch(setMakeBank({ data, navigate }));
         //    )
     };
     return (

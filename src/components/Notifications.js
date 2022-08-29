@@ -49,6 +49,8 @@ const Notifications = props => {
         };
     }, [hasMorePosts, notilist, listloading, isMount]);
 
+    console.log(notilist, 'notilists');
+
     // const renderByStatus = useCallback(() => {
     //     switch (status) {
     //         case 'loading':

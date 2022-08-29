@@ -71,14 +71,14 @@ export const setMakeBank = createAsyncThunk(
 );
 export const expiredBank = createAsyncThunk(
     'bank/delete',
-    async (data, { rejectWithValue }) => {
+    async ({ data, navigate }, { rejectWithValue }) => {
         try {
             return await tokenURL
                 .put(`/expired-bank?id=${data.id}`, data)
                 .then(res => {
                     console.log(res);
-                    navigate('/main', { replace: true });
-                    location.reload();
+                    // navigate('/main', { replace: true });
+                    // location.reload();
                 });
         } catch (error) {
             console.log(error);
