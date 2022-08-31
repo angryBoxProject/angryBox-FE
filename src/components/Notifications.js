@@ -8,12 +8,17 @@ import Noti from './Noti';
 import { getnotis } from '../redux/modules/notification';
 import useIsMount from '../hooks/useIsMount';
 import { ReactComponent as BellIcon } from '../static/image/header/nav_bell_icon_on.svg';
+import { tokenURL } from '../Apis/API';
+import { useNavigate } from 'react-router-dom';
+import { deleteCookie } from '../shared/utils/Cookie';
+import { removeLogout } from '../redux/modules/member';
 
 const Notifications = props => {
     const { notilist, listloading, hasMorePosts } = useSelector(
         state => state.noti,
     );
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const scrollRef = useRef();
     const isMount = useIsMount();
 
@@ -51,6 +56,18 @@ const Notifications = props => {
 
     console.log(notilist, 'notilists');
 
+    const logOutHandle = async () => {
+        console.log('logout');
+        await tokenURL.post(`auth/logout`).then(res => {
+            console.log(res);
+            deleteCookie('token');
+            localStorage.removeItem('nickname');
+            localStorage.removeItem('memberId');
+            dispatch(removeLogout());
+        });
+        navigate('/', { replace: true });
+    };
+
     // const renderByStatus = useCallback(() => {
     //     switch (status) {
     //         case 'loading':
@@ -87,6 +104,11 @@ const Notifications = props => {
                             ></ProfileImage>
                         </ProfileCircle>
                     </HeaderIcon>
+                    <LogoutDiv onClick={logOutHandle}>
+                        <LogOutBtn>
+                            <LogoutButtonText>logout</LogoutButtonText>
+                        </LogOutBtn>
+                    </LogoutDiv>
                 </Util>
                 <Container>
                     <Title>알림</Title>
@@ -168,6 +190,35 @@ const HeaderIcon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+const LogoutDiv = styled.div`
+    width: 88px;
+    height: 64px;
+    top: 40px;
+    right: 68px;
+    display: flex;
+    position: absolute;
+    /* align-items: center;
+    justify-content: flex-end; */
+`;
+
+const LogOutBtn = styled.button`
+    width: 100%;
+    max-width: 436px;
+    height: 46px;
+    border: solid 3px #ffffff;
+    border-radius: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+`;
+const LogoutButtonText = styled.span`
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    color: #ffffff;
+    margin-right: 1px;
 `;
 const ProfileCircle = styled.div`
     width: 36px;

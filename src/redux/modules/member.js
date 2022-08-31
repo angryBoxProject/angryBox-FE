@@ -133,6 +133,15 @@ export const memberSlice = createSlice({
             localStorage.setItem('nickname', state.user_info.nickname);
             localStorage.setItem('memberId', state.user_info.memberId);
         },
+        removeLogout: (state, action) => {
+            state.user_info = {
+                id: '',
+                email: '',
+                nickname: '',
+                file: '',
+            };
+            state.isLogin = false;
+        },
     },
     extraReducers: builder => {
         builder
@@ -169,6 +178,7 @@ export const memberSlice = createSlice({
     },
 });
 
-export const { setUserName, setLoginUser, setkakaoLogin } = memberSlice.actions;
+export const { setUserName, setLoginUser, setkakaoLogin, removeLogout } =
+    memberSlice.actions;
 
 export default memberSlice.reducer;
