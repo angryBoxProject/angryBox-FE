@@ -104,7 +104,7 @@ const Profile = props => {
                                 padding="0 15px 50px 0px"
                                 justify="space-between"
                             >
-                                <Countbox>분노 통장수</Countbox>
+                                <Countbox>게시글 수</Countbox>
                                 <Counttext>
                                     {profileList.diaryCount} 개
                                 </Counttext>

@@ -37,6 +37,7 @@ const Main = () => {
     const [modalmakebank, Setmodalmakebank] = useState(false);
     const [modalmakePost, SetmodalmakePost] = useState(false);
     const [modalbreakBank, SetmodalbreakBank] = useState(false);
+    const [modalmakeBank, SetmodalmakeBank] = useState(false);
 
     const { status, data: banklist, error, isFetching, refetch } = useBank();
     const isbreakbank = banklist?.canCrush
@@ -264,7 +265,15 @@ const Main = () => {
                     </CreditWrap>
                     <ClearButton
                         onClick={() => {
+                            if (status !== 'success') {
+                                SetmodalmakeBank(true);
+                                return;
+                            }
                             SetmodalbreakBank(true);
+                            const data = {
+                                id: banklist.id,
+                            };
+                            dispatch(expiredBank({ data, navigate }));
                         }}
                         style={{
                             border: isbreakbank
@@ -272,15 +281,28 @@ const Main = () => {
                                 : 'solid 3px #ECECEC',
                         }}
                     >
-                        <ClearButtonValue
-                            style={{
-                                color: isbreakbank ? '#813BF3' : '#737373',
-                            }}
-                        >
-                            {isbreakbank
-                                ? '버튼을 눌러 적금을 깨보세요!!'
-                                : '아직 적금을 깰 수 없습니다.'}
-                        </ClearButtonValue>
+                        {status !== 'success' ? (
+                            <ClearButtonValue
+                                style={{
+                                    color: isbreakbank ? '#813BF3' : '#737373',
+                                }}
+                            >
+                                {isbreakbank
+                                    ? '적금을 생성하세요!'
+                                    : '아직 적금을 깰 수 없습니다.'}
+                            </ClearButtonValue>
+                        ) : (
+                            <ClearButtonValue
+                                style={{
+                                    color: isbreakbank ? '#813BF3' : '#737373',
+                                }}
+                            >
+                                {isbreakbank
+                                    ? '버튼을 눌러 적금을 깨보세요!!'
+                                    : '아직 적금을 깰 수 없습니다.'}
+                            </ClearButtonValue>
+                        )}
+
                         {isbreakbank ? (
                             <ClearButtonIconOn />
                         ) : (
@@ -351,6 +373,15 @@ const Main = () => {
                     modalType="info"
                     close={() => SetmodalbreakBank(false)}
                     bankId={banklist?.id}
+                />
+            )}
+            {modalmakeBank && (
+                <ModalMakeBank
+                    title="분노 적금 만들기"
+                    modalType="form"
+                    close={() => {
+                        SetmodalmakeBank(false);
+                    }}
                 />
             )}
         </MainLayout>

@@ -38,7 +38,7 @@ const AngryBookProfile = props => {
                             >
                                 <Underline>분노 계좌번호</Underline>
                                 <BankAccount>
-                                    {profilelist.bankAccount}
+                                    {profilelist?.bankAccount}
                                 </BankAccount>
                             </FlexDiv>
                             <FlexDiv
@@ -47,7 +47,7 @@ const AngryBookProfile = props => {
                             >
                                 <Underline>총 쓰담 수</Underline>
                                 <RecieveTodackCount>
-                                    {profilelist.recieveTodackCount}{' '}
+                                    {profilelist?.recieveTodackCount}{' '}
                                     <Text>회</Text>
                                 </RecieveTodackCount>
                             </FlexDiv>

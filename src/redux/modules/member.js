@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { tokenURL, URL } from '../../Apis/API';
-import { setCookie } from '../../shared/utils/Cookie';
+import { getCookie, setCookie } from '../../shared/utils/Cookie';
 
 const ismock = false;
 export const login = createAsyncThunk(
@@ -10,7 +10,7 @@ export const login = createAsyncThunk(
             return await URL.post(`/auth/login`, data, {
                 withCredentials: true,
             }).then(response => {
-                console.log(response);
+                console.log(response.data.data);
                 setCookie('token', response.headers.authorization);
                 navigate('/new/main', { replace: true });
 
@@ -27,11 +27,19 @@ export const login = createAsyncThunk(
 //kakao
 export const kakaoLogin = createAsyncThunk(
     'member/kakaoLogin',
-    async ({ code, navigate }, thunkAPI) => {
+    async ({ code, navigate, dispatch }, { rejectWithValue }) => {
         const _ = null;
         try {
-            await URL.post(`oauth2/kakao?code=${code}`).then(res => {
-                console.log(res);
+            await URL.post(`oauth2/kakao?code=${code}`, _, {
+                withCredentials: true,
+            }).then(response => {
+                console.log(response.data);
+                setCookie('token', response.headers.authorization);
+                console.log(getCookie('token'));
+                dispatch(setkakaoLogin(response.data.data));
+                navigate('/new/main', { replace: true });
+                return response.data.data;
+
                 // setCookie('token', response.headers.authorization);
 
                 // sessionStorage.setItem('userInfo', JSON.stringify(res.data));
@@ -115,11 +123,31 @@ export const memberSlice = createSlice({
         setLoginUser: (state, action) => {
             state.user_info = action.payload;
             state.isLogin = true;
+            localStorage.setItem('nickname', state.user_info.nickname);
+            localStorage.setItem('memberId', state.user_info.memberId);
+        },
+        setkakaoLogin: (state, action) => {
+            console.log(action);
+            state.user_info = action.payload;
+            state.isLogin = true;
+            localStorage.setItem('nickname', state.user_info.nickname);
+            localStorage.setItem('memberId', state.user_info.memberId);
+        },
+        removeLogout: (state, action) => {
+            state.user_info = {
+                id: '',
+                email: '',
+                nickname: '',
+                file: '',
+            };
+            state.isLogin = false;
         },
     },
     extraReducers: builder => {
         builder
             .addCase(login.fulfilled, (state, action) => {
+                console.log(action);
+
                 state.user_info = action.payload;
                 state.isLogin = true;
                 localStorage.setItem('nickname', state.user_info.nickname);
@@ -130,10 +158,10 @@ export const memberSlice = createSlice({
             })
             .addCase(kakaoLogin.fulfilled, (state, action) => {
                 console.log(action);
-                // state.user_info = action.payload;
-                // state.isLogin = true;
-                // localStorage.setItem('nickname', state.user_info.nickname);
-                // localStorage.setItem('memberId', state.user_info.memberId);
+                state.user_info = action.payload;
+                state.isLogin = true;
+                localStorage.setItem('nickname', state.user_info.nickname);
+                localStorage.setItem('memberId', state.user_info.memberId);
             })
             .addCase(googleLogin.fulfilled, (state, action) => {
                 state.user_info = action.payload;
@@ -150,6 +178,7 @@ export const memberSlice = createSlice({
     },
 });
 
-export const { setUserName, setLoginUser } = memberSlice.actions;
+export const { setUserName, setLoginUser, setkakaoLogin, removeLogout } =
+    memberSlice.actions;
 
 export default memberSlice.reducer;

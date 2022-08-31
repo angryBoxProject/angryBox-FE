@@ -1,6 +1,6 @@
 import './App.css';
 import React, { lazy, Suspense, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from './Styles/theme';
 
@@ -15,7 +15,7 @@ import Nav from './shared/Nav';
 import Mypage from './page/Mypage';
 
 import { useDispatch } from 'react-redux';
-import { getCookie } from './shared/utils/Cookie';
+import { getCookie, isLogin } from './shared/utils/Cookie';
 import { setLogin } from './redux/modules/member';
 import Bamboo from './page/Bamboo';
 import BambooRealTimeDiary from './components/bamboo/BambooRealTimeDiary';
@@ -33,6 +33,8 @@ import Recent from './page/new/Community/Recent';
 import Gallery from './page/new/Community/Gallery';
 import Statistic from './page/new/Statistic';
 import MypageN from './page/new/Mypage';
+import PrivateRoute from './components/Route/PrivateRoute';
+import PublicRoute from './components/Route/PublicRoute';
 
 // const Main = lazy(() => import('./page/Main'));
 // const Login = lazy(() => import('./page/Login'));
@@ -42,7 +44,7 @@ import MypageN from './page/new/Mypage';
 function App() {
     const dispatch = useDispatch();
     const mytoken = getCookie('token');
-
+    const isLoginvalue = isLogin();
     useEffect(() => {
         if (mytoken) {
             dispatch(setLogin());
@@ -66,6 +68,27 @@ function App() {
                         path="/bamboo/topdiary"
                         element={<BambooTopDiary />}
                     /> */}
+                    {/* <PublicRoute
+                        restricted={false}
+                        component={Main}
+                        path="/"
+                        exact
+                    />
+                    <PublicRoute
+                        restricted={true}
+                        component={Register}
+                        path="/register"
+                        exact
+                    />
+                    <PublicRoute
+                        restricted={true}
+                        component={Login}
+                        path="/login"
+                        exact
+                    />
+                    <PrivateRoute component={MyPage} path="/mypage" exact /> */}
+
+                    {/* <Route path="/signup" element={<SignUp />} /> */}
                     <Route
                         path="/oauth2/kakao/callback"
                         // path="/login/oauth2/code/kakao"
@@ -75,22 +98,105 @@ function App() {
                         path="/oauth2/google/callback"
                         element={<Googlecallback />}
                     />
-                    <Route path="/signup" element={<SignUp />} />
 
-                    <Route path="/" element={<SplashN />} />
-                    <Route path="/new/login" element={<LoginN />} />
-                    <Route path="/new/signup" element={<SignUpN />} />
-                    <Route path="/new/main" element={<MainN />} />
-                    <Route path="/new/mypage" element={<MypageN />} />
-                    <Route path="/new/community" element={<Community />} />
-                    <Route path="/new/statistic" element={<Statistic />} />
+                    <Route
+                        path="/"
+                        element={
+                            <PublicRoute
+                                restricted={false}
+                                authenticated={isLoginvalue}
+                                component={<SplashN />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/login"
+                        element={
+                            <PublicRoute
+                                restricted={true}
+                                authenticated={isLoginvalue}
+                                component={<LoginN />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/signup"
+                        element={
+                            <PublicRoute
+                                restricted={true}
+                                authenticated={isLoginvalue}
+                                component={<SignUpN />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/main"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<MainN />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/mypage"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<MypageN />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/community"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<Community />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/statistic"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<Statistic />}
+                            />
+                        }
+                    />
 
-                    <Route path="/new/community/best" element={<Best />} />
-                    <Route path="/new/community/recent" element={<Recent />} />
+                    <Route
+                        path="/new/community/best"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<Best />}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/new/community/recent"
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<Recent />}
+                            />
+                        }
+                    />
                     <Route
                         path="/new/community/gallery"
-                        element={<Gallery />}
+                        element={
+                            <PrivateRoute
+                                authenticated={isLoginvalue}
+                                component={<Gallery />}
+                            />
+                        }
                     />
+                    <Route
+                        path="/*"
+                        element={<Navigate to="/"></Navigate>}
+                    ></Route>
                 </Routes>
             </Suspense>
         </>
