@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { tokenURL } from '../../Apis/API';
+import { tokenURL, URL } from '../../Apis/API';
 import ModalLayout from '../../Layouts/ModalLayout';
 
 import { ReactComponent as SaveIcon } from '../../static/image/main/save_icon.svg';
@@ -13,11 +13,8 @@ const ModalFindPw = props => {
     const [findpw, setFindpw] = useState('');
 
     const testfindpw = async () => {
-        await URL.put(
-            `/user/pw?email=${findpw}`,
-            { email: findpw },
-            // { params: { email: findpw } },
-        ).then(res => {
+        const _ = '';
+        await URL.put(`/user/pw?email=${findpw}`, _).then(res => {
             console.log(res);
         });
     };
