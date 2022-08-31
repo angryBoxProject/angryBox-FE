@@ -9,7 +9,7 @@ const Kakaocallback = props => {
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
     useEffect(() => {
-        dispatch(kakaoLogin({ code, navigate }));
+        dispatch(kakaoLogin({ code, navigate, dispatch }));
     }, [dispatch]);
     return (
         <>

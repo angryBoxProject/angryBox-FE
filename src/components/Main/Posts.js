@@ -55,7 +55,9 @@ const Posts = props => {
                                 setModalPost(data.id);
                             }}
                         >
-                            {bankpostlist.length - 1 == key ? (
+                            {bankpostlist.length - 1 ||
+                            bankpostlist.length - 2 ||
+                            bankpostlist.length - 3 == key ? (
                                 <div ref={ref}>
                                     <ListIndex ref={ref}>
                                         NO. {data.id}

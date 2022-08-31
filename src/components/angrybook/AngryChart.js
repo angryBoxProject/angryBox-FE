@@ -12,7 +12,7 @@ const AngryChart = props => {
         error,
         isFetching,
         refetch,
-    } = useMonthchart(moment(props?.selectDay).format('YYYY-MM'));
+    } = useMonthchart(moment(props?.selectDay).format('YYYY-MM-DD'));
     console.log(chartlist);
     const renderByStatus = useCallback(() => {
         switch (status) {

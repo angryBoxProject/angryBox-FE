@@ -17,5 +17,5 @@ function deleteCookie(name) {
     const date = new Date('1000-01-01').toUTCString();
     document.cookie = `${name}=;  path=/;expires=${date}`;
 }
-
-export { getCookie, setCookie, deleteCookie };
+const isLogin = () => !!getCookie('token');
+export { getCookie, setCookie, deleteCookie, isLogin };
