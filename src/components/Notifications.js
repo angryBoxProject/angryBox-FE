@@ -64,6 +64,7 @@ const Notifications = props => {
             localStorage.removeItem('nickname');
             localStorage.removeItem('memberId');
             dispatch(removeLogout());
+            navigate('/', { replace: true });
         });
         navigate('/', { replace: true });
     };

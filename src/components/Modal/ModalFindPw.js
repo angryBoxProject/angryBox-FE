@@ -15,7 +15,9 @@ const ModalFindPw = props => {
     const testfindpw = async () => {
         const _ = '';
         await URL.put(`/user/pw?email=${findpw}`, _).then(res => {
+            window.alert('임시 비밀번호 발급 성공! 메일을 확인해주세요');
             console.log(res);
+            location.reload();
         });
     };
 
