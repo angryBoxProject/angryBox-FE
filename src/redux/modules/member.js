@@ -17,8 +17,12 @@ export const login = createAsyncThunk(
                 return response.data.data;
             });
         } catch (error) {
-            console.log(error);
-            window.alert(error.response.data.message);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
 
             return rejectWithValue(error.response);
         }
@@ -47,7 +51,12 @@ export const kakaoLogin = createAsyncThunk(
             });
         } catch (error) {
             console.log(error);
-            window.alert(error.response.data.message);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
 
             return rejectWithValue(error.response);
         }
@@ -88,8 +97,12 @@ export const signup = createAsyncThunk(
                 return response;
             });
         } catch (error) {
-            window.alert(error.response.data.message);
-
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
             console.log(error);
         }
     },
@@ -103,6 +116,12 @@ export const setLogin = createAsyncThunk('member/setLogin', async () => {
         });
     } catch (error) {
         console.log(error);
+        console.log(error.response.data);
+        if (error.response.data.message) {
+            window.alert(error.response.data.message);
+        } else if (error.response.data.error) {
+            window.alert(error.response.data.error.split(']')[0] + ']');
+        }
     }
 });
 

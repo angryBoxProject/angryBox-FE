@@ -19,7 +19,12 @@ const NewPw = props => {
             })
             .catch(error => {
                 console.log(error.response);
-                window.alert(error.response.data.error);
+                console.log(error.response.data);
+                if (error.response.data.message) {
+                    window.alert(error.response.data.message);
+                } else if (error.response.data.error) {
+                    window.alert(error.response.data.error.split(']')[0] + ']');
+                }
             });
     });
     const handleChagePw = () => {

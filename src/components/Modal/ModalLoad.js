@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { tokenURL } from '../../Apis/API';
 import moment from 'moment';
 import ModalPostDetail from './ModalPostDetail';
+import ModalMakeBank from './ModalMakeBank';
 
 const bankTableHead = ['No', '적금명', '세부 설명', '설계일'];
 const writingTableHead = ['No', '게시글명', '본문', '작성일'];
@@ -46,6 +47,7 @@ const ModalLoad = props => {
     const [loading, setLoading] = useState(false);
     const [lastId, setLastId] = useState(0);
     const [modalPost, setModalPost] = useState();
+    const [editBank, setEditBank] = useState();
     const [statuss, setStatus] = useState('view');
 
     const getList = useCallback(async () => {
@@ -74,6 +76,7 @@ const ModalLoad = props => {
         return moment(date).format('D');
     };
     // console.log(bankList, select, selectbankId);
+
     const renderByStatus = useCallback(() => {
         switch (status) {
             case 'loading':
@@ -212,14 +215,28 @@ const ModalLoad = props => {
                     )}
                 </TableBody>
             </Table>
-            <ActionButton
-                onClick={() => {
-                    if (contentType === 'bank') setModal(true);
-                    else close();
-                }}
-            >
-                {contentType === 'bank' ? '불러오기' : '닫기'}
-            </ActionButton>
+            <ButtonWarp>
+                {contentType === 'bank' && (
+                    <ActionButton
+                        onClick={() => {
+                            if (contentType === 'bank') setEditBank(true);
+                            else close();
+                        }}
+                        right={true}
+                    >
+                        {contentType === 'bank' ? '수정하기' : '닫기'}
+                    </ActionButton>
+                )}
+                <ActionButton
+                    onClick={() => {
+                        if (contentType === 'bank') setModal(true);
+                        else close();
+                    }}
+                    right={contentType === 'bank'}
+                >
+                    {contentType === 'bank' ? '불러오기' : '닫기'}
+                </ActionButton>
+            </ButtonWarp>
             {modal && (
                 <ModalLoad
                     title="게시글 목록"
@@ -235,10 +252,24 @@ const ModalLoad = props => {
                     title="분노 게시글"
                     modalType="form"
                     status={statuss}
+                    isnoti={false}
                     setStatus={setStatus}
                     close={() => {
                         setModalPost(null);
                     }}
+                />
+            )}
+            {editBank && (
+                <ModalMakeBank
+                    title="분노 적금 수정하기"
+                    modalType="form"
+                    close={() => {
+                        setEditBank(false);
+                    }}
+                    // editBank={bankList.coinBankList.filter(
+                    //     x => x?.coinBankId === selectbankId,
+                    // )}
+                    editBank={selectbankId}
                 />
             )}
         </ModalLayout>
@@ -346,6 +377,13 @@ const Content = styled.div`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 `;
+const ButtonWarp = styled.div`
+    width: 100%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
 
 const ActionButton = styled.button`
     width: 100%;
@@ -362,6 +400,7 @@ const ActionButton = styled.button`
     line-height: 26px;
     color: #813bf3;
     margin-top: 50px;
+    ${props => (props.right ? `margin-right:8px;` : ``)};
 `;
 
 const PostlistWrap = styled.div`

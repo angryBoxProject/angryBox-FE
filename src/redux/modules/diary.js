@@ -21,24 +21,6 @@ export const mainPageLoad = createAsyncThunk(
     },
 );
 
-// export const CreateDiary = createAsyncThunk(
-//     'diary/create',
-//     async ({ dispatch, formData }, { rejectWithValue }) => {
-//         try {
-//             return await tokenURL.post(`/diary`, formData)
-//             .then(response => {
-//                 console.log(response);
-//                 return response.data.data;
-//             });
-//         } catch (error) {
-//             console.log(error);
-//             window.alert(error.response.data.message);
-
-//             return rejectWithValue(error.response);
-//         }
-//     },
-// );
-
 export const CreateDiary = createAsyncThunk(
     'diary/create',
     async ({ dispatch, diaryDTO, isPublic, formData }, { rejectWithValue }) => {

@@ -8,10 +8,14 @@ import Noti from './Noti';
 import { getnotis } from '../redux/modules/notification';
 import useIsMount from '../hooks/useIsMount';
 import { ReactComponent as BellIcon } from '../static/image/header/nav_bell_icon_on.svg';
+import { ReactComponent as BellIcon2 } from '../static/image/header/nav_bell_icon_non.svg';
+
 import { tokenURL } from '../Apis/API';
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie } from '../shared/utils/Cookie';
 import { removeLogout } from '../redux/modules/member';
+import ModalPostDetail from './Modal/ModalPostDetail';
+import { useInView } from 'react-intersection-observer';
 
 const Notifications = props => {
     const { notilist, listloading, hasMorePosts } = useSelector(
@@ -24,42 +28,44 @@ const Notifications = props => {
 
     const profileList = useSelector(state => state.member.user_info);
     const isLogin = useSelector(state => state.member.isLogin);
+    const [modalPost, setModalPost] = useState();
+    const [statuss, setStatus] = useState('view');
 
-    useEffect(() => {
-        dispatch(getnotis(props.lastnotiId));
-    }, []);
-    // const {
-    //     status,
-    //     data: notilistquery,
-    //     error,
-    //     isFetching,
-    // } = useNotification(lastnotiId, hasMorePosts);
-    useEffect(() => {
-        function onScroll() {
-            const { clientHeight, scrollTop, scrollHeight } = scrollRef.current;
-            if (clientHeight + scrollTop > scrollHeight - 300) {
-                if (
-                    hasMorePosts &&
-                    notilist &&
-                    !listloading &&
-                    isMount.current
-                ) {
-                    dispatch(getnotis(props.lastnotiId));
-                }
-            }
-        }
-        scrollRef.current.addEventListener('scroll', onScroll);
-        return () => {
-            scrollRef.current.removeEventListener('scroll', onScroll);
+    //scroll
+    const [ref, inView] = useInView();
+    const [notisList, setNotisList] = useState([]);
+    const [lastId, setLastId] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const getList = useCallback(async () => {
+        setLoading(true);
+        const data = {
+            startDate: '',
+            endDate: '',
+            imageFilter: 2,
+            angry: [],
         };
-    }, [hasMorePosts, notilist, listloading, isMount]);
+        await tokenURL.get(`/notification/${lastId}/20`).then(res => {
+            const list = res.data.data.ntfList;
+            setNotisList(prevState => [...prevState, ...list]);
+        });
+        setLoading(false);
+    }, [lastId]);
 
-    console.log(notilist, 'notilists');
+    useEffect(() => {
+        getList();
+    }, [getList]);
+    useEffect(() => {
+        if (inView && !loading) {
+            setLastId(prevState => prevState + 10);
+        }
+    }, [inView, loading]);
+    useEffect(() => {
+        // dispatch(getnotis(props.lastnotiId));
+    }, []);
 
     const logOutHandle = async () => {
-        console.log('logout');
         await tokenURL.post(`auth/logout`).then(res => {
-            console.log(res);
             deleteCookie('token');
             localStorage.removeItem('nickname');
             localStorage.removeItem('memberId');
@@ -69,26 +75,19 @@ const Notifications = props => {
         navigate('/', { replace: true });
     };
 
-    // const renderByStatus = useCallback(() => {
-    //     switch (status) {
-    //         case 'loading':
-    //             return <div>loading</div>;
-    //         case 'error':
-    //             if (error instanceof Error) {
-    //                 return <span>Error: {error.message}</span>;
-    //             }
-    //             break;
-    //         default:
-    //             return <></>;
-    //     }
-    // }, [status, isFetching]);
     return (
         <div>
             <WrapOut onClick={() => props.setNotimodal(false)}></WrapOut>
-            <Wrap ref={scrollRef} onClick={() => props.setNotimodal(false)}>
+            {/* <Wrap ref={scrollRef} onClick={() => props.setNotimodal(false)}> */}
+            <Wrap>
                 <Util>
                     <UtilItem>
-                        <BellIcon />
+                        {/* <BellIcon /> */}
+                        {props?.notiCheck?.unCheckedNftCount === 0 ? (
+                            <BellIcon2 fill="#F6F6F6" />
+                        ) : (
+                            <BellIcon />
+                        )}
                     </UtilItem>
 
                     <HeaderIcon>
@@ -113,47 +112,42 @@ const Notifications = props => {
                 </Util>
                 <Container>
                     <Title>알림</Title>
-                    <NotiWrap>
-                        {notilist?.map((data, index) => (
-                            <Noti
-                                key={index}
-                                notiid={data.id}
-                                diaryId={data.diaryId}
-                                checked={data.checked}
-                                content={data.content}
-                                dateTime={data.dateTime}
-                                receiveMemberId={data.receiveMemberId}
-                                sendMemberId={data.sendMemberId}
-                            />
-                        ))}
-                    </NotiWrap>
+                    {notisList && (
+                        <NotiWrap>
+                            {notisList?.map((data, index) => (
+                                <Noti
+                                    ref={
+                                        notisList?.length - 1 == index
+                                            ? ref
+                                            : null
+                                    }
+                                    key={index}
+                                    notiid={data.id}
+                                    diaryId={data.diaryId}
+                                    checked={data.checked}
+                                    content={data.content}
+                                    dateTime={data.dateTime}
+                                    receiveMemberId={data.receiveMemberId}
+                                    sendMemberId={data.sendMemberId}
+                                    setModalPost={setModalPost}
+                                />
+                            ))}
+                        </NotiWrap>
+                    )}
                 </Container>
-                {/* <Section
-    onClick={() => {
-        props.setNotimodal(false);
-    }}
->
-    <Modaltap ref={scrollRef}>
-        <Notiheader>
-            <BsFillBellFill size="20px" />
-            <div>프로필 url</div>
-        </Notiheader>
-        <MainModal>알림</MainModal>
-        
-        {notilist?.map((data, index) => (
-            <Noti
-                key={index}
-                notiid={data.id}
-                diaryId={data.diaryId}
-                checked={data.checked}
-                content={data.content}
-                dateTime={data.dateTime}
-                receiveMemberId={data.receiveMemberId}
-                sendMemberId={data.sendMemberId}
-            />
-        ))}
-    </Modaltap>
-</Section> */}
+                {modalPost && (
+                    <ModalPostDetail
+                        id={modalPost}
+                        title="분노 게시글"
+                        modalType="form"
+                        status={statuss}
+                        setStatus={setStatus}
+                        isnoti={true}
+                        close={() => {
+                            setModalPost(null);
+                        }}
+                    />
+                )}
             </Wrap>
         </div>
     );

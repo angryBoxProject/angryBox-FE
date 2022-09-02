@@ -126,6 +126,7 @@ const Statistic = props => {
                         title="분노 게시글"
                         modalType="form"
                         status={statuss}
+                        isnoti={false}
                         setStatus={setStatus}
                         close={() => {
                             setModalPost(null);

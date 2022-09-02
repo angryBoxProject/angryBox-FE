@@ -254,6 +254,7 @@ const Community = props => {
                     title="대나무숲 게시글"
                     modalType="form"
                     status={status}
+                    isnoti={false}
                     setStatus={setStatus}
                     close={() => {
                         setModalPost(null);
