@@ -15,6 +15,9 @@ import { ReactComponent as StatisticIconOn } from '../static/image/header/nav_st
 import { ReactComponent as MypageIcon } from '../static/image/header/nav_mypage_icon.svg';
 import { ReactComponent as MypageIconOn } from '../static/image/header/nav_mypage_icon_on.svg';
 import { ReactComponent as BellIcon } from '../static/image/header/nav_bell_icon.svg';
+import { ReactComponent as BellIcon2 } from '../static/image/header/nav_bell_icon_non.svg';
+import { tokenURL } from '../Apis/API';
+import { useNotiCheck } from '../hooks/useNotiCheck';
 const Header = props => {
     const [notimmodal, setNotimodal] = useState(false);
     const dispatch = useDispatch();
@@ -22,6 +25,20 @@ const Header = props => {
     const lastnotiId = useSelector(state => state.noti.lastnotiId);
     const profileList = useSelector(state => state.member.user_info);
     const isLogin = localStorage.getItem('nickname') ? true : false;
+    const {
+        status,
+        data: notiCheck,
+        error,
+        isFetching,
+        refetch,
+    } = useNotiCheck();
+    // const getNotiCount = async () => {
+    //     const { data } = await tokenURL.get(`/notification/un-checked`);
+    //     if (data) setNotiCount(data.data);
+    // };
+    useEffect(() => {
+        refetch();
+    }, []);
 
     // console.log(profileList);
     // console.log(process.env.REACT_APP_IP + profileList.file);
@@ -82,7 +99,11 @@ const Header = props => {
 
                 <Util onClick={() => setNotimodal(true)}>
                     <UtilItem>
-                        <BellIcon />
+                        {notiCheck?.unCheckedNftCount === 0 ? (
+                            <BellIcon2 fill="#737373" />
+                        ) : (
+                            <BellIcon />
+                        )}
                     </UtilItem>
 
                     <HeaderIcon>
@@ -107,6 +128,7 @@ const Header = props => {
                     notimmodal={notimmodal}
                     setNotimodal={setNotimodal}
                     lastnotiId={lastnotiId}
+                    notiCheck={notiCheck}
                 />
             )}
         </>

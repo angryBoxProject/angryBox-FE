@@ -208,6 +208,7 @@ const Recent = props => {
                     id={modalPost}
                     title="대나무숲 게시글"
                     modalType="form"
+                    isnoti={false}
                     status={status}
                     setStatus={setStatus}
                     close={() => {

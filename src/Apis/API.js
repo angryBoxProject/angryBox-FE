@@ -55,18 +55,23 @@ tokenURL.interceptors.response.use(
 );
 
 const refreshaxios = async _ => {
-    const response = await axios.post(
-        `${process.env.REACT_APP_IP}/auth/refresh`,
-        _,
-        {
+    console.log('test');
+    const response = await axios
+        .post(`${process.env.REACT_APP_IP}/auth/refresh`, _, {
             withCredentials: true,
             headers: {
                 Authorization: getCookie('token'),
             },
-        },
-    );
+        })
+        .then(res => {
+            console.log('test', res);
+        })
+        .catch(error => {
+            console.log('test E', error);
+        });
     console.log('response:::', response);
     setCookie('token', `Bearer ${response.data.data.access_token}`);
+    console.log('test');
 
     return response;
 };

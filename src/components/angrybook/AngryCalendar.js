@@ -20,7 +20,7 @@ const AngryCalendar = props => {
         isFetching,
         refetch,
     } = useMonthBankCalender(selectMonth);
-    // console.log(Object.keys(Markerlist));
+    console.log(mark, 'mark');
     const ismount = useIsMount();
     useEffect(() => {
         if (status === 'success') {
@@ -39,7 +39,6 @@ const AngryCalendar = props => {
     useEffect(() => {
         refetch();
     }, [selectMonth]);
-    // setSelectMonth(moment(date).format('YYYY-MM'));
 
     return (
         <>

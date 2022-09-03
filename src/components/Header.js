@@ -15,8 +15,6 @@ const Header = props => {
     const lastnotiId = useSelector(state => state.noti.lastnotiId);
     const profileList = useSelector(state => state.member.user_info);
     const isLogin = useSelector(state => state.member.isLogin);
-    // console.log(profileList);
-    // console.log(process.env.REACT_APP_IP + profileList.file);
 
     return (
         <>
@@ -45,6 +43,7 @@ const Header = props => {
                     </ProfileCircle> */}
                 </div>
             </div>
+
             {notimmodal && (
                 <Notifications
                     notimmodal={notimmodal}

@@ -27,7 +27,6 @@ const Posts = props => {
         await tokenURL
             .get(`/diaries/coinBank/${data.coinBankId}/${data.lastDiaryId}/15`)
             .then(res => {
-                console.log(res);
                 const list = res.data.data.diaryListInCoinBank;
                 setBankpostlist(prevState => [...prevState, ...list]);
             });
@@ -120,6 +119,7 @@ const Posts = props => {
                     modalType="form"
                     status={status}
                     setStatus={setStatus}
+                    isnoti={false}
                     close={() => {
                         setModalPost(null);
                     }}

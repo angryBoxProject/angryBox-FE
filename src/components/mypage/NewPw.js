@@ -13,11 +13,18 @@ const NewPw = props => {
         tokenURL
             .put(`users`, Data)
             .then(res => {
-                window.alert('변경성공');
+                window.alert('비밀번호 변경 성공!');
+                console.log(res);
+                location.reload();
             })
             .catch(error => {
                 console.log(error.response);
-                window.alert(error.response.data.error);
+                console.log(error.response.data);
+                if (error.response.data.message) {
+                    window.alert(error.response.data.message);
+                } else if (error.response.data.error) {
+                    window.alert(error.response.data.error.split(']')[0] + ']');
+                }
             });
     });
     const handleChagePw = () => {
@@ -71,7 +78,7 @@ const NewPw = props => {
 const Warp = styled.div`
     height: 603px;
     width: 100%;
-    background-color: #ECECEC;
+    background-color: #ececec;
     padding: 39px 48px 33.25px;
     margin-top: 50px;
 `;
@@ -82,7 +89,7 @@ const TitleArea = styled.div`
     padding-bottom: 33px;
     border-bottom: solid 1px #737373;
     margin-bottom: 50.5px;
-`
+`;
 const Subtitle = styled.div`
     font-weight: 700;
     font-size: 23px;
@@ -92,12 +99,11 @@ const Subtitle = styled.div`
 const EditButton = styled.button`
     width: 128px;
     height: 44px;
-    background: #813BF3;
+    background: #813bf3;
     border-radius: 4px;
-    color: #F6F6F6;
-`
-const Table = styled.div`
+    color: #f6f6f6;
 `;
+const Table = styled.div``;
 const Text = styled.div`
     font-weight: 500;
     font-size: 20px;
@@ -108,7 +114,7 @@ const Text = styled.div`
 const Inputtable = styled.input`
     width: 100%;
     height: 47px;
-    background: #ECECEC;
+    background: #ececec;
     border: solid #737373 1px;
     border-radius: 4px;
     padding: 15px 19px;
