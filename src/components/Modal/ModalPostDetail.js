@@ -14,9 +14,14 @@ import { tokenURL } from '../../Apis/API';
 import ModalMakePost from './ModalMakePost';
 
 const ModalPostDetail = props => {
-    const { id, close, title, modalType, status, setStatus } = props;
+    const { id, close, title, modalType, status, setStatus, isnoti } = props;
 
-    const { data: detailList, error, isFetching, refetch } = usePostDetail(id);
+    const {
+        data: detailList,
+        error,
+        isFetching,
+        refetch,
+    } = usePostDetail(id, isnoti);
 
     const [name, setName] = useState();
     const [memo, setMemo] = useState();

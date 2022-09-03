@@ -4,12 +4,12 @@ import { tokenURL } from '../../Apis/API';
 export const getnotis = createAsyncThunk(
     'getnotis',
     async (lastNotiId, { rejectWithValue }) => {
-        console.log('lastNotiId:::', lastNotiId);
+        // console.log('lastNotiId:::', lastNotiId);
         try {
             return await tokenURL
                 .get(`/notification/${lastNotiId}/10`)
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     return res.data.data.ntfList;
                 });
         } catch (error) {

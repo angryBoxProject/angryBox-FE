@@ -114,7 +114,7 @@ const NavLogoBox = styled.div`
     font-weight: 700;
     font-size: 24px;
     line-height: 25px;
-    color: #DA463C;
+    color: #da463c;
 `;
 
 const IconWrapBox = styled.div`

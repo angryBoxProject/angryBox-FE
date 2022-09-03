@@ -69,6 +69,23 @@ export const setMakeBank = createAsyncThunk(
         }
     },
 );
+export const setEditBank = createAsyncThunk(
+    'setEditBank',
+    async ({ data, navigate }, { rejectWithValue }) => {
+        console.log('setEditBank', data);
+        try {
+            return await tokenURL.put(`/bank`, data).then(res => {
+                navigate('/new/statistic', { replace: true });
+                location.reload();
+                console.log(res);
+            });
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+setEditBank;
 export const expiredBank = createAsyncThunk(
     'bank/delete',
     async ({ data, navigate }, { rejectWithValue }) => {
@@ -208,6 +225,7 @@ export const bankSlice = createSlice({
                 // state.bankpostlist = action.payload;
             })
             .addCase(setMakeBank.fulfilled, (state, action) => {})
+            .addCase(setEditBank.fulfilled, (state, action) => {})
             .addCase(expiredBank.fulfilled, (state, action) => {})
             .addCase(setMakePost.fulfilled, (state, action) => {})
             .addCase(getPost.fulfilled, (state, action) => {

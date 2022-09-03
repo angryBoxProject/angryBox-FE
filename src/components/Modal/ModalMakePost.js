@@ -96,7 +96,6 @@ const ModalMakePost = props => {
 
         const readAndPreview = file => {
             const reader = new FileReader();
-            console.log(file, 'file');
             reader.onload = () => {
                 const data = {
                     fileLink: reader.result,
@@ -120,19 +119,6 @@ const ModalMakePost = props => {
         }
     };
 
-    console.log(editPostlist, 'editPostlist');
-    console.log(
-        'name::',
-        editPostlist?.diary?.title,
-        ' Memo::',
-        editPostlist?.diary?.content,
-        ' Image::',
-        editPostlist?.fileList,
-        ' 분노수치::',
-        editPostlist?.diary?.angryPhaseId,
-        ' ::공개 여부',
-        editPostlist?.diary?.public,
-    );
     useEffect(() => {
         if (editPostlist) {
             const angrystate = ['', '극소노', '소노', '중노', '대노', '극대노'];
@@ -146,11 +132,8 @@ const ModalMakePost = props => {
             editPostlist?.fileList.map(item => {
                 setRemovedFileId(prev => [...prev, item?.fileId]);
             });
-
-            console.log('test');
         }
     }, [editPostlist]);
-    console.log(angryPhase, image, 'angryPhase,image');
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>
@@ -188,33 +171,30 @@ const ModalMakePost = props => {
                 />
             </TitleArea>
             <ContentsArea>
-                {image &&
-                    image?.length !== 0 &&
-                    (console.log('asdf', image),
-                    (
-                        <UploadImage>
-                            {editPostlist ? (
-                                <div>
-                                    {isflag ? (
-                                        <SwipeableTextMobileStepper
-                                            images={imageUrl}
-                                            ismake={true}
-                                        />
-                                    ) : (
-                                        <SwipeableTextMobileStepper
-                                            images={image}
-                                            ismake={false}
-                                        />
-                                    )}
-                                </div>
-                            ) : (
-                                <SwipeableTextMobileStepper
-                                    images={imageUrl}
-                                    ismake={true}
-                                />
-                            )}
-                        </UploadImage>
-                    ))}
+                {image && image?.length !== 0 && (
+                    <UploadImage>
+                        {editPostlist ? (
+                            <div>
+                                {isflag ? (
+                                    <SwipeableTextMobileStepper
+                                        images={imageUrl}
+                                        ismake={true}
+                                    />
+                                ) : (
+                                    <SwipeableTextMobileStepper
+                                        images={image}
+                                        ismake={false}
+                                    />
+                                )}
+                            </div>
+                        ) : (
+                            <SwipeableTextMobileStepper
+                                images={imageUrl}
+                                ismake={true}
+                            />
+                        )}
+                    </UploadImage>
+                )}
                 <Contents
                     placeholder={
                         '본문 내용을 입력하세요.\n타인을 비방하거나 욕설이 포함된 게시글의 경우 게시판 이용에 제한이 있을 수 있습니다.'

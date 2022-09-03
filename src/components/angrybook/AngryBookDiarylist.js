@@ -12,7 +12,7 @@ const AngryBookDiarylist = props => {
     const dispatch = useDispatch();
     const [modalPost, setModalPost] = useState();
     const selectDay = useSelector(state => state.main.calendarDay);
-    console.log(selectDay);
+    // console.log(selectDay);
     const data = {
         date: selectDay,
         lastDiaryId: 0,
@@ -38,7 +38,7 @@ const AngryBookDiarylist = props => {
     const daydate = date => {
         return moment(date).format('D');
     };
-    console.log(bankdiarylist);
+    // console.log(bankdiarylist);
 
     const renderByStatus = useCallback(() => {
         switch (status) {

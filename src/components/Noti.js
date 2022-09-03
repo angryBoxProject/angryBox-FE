@@ -13,6 +13,7 @@ const Noti = props => {
         content,
         checked,
         dateTime,
+        setModalPost,
     } = props;
     const displayCreatedAt = createdAt => {
         let startTime = new Date(createdAt);
@@ -30,7 +31,12 @@ const Noti = props => {
 
     return (
         <>
-            <Warp id={notiid}>
+            <Warp
+                id={notiid}
+                onClick={() => {
+                    props.setModalPost(notiid);
+                }}
+            >
                 <FlexDiv justify="space-between" align="center">
                     <Subtitle>쓰담받음</Subtitle>
                     <SubtitleDate>{displayCreatedAt(dateTime)}</SubtitleDate>
@@ -40,27 +46,26 @@ const Noti = props => {
         </>
     );
 };
-const Warp = styled.div`
-`;
+const Warp = styled.div``;
 const Subtitle = styled.div`
-    background: #F6F6F6;
+    background: #f6f6f6;
     padding: 3px 8px;
     font-weight: 500;
     font-size: 12px;
     line-height: 17px;
-    color: #813BF3;
+    color: #813bf3;
 `;
 const SubtitleDate = styled.div`
     font-weight: 500;
     font-size: 10px;
     line-height: 14px;
-    color: #FFFFFF;
+    color: #ffffff;
 `;
 const ContentStyle = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 17px;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 13px 0 35px;
     text-overflow: ellipsis;
     display: -webkit-box;

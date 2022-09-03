@@ -1,56 +1,52 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FlexDiv, ModalInput, Select } from '../../elements';
-import theme from '../../Styles/theme';
-import { ReactComponent as CloseButton } from '../../static/image/CloseButton.svg';
-import Button from '../../elements/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import useIsMount from '../../hooks/useIsMount';
-import { setMakeBank } from '../../redux/modules/bank';
+import { Select } from '../../elements';
+import { useDispatch } from 'react-redux';
+import { setEditBank, setMakeBank } from '../../redux/modules/bank';
 import { useNavigate } from 'react-router-dom';
 
 import ModalLayout from '../../Layouts/ModalLayout';
 
 const ModalMakeBank = props => {
-    const {
-        open,
-        close,
-        modalType,
-        width,
-        height,
-        title,
-        subtitle,
-        bankId,
-        contents,
-        _onChange,
-        listclick,
-    } = props;
+    const { open, close, modalType, title, editBank } = props;
 
-    const { lastDiaryId, bankpostlist, hasMoreBankPosts, Postlistloading } =
-        useSelector(state => state.bank);
+    console.log(editBank);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const scrollRef = useRef();
-    const isMount = useIsMount();
     const [name, setName] = useState();
     const [angrylimit, setAngrylimit] = useState(100);
     const [reward, setReward] = useState();
     const [memo, setMemo] = useState();
 
     const handleMakeBank = () => {
-        const data = {
-            name: name,
-            angryLimit: parseInt(angrylimit),
-            reward: reward,
-            memo: memo,
-        };
-        console.log(data);
-        // console.log(bankId, 'bankId');
+        if (editBank) {
+            const data = {
+                id: editBank,
+                name: name,
+                angryLimit: parseInt(angrylimit),
+                reward: reward,
+                memo: memo,
+            };
 
-        //    dispatch(expiredBank(bankId)).then(dis)
-        dispatch(setMakeBank({ data, navigate }));
-        //    )
+            console.log(data);
+            dispatch(setEditBank({ data, navigate }));
+        } else {
+            const data = {
+                name: name,
+                angryLimit: parseInt(angrylimit),
+                reward: reward,
+                memo: memo,
+            };
+            console.log(data);
+
+            dispatch(setMakeBank({ data, navigate }));
+        }
     };
+
+    useEffect(() => {
+        // if(editBank)
+        //적금수정 초기값 받아올때 사용해야함
+    });
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>
@@ -92,122 +88,10 @@ const ModalMakeBank = props => {
             </ContentsArea>
             <ButtonArea>
                 <ModalButtonBlack onClick={close}>취소</ModalButtonBlack>
-                <ModalButton onClick={handleMakeBank}>만들기</ModalButton>
+                <ModalButton onClick={handleMakeBank}>
+                    {editBank ? '수정하기' : '만들기'}
+                </ModalButton>
             </ButtonArea>
-            {/* <div className={open ? 'openModal modal' : 'modal'}>
-                {open ? (
-                    <Section>
-                        <MainModal width={width} height={height}>
-                            <ModalPopup>
-                                <FlexDiv justify="space-between" padding="10px">
-                                    <FlexDiv>
-                                        <ModalTitle>{title}</ModalTitle>
-                                        <ModalSubTitle>
-                                            {subtitle}
-                                        </ModalSubTitle>
-                                    </FlexDiv>
-                                    <CloseButton onClick={close} />
-                                </FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                >
-                                    <div
-                                        style={{
-                                            width: '10%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <ModalTextTitle>적금명</ModalTextTitle>
-                                    </div>
-                                    <FlexDiv width="90%">
-                                        <ModalInput
-                                            width="70%"
-                                            placeholder="적금명을 입력하세요."
-                                            _onChange={e => {
-                                                setName(e.target.value);
-                                            }}
-                                        />
-                                        <ModalTextTitle width="10%">
-                                            한계치
-                                        </ModalTextTitle>
-                                        <ModalInput
-                                            width="20%"
-                                            placeholder="직접 입력"
-                                            _onChange={e => {
-                                                setAngrylimit(e.target.value);
-                                            }}
-                                        />
-                                    </FlexDiv>
-                                </FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                >
-                                    <div
-                                        style={{
-                                            width: '10%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <ModalTextTitle>보상</ModalTextTitle>
-                                    </div>
-                                    <FlexDiv width="90%">
-                                        <ModalInput
-                                            width="100%"
-                                            placeholder="적금을 깰 때의 보상을 입력하세요. ex) 치킨데이"
-                                            _onChange={e => {
-                                                setReward(e.target.value);
-                                            }}
-                                        />
-                                    </FlexDiv>
-                                </FlexDiv>
-                                <FlexDiv
-                                    justify="flex-start"
-                                    padding="10px"
-                                    width="100%"
-                                >
-                                    <div
-                                        style={{
-                                            width: '10%',
-                                            display: 'flex',
-                                            alignItems: 'flex-start',
-                                        }}
-                                    >
-                                        <ModalTextTitle>메모</ModalTextTitle>
-                                    </div>
-                                    <FlexDiv width="90%">
-                                        <ModalInput
-                                            multiLine={true}
-                                            width="100%"
-                                            placeholder="메모 내용을 입력하세요."
-                                            _onChange={e => {
-                                                setMemo(e.target.value);
-                                            }}
-                                        />
-                                    </FlexDiv>
-                                </FlexDiv>
-
-                                <ModalButton>
-                                    <Button margin="10px" onClick={close}>
-                                        닫기
-                                    </Button>
-                                    <Button
-                                        margin="10px"
-                                        onClick={handleMakeBank}
-                                    >
-                                        만들기
-                                    </Button>
-                                </ModalButton>
-                            </ModalPopup>
-                        </MainModal>
-                    </Section>
-                ) : null}
-            </div> */}
         </ModalLayout>
     );
 };
