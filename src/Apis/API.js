@@ -81,6 +81,8 @@ const refreshaxios = async _ => {
             console.log('test E', error);
             console.log('토큰 만료 테스트3');
             deleteCookie('token');
+            localStorage.removeItem('nickname');
+            localStorage.removeItem('memberId');
             window.alert(
                 '로그인 정보가 만료되었습니다 재 로그인이 필요합니다.',
             );
