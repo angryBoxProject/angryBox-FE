@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie, setCookie } from '../shared/utils/Cookie';
+import { deleteCookie, getCookie, setCookie } from '../shared/utils/Cookie';
 
 const URL = axios.create({
     baseURL: process.env.REACT_APP_IP,
@@ -44,11 +44,16 @@ tokenURL.interceptors.response.use(
             response.data.message === '만료된 토큰' &&
             !originalRequest._retry
         ) {
-            console.log('토큰만료');
-            const { data } = await refreshaxios();
+            console.log(localStorage.getItem('flag'));
+            if (!localStorage.getItem('flag')) {
+                localStorage.setItem('flag', true);
+                console.log('토큰만료');
+                console.log('토큰 만료 테스트1');
+                const { data } = await refreshaxios();
 
-            originalRequest.headers.authorization = getCookie('token');
-            return axios(originalRequest);
+                originalRequest.headers.authorization = getCookie('token');
+                return axios(originalRequest);
+            }
         }
         return Promise.reject(error);
     },
@@ -65,12 +70,27 @@ const refreshaxios = async _ => {
         })
         .then(res => {
             console.log('test', res);
+            console.log('토큰 만료 테스트2');
+            console.log('token', res.data.data.access_token);
+            setCookie('token', res.data.data.access_token);
+            localStorage.removeItem('flag');
+
+            return res.data.data.access_token;
         })
         .catch(error => {
             console.log('test E', error);
+            console.log('토큰 만료 테스트3');
+            deleteCookie('token');
+            window.alert(
+                '로그인 정보가 만료되었습니다 재 로그인이 필요합니다.',
+            );
+            localStorage.removeItem('flag');
+
+            window.location.assign('/new/login');
         });
     console.log('response:::', response);
     setCookie('token', `Bearer ${response.data.data.access_token}`);
+    console.log('test');
     console.log('test');
 
     return response;
