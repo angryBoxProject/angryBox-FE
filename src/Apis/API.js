@@ -91,6 +91,7 @@ const refreshaxios = async _ => {
     console.log('response:::', response);
     setCookie('token', `Bearer ${response.data.data.access_token}`);
     console.log('test');
+    console.log('test');
 
     return response;
 };
