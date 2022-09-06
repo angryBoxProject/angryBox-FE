@@ -47,7 +47,7 @@ const Main = () => {
         : false;
     const memberNick = localStorage.getItem('nickname');
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
-    console.log(banklist, 'isbreakbank');
+    console.log(banklist, 'isbreakbanktest');
     const openModal = () => {
         setOpen(true);
     };
