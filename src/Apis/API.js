@@ -88,7 +88,8 @@ const refreshaxios = async _ => {
             );
             localStorage.removeItem('flag');
 
-            window.location.assign('/new/login');
+            console.log('TEST:::로그인페이지로 보내야하나 로그체크로 안보냄');
+            // window.location.assign('/new/login');
         });
     console.log('response:::', response);
     setCookie('token', `Bearer ${response.data.data.access_token}`);
