@@ -317,7 +317,7 @@ const Main = () => {
                                 <UtilLink>
                                     <ListIconLeft />
                                     <UtilLinkText>
-                                        이번달은 진짜로!
+                                        {banklist?.name}
                                     </UtilLinkText>
                                     <ListIconRight />
                                 </UtilLink>
