@@ -10,7 +10,7 @@ import ModalLayout from '../../Layouts/ModalLayout';
 const ModalMakeBank = props => {
     const { open, close, modalType, title, editBank } = props;
 
-    console.log(editBank);
+    console.log(editBank ?? 'test');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [name, setName] = useState();
@@ -21,7 +21,7 @@ const ModalMakeBank = props => {
     const handleMakeBank = () => {
         if (editBank) {
             const data = {
-                id: editBank,
+                id: editBank?.id,
                 name: name,
                 angryLimit: parseInt(angrylimit),
                 reward: reward,
@@ -44,9 +44,14 @@ const ModalMakeBank = props => {
     };
 
     useEffect(() => {
-        // if(editBank)
+        if (editBank) {
+            setName(editBank?.name);
+            setAngrylimit(editBank?.angryLimit);
+            setReward(editBank?.reward);
+            setMemo(editBank?.memo);
+        }
         //적금수정 초기값 받아올때 사용해야함
-    });
+    }, [editBank]);
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>
@@ -57,6 +62,7 @@ const ModalMakeBank = props => {
                     onChange={e => {
                         setName(e.target.value);
                     }}
+                    value={name}
                 />
                 <LabelTitle>한계치</LabelTitle>
                 <Select
@@ -64,6 +70,7 @@ const ModalMakeBank = props => {
                     onChange={e => {
                         setAngrylimit(e.target.value);
                     }}
+                    value={angrylimit}
                 ></Select>
             </TitleArea>
             <Compensation>
@@ -75,6 +82,7 @@ const ModalMakeBank = props => {
                     onChange={e => {
                         setReward(e.target.value);
                     }}
+                    value={reward}
                 />
             </Compensation>
             <ContentsArea>
@@ -84,6 +92,7 @@ const ModalMakeBank = props => {
                     onChange={e => {
                         setMemo(e.target.value);
                     }}
+                    value={memo}
                 />
             </ContentsArea>
             <ButtonArea>

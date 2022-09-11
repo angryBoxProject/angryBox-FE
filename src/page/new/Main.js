@@ -47,7 +47,7 @@ const Main = () => {
         : false;
     const memberNick = localStorage.getItem('nickname');
     const mainlastDiaryId = useSelector(state => state.main.lastDiaryId);
-    console.log(banklist, 'isbreakbank');
+    console.log(banklist, 'isbreakbanktest');
     const openModal = () => {
         setOpen(true);
     };
@@ -317,7 +317,7 @@ const Main = () => {
                                 <UtilLink>
                                     <ListIconLeft />
                                     <UtilLinkText>
-                                        이번달은 진짜로!
+                                        {banklist?.name}
                                     </UtilLinkText>
                                     <ListIconRight />
                                 </UtilLink>

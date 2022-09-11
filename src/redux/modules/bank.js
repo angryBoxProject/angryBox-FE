@@ -49,6 +49,7 @@ export const getBankPostList = createAsyncThunk(
                 });
         } catch (error) {
             console.log(error);
+
             return rejectWithValue(error.response.data);
         }
     },
@@ -65,6 +66,13 @@ export const setMakeBank = createAsyncThunk(
             });
         } catch (error) {
             console.log(error);
+            console.log(error);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
             return rejectWithValue(error.response.data);
         }
     },
@@ -81,6 +89,13 @@ export const setEditBank = createAsyncThunk(
             });
         } catch (error) {
             console.log(error);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
+
             return rejectWithValue(error.response.data);
         }
     },
@@ -99,6 +114,12 @@ export const expiredBank = createAsyncThunk(
                 });
         } catch (error) {
             console.log(error);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
             return rejectWithValue(error.response);
         }
     },
@@ -130,6 +151,12 @@ export const setMakePost = createAsyncThunk(
             });
         } catch (error) {
             console.log(error);
+            console.log(error.response.data);
+            if (error.response.data.message) {
+                window.alert(error.response.data.message);
+            } else if (error.response.data.error) {
+                window.alert(error.response.data.error.split(']')[0] + ']');
+            }
             return rejectWithValue(error.response.data);
         }
     },

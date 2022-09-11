@@ -8,6 +8,7 @@ import { tokenURL } from '../../Apis/API';
 import moment from 'moment';
 import ModalPostDetail from './ModalPostDetail';
 import ModalMakeBank from './ModalMakeBank';
+import { useBank } from '../../hooks/useBank';
 
 const bankTableHead = ['No', '적금명', '세부 설명', '설계일'];
 const writingTableHead = ['No', '게시글명', '본문', '작성일'];
@@ -37,6 +38,8 @@ const ModalLoad = props => {
     const { title, modalType, contentType, close, bankId } = props;
 
     const { status, data: bankList, error, isFetching, refetch } = useBanks();
+    const { status2, data: mainbankList, error2 } = useBank();
+
     const [modal, setModal] = useState(false);
 
     const [select, setSelect] = useState(false);
@@ -218,6 +221,7 @@ const ModalLoad = props => {
             <ButtonWarp>
                 {contentType === 'bank' && (
                     <ActionButton
+                        disabled={!(selectbankId === mainbankList?.id)}
                         onClick={() => {
                             if (contentType === 'bank') setEditBank(true);
                             else close();
@@ -269,7 +273,8 @@ const ModalLoad = props => {
                     // editBank={bankList.coinBankList.filter(
                     //     x => x?.coinBankId === selectbankId,
                     // )}
-                    editBank={selectbankId}
+
+                    editBank={mainbankList}
                 />
             )}
         </ModalLayout>
@@ -389,7 +394,7 @@ const ActionButton = styled.button`
     width: 100%;
     max-width: 440px;
     height: 44px;
-    border: solid 3px #813bf3;
+    border: solid 3px #8c8c8c;
     border-radius: 22px;
     display: flex;
     align-items: center;
@@ -398,9 +403,13 @@ const ActionButton = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
-    color: #813bf3;
+    color: #8c8c8c;
     margin-top: 50px;
     ${props => (props.right ? `margin-right:8px;` : ``)};
+    ${props =>
+        props.disabled
+            ? `    border: solid 3px #8c8c8c;    color: #8c8c8c;`
+            : `    border: solid 3px #813bf3;color: #813bf3;`}
 `;
 
 const PostlistWrap = styled.div`
