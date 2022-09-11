@@ -7,7 +7,7 @@ function getCookie(name) {
     }
 }
 
-function setCookie(name, value, exp = 5) {
+function setCookie(name, value, exp = 20) {
     const date = new Date();
     date.setTime(date.getTime() + exp * 24 * 60 * 60 * 100);
     document.cookie = `${name}=${value}; path=/; expires=${date.toUTCString}`;

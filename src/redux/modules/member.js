@@ -97,13 +97,13 @@ export const signup = createAsyncThunk(
                 return response;
             });
         } catch (error) {
-            console.log(error.response.data);
-            if (error.response.data.message) {
-                window.alert(error.response.data.message);
-            } else if (error.response.data.error) {
-                window.alert(error.response.data.error.split(']')[0] + ']');
-            }
-            console.log(error);
+            // console.log(error.response.data);
+            // if (error.response.data.message) {
+            //     window.alert(error.response.data.message);
+            // } else if (error.response.data.error) {
+            //     window.alert(error.response.data.error.split(']')[0] + ']');
+            // }
+            // console.log(error);
         }
     },
 );

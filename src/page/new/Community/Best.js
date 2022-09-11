@@ -15,6 +15,7 @@ import { getTopDiary } from '../../../redux/modules/bamboo';
 import { useInView } from 'react-intersection-observer';
 import { tokenURL } from '../../../Apis/API';
 import ModalPostDetail from '../../../components/Modal/ModalPostDetail';
+import ModalFilter from '../../../components/Modal/ModalFilter';
 
 const bestsList = [
     {
@@ -76,6 +77,7 @@ const Best = props => {
     const [status, setStatus] = useState('view');
 
     const [modalPost, setModalPost] = useState();
+    const [modalFilter, setModalFilter] = useState();
 
     const isMount = useIsMount();
 
@@ -110,6 +112,13 @@ const Best = props => {
     }, [inView, loading]);
     return (
         <MainLayout nav={true}>
+            {/* <button
+                onClick={() => {
+                    setModalFilter(true);
+                }}
+            >
+                test
+            </button> */}
             <Contents header={true}>
                 <TablelistWrap>
                     <TablelistBest>
@@ -119,24 +128,35 @@ const Best = props => {
                                 <Text>실시간 Best</Text>
                             </Title>
                             {/*필터 추후 추가*/}
-                            {/* <FilterWrap onClick={() => setSelect(!select)}>
+                            <FilterWrap onClick={() => setSelect(!select)}>
                                 {option}
 
-                                <Arrow style={{transform: select ? "rotate(180deg) translate(0, 50%)" : ""}}>
+                                <Arrow
+                                    style={{
+                                        transform: select
+                                            ? 'rotate(180deg) translate(0, 50%)'
+                                            : '',
+                                    }}
+                                >
                                     <FilterArrow />
                                 </Arrow>
-                                {select &&
+                                {select && (
                                     <OptionWarp>
                                         {optionItems.map((option, key) => {
-                                            return(
-                                                <OptionItem key={key} onClick={() => setOption(option)}>
+                                            return (
+                                                <OptionItem
+                                                    key={key}
+                                                    onClick={() =>
+                                                        setOption(option)
+                                                    }
+                                                >
                                                     {option}
                                                 </OptionItem>
-                                            )
+                                            );
                                         })}
                                     </OptionWarp>
-                                }
-                            </FilterWrap> */}
+                                )}
+                            </FilterWrap>
                         </TableHead>
                         <TableBody>
                             {bestList.map((item, key) => (
@@ -220,6 +240,16 @@ const Best = props => {
                     setStatus={setStatus}
                     close={() => {
                         setModalPost(null);
+                    }}
+                />
+            )}
+            {modalFilter && (
+                <ModalFilter
+                    title="필터링"
+                    modalType="list"
+                    contentType="bank"
+                    close={() => {
+                        setModalFilter(false);
                     }}
                 />
             )}
