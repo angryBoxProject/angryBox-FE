@@ -112,13 +112,13 @@ const Best = props => {
     }, [inView, loading]);
     return (
         <MainLayout nav={true}>
-            <button
+            {/* <button
                 onClick={() => {
                     setModalFilter(true);
                 }}
             >
                 test
-            </button>
+            </button> */}
             <Contents header={true}>
                 <TablelistWrap>
                     <TablelistBest>
