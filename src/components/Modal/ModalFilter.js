@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ModalLayout from '../../Layouts/ModalLayout';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ReactComponent as CalenderIcon } from '../../static/image/statistic/CalenderIcon.svg';
+import moment from 'moment';
 const ModalFilter = props => {
-    const { title, modalType, contentType, close } = props;
-    const [image, setImage] = useState();
-    const [angry, setAngry] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    console.log(angry, startDate, endDate);
+    const {
+        title,
+        modalType,
+        contentType,
+        close,
+        image,
+        setImage,
+        angry,
+        setAngry,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
+        setBestList,
+        setLastId,
+        setLoading,
+    } = props;
+    // const [image, setImage] = useState();
+    // const [angry, setAngry] = useState([]);
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(new Date());
+    // console.log(angry, startDate, endDate);
 
+    useEffect(() => {
+        setStartDate(new Date());
+        setEndDate(new Date());
+    }, []);
     return (
         <ModalLayout modalType={modalType} title={title} close={close}>
             <TitleArea>
@@ -126,7 +147,10 @@ const ModalFilter = props => {
             <ButtonArea>
                 <ModalButton
                     onClick={() => {
-                        console.log('test');
+                        setBestList([]);
+                        setLastId(0);
+                        setLoading(false);
+                        props.setModalFilter(false);
                     }}
                 >
                     {'적용하기'}

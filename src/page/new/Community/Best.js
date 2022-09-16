@@ -16,6 +16,7 @@ import { useInView } from 'react-intersection-observer';
 import { tokenURL } from '../../../Apis/API';
 import ModalPostDetail from '../../../components/Modal/ModalPostDetail';
 import ModalFilter from '../../../components/Modal/ModalFilter';
+import moment from 'moment';
 
 const bestsList = [
     {
@@ -79,8 +80,15 @@ const Best = props => {
     const [modalPost, setModalPost] = useState();
     const [modalFilter, setModalFilter] = useState();
 
-    const isMount = useIsMount();
+    const [image, setImage] = useState(2);
+    const [angry, setAngry] = useState([]);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
+    console.log(
+        moment(startDate).format('YYYY-MM-DD'),
+        moment(endDate).format('YYYY-MM-DD'),
+    );
     const getList = useCallback(async () => {
         console.log(bestList);
         setLoading(true);
@@ -91,13 +99,19 @@ const Best = props => {
             angry: [],
         };
         await tokenURL.get(`/diaries/todayTop/${lastId}/5`).then(res => {
-            // await tokenURL
-            //     .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
-            //     .then(res => {
-            // const list = res.data.data.diaries;
             const list = res.data.data.todayTopDiary;
             setBestList(prevState => [...prevState, ...list]);
         });
+
+        //테스트 필터
+        // await tokenURL
+        //     .post(`/diaries?lastDiaryId=${lastId}&size=5`, data)
+        //     .then(res => {
+        //         console.log(res);
+        //         const list = res.data.data.diaries;
+        //         // const list = res.data.data.todayTopDiary;
+        //         setBestList(prevState => [...prevState, ...list]);
+        //     });
         setLoading(false);
     }, [lastId]);
 
@@ -110,15 +124,14 @@ const Best = props => {
             setLastId(prevState => prevState + 5);
         }
     }, [inView, loading]);
+    useEffect(() => {
+        //필터 적용 전용
+        if (bestList.length === 0 && startDate !== '') {
+            getList();
+        }
+    }, [bestList]);
     return (
         <MainLayout nav={true}>
-            {/* <button
-                onClick={() => {
-                    setModalFilter(true);
-                }}
-            >
-                test
-            </button> */}
             <Contents header={true}>
                 <TablelistWrap>
                     <TablelistBest>
@@ -128,10 +141,15 @@ const Best = props => {
                                 <Text>실시간 Best</Text>
                             </Title>
                             {/*필터 추후 추가*/}
-                            <FilterWrap onClick={() => setSelect(!select)}>
+                            <FilterWrap
+                                onClick={() => {
+                                    // setSelect(!select);
+                                    setModalFilter(true);
+                                }}
+                            >
                                 {option}
 
-                                <Arrow
+                                {/* <Arrow
                                     style={{
                                         transform: select
                                             ? 'rotate(180deg) translate(0, 50%)'
@@ -139,7 +157,7 @@ const Best = props => {
                                     }}
                                 >
                                     <FilterArrow />
-                                </Arrow>
+                                </Arrow> */}
                                 {select && (
                                     <OptionWarp>
                                         {optionItems.map((option, key) => {
@@ -250,7 +268,23 @@ const Best = props => {
                     contentType="bank"
                     close={() => {
                         setModalFilter(false);
+                        setStartDate('');
+                        setEndDate('');
+                        setImage(2);
+                        setAngry([]);
                     }}
+                    image={image}
+                    setImage={setImage}
+                    angry={angry}
+                    setAngry={setAngry}
+                    setStartDate={setStartDate}
+                    startDate={startDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                    setBestList={setBestList}
+                    setLastId={setLastId}
+                    setLoading={setLoading}
+                    setModalFilter={setModalFilter}
                 />
             )}
         </MainLayout>

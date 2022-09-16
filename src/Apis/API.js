@@ -72,7 +72,7 @@ const refreshaxios = async _ => {
             console.log('test', res);
             console.log('토큰 만료 테스트2');
             console.log('token', res.data.data.access_token);
-            setCookie('token', res.data.data.access_token);
+            setCookie('token', `Bearer ${res.data.data.access_token}`);
             localStorage.removeItem('flag');
 
             return res.data.data.access_token;
@@ -93,7 +93,6 @@ const refreshaxios = async _ => {
         });
     console.log('response:::', response);
     setCookie('token', `Bearer ${response.data.data.access_token}`);
-    console.log('test');
     console.log('test');
 
     return response;
