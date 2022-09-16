@@ -12,6 +12,7 @@ import { ReactComponent as ViewIcon } from '../../../static/image/community/view
 import { ReactComponent as FilterArrow } from '../../../static/image/community/filter_arrow.svg';
 import { tokenURL } from '../../../Apis/API';
 import BambooSocket from '../../../components/bamboo/BambooSocket';
+import ModalPostDetail from '../../../components/Modal/ModalPostDetail';
 
 const recentList = [
     {
